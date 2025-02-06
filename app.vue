@@ -26,14 +26,14 @@ onMounted(() => {
             {
               label: 'QR',
               links: {
-                live: 'https://stars.atlasyigitaydin.com/',
+                live: 'https://qr.atlasyigitaydin.com/',
                 github: 'https://github.com/atlasyigitaydin/qr',
               },
             },
             {
               label: 'FOXIAN',
               links: {
-                live: 'https://stars.atlasyigitaydin.com/',
+                live: 'https://foxian.atlasyigitaydin.com/',
                 github: 'https://github.com/atlasyigitaydin/foxian',
               },
             },
