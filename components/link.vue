@@ -20,7 +20,7 @@ const isHover = ref<boolean>(false)
       :class="{
         'ml-2': isHover,
       }"
-      class="w-full animation-all flex flex-row gap-2 items-end duration-500 ease-in-out delay-100"
+      class="select-none w-full animation-all flex flex-row gap-2 items-end duration-500 ease-in-out delay-100"
     >
       <p class="whitespace-nowrap">
         {{ props.label }}
