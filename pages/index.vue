@@ -9,8 +9,10 @@ definePageMeta({
 <template>
   <NuxtLayout>
     <div class="flex flex-col">
-      <p> ATLAS YİĞİT AYDIN </p>
-      <p class="text-xs">
+      <p class="text-xl">
+        ATLAS YİĞİT AYDIN
+      </p>
+      <p class="text-sm">
         FRONTEND DEVELOPER
       </p>
     </div>
@@ -52,6 +54,6 @@ definePageMeta({
       <label> this page is under construction </label>
     </div> -->
 
-    <MyGithubLink class="w-full flex justify-center" />
+    <MyGithubLink class="flex w-full justify-center" />
   </NuxtLayout>
 </template>
