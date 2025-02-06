@@ -9,7 +9,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-screen justify-center text-lg flex h-screen fixed left-0 top-0 bg-zinc-900 text-white doto">
+  <div class="w-screen justify-center text-lg flex h-screen fixed left-0 top-0 bg-black text-white doto">
     <div class="flex flex-col justify-around pt-12 px-6">
       <label> ATLAS YİĞİT AYDIN </label>
 
