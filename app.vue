@@ -2,6 +2,7 @@
 import Link from '@/components/link.vue'
 import MyGithubLink from '@/components/my-github-link.vue'
 import { Analytics } from '@vercel/analytics/nuxt'
+import { SpeedInsights } from '@vercel/speed-insights/nuxt'
 
 useHead({
   title: 'Atlas Yiğit Aydın',
@@ -55,6 +56,7 @@ useHead({
   </div>
 
   <Analytics />
+  <SpeedInsights />
 </template>
 
 <style>
