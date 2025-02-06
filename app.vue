@@ -22,7 +22,7 @@ useHead({
               },
             },
             {
-              label: 'QR Fox',
+              label: 'QR',
               links: {
                 live: 'https://qr.atlasyigitaydin.com/',
                 github: 'https://github.com/atlasyigitaydin/qr',
