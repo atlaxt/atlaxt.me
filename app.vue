@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Link from '@/components/link.vue'
 import MyGithubLink from '@/components/my-github-link.vue'
+import { Analytics } from '@vercel/analytics/nuxt'
 
 useHead({
   title: 'Atlas Yiğit Aydın',
@@ -52,6 +53,8 @@ useHead({
       <MyGithubLink class="absolute bottom-0 right-0 mx-4 my-2" />
     </div>
   </div>
+
+  <Analytics />
 </template>
 
 <style>
