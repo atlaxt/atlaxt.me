@@ -1380,7 +1380,6 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.8
-      napi-wasm: 1.1.3
     dev: false
     bundledDependencies:
       - napi-wasm
@@ -1466,9 +1465,9 @@ packages:
     resolution: {integrity: sha512-Nyyv1Bj7GgYwj/l46O0nkH1GTKWbO3Ixe7KFcn021aZipkZd+z8Vlu1BwkhqtVgivcKaClaExtWU/lDHkjBzag==}
     dev: false
 
-  /@redocly/openapi-core@1.28.2(supports-color@9.4.0):
-    resolution: {integrity: sha512-nC8ZTFfp1C0RrK7OjYYJL1u0SPYdOtXbLBichCMMfsjwMuEBdGfbDNBJF07mx6/hw6rGRxPsLlvPPa7csX4UpA==}
-    engines: {node: '>=18.17.0', npm: '>=10.8.2'}
+  /@redocly/openapi-core@1.28.3(supports-color@9.4.0):
+    resolution: {integrity: sha512-PtUnjtU9rYA+72PlN3MiR/J++PQI0q6AMV7hIHJQmtsEMtB1OU8l3duT5Txkpc6JJi7deHg66UpzVznImz3OCw==}
+    engines: {node: '>=18.17.0', npm: '>=9.5.0'}
     dependencies:
       '@redocly/ajv': 8.11.2
       '@redocly/config': 0.20.3
@@ -5325,10 +5324,6 @@ packages:
     resolution: {integrity: sha512-9ca1h0Xjvo9bEkE4UOxgAzLV0jHKe6LMaxo37ND2DAhhAtd0j8pR1Wxz+/goMrZO8AEZTWCmyaOsFI/W5AdpCQ==}
     dev: false
 
-  /napi-wasm@1.1.3:
-    resolution: {integrity: sha512-h/4nMGsHjZDCYmQVNODIrYACVJ+I9KItbG+0si6W/jSjdA9JbWDoU4LLeMXVcEQGHjttI2tuXqDrbGF7qkUHHg==}
-    dev: false
-
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -5737,7 +5732,7 @@ packages:
     peerDependencies:
       typescript: ^5.x
     dependencies:
-      '@redocly/openapi-core': 1.28.2(supports-color@9.4.0)
+      '@redocly/openapi-core': 1.28.3(supports-color@9.4.0)
       ansi-colors: 4.1.3
       change-case: 5.4.4
       parse-json: 8.1.0

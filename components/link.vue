@@ -25,7 +25,7 @@ const isHover = ref<boolean>(false)
       <p class="whitespace-nowrap">
         {{ props.label }}
       </p>
-      <p class="text-xs mb-1 w-full">
+      <p class="text-xs mb-[2px] w-full">
         {{ props.info }}
       </p>
     </div>
