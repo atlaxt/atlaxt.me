@@ -32,6 +32,7 @@ onMounted(() => {
             },
             {
               label: 'FOXIAN',
+              info: 'not responsive',
               links: {
                 live: 'https://foxian.atlasyigitaydin.com/',
                 github: 'https://github.com/atlasyigitaydin/foxian',
@@ -41,6 +42,7 @@ onMounted(() => {
           :key
           :label="link.label"
           :links="link.links"
+          :info="link.info"
         />
       </div>
 

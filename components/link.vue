@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   label: string
+  info?: string
   links: {
     live: string
     github: string
@@ -19,12 +20,17 @@ const isHover = ref<boolean>(false)
       :class="{
         'ml-2': isHover,
       }"
-      class="w-full animation-all duration-500 ease-in-out delay-100"
+      class="w-full animation-all flex flex-row gap-2 items-end duration-500 ease-in-out delay-100"
     >
-      {{ props.label }}
+      <p>
+        {{ props.label }}
+      </p>
+      <p class="text-xs mb-1 w-full">
+        {{ props.info }}
+      </p>
     </div>
 
-    <div class="w-full flex justify-end gap-4">
+    <div class="flex justify-end gap-4">
       <a
         :href="props.links.github"
         target="_blank"
