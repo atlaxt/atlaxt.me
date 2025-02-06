@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Link from '@/components/link.vue'
+import MyGithubLink from '@/components/my-github-link.vue'
 
 useHead({
   title: 'Atlas Yiğit Aydın',
@@ -7,11 +8,11 @@ useHead({
 </script>
 
 <template>
-  <div class="w-screen justify-center text-lg flex h-screen fixed left-0 top-0 bg-black text-white doto">
-    <div class="flex flex-col justify-around pt-12 px-6">
+  <div class="w-screen justify-center flex h-screen fixed left-0 top-0 bg-black text-white doto">
+    <div class="flex flex-col lg:items-center items-start justify-around pt-12 px-6 relative">
       <label data-text="ATLAS YİĞİT AYDIN" class="glitch"> ATLAS YİĞİT AYDIN </label>
 
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4 w-full">
         <Link
           v-for="(link, key) in [
             {
@@ -47,6 +48,8 @@ useHead({
       <div class="opacity-70">
         <label> this page is under construction </label>
       </div>
+
+      <MyGithubLink class="absolute bottom-0 right-0 mx-4 my-2" />
     </div>
   </div>
 </template>
