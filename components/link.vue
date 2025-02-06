@@ -22,7 +22,7 @@ const isHover = ref<boolean>(false)
       }"
       class="w-full animation-all flex flex-row gap-2 items-end duration-500 ease-in-out delay-100"
     >
-      <p>
+      <p class="whitespace-nowrap">
         {{ props.label }}
       </p>
       <p class="text-xs mb-1 w-full">

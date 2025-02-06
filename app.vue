@@ -24,7 +24,7 @@ onMounted(() => {
               },
             },
             {
-              label: 'QR',
+              label: 'QR Fox',
               links: {
                 live: 'https://qr.atlasyigitaydin.com/',
                 github: 'https://github.com/atlasyigitaydin/qr',
