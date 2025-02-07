@@ -5,11 +5,6 @@ import { Analytics } from '@vercel/analytics/nuxt'
 useHead({
   title: 'Atlas Yiğit Aydın',
 })
-
-const colorMode = useColorMode()
-onMounted(() => {
-  colorMode.preference = 'dark'
-})
 </script>
 
 <template>

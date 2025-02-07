@@ -18,13 +18,13 @@ const isHover = ref<boolean>(false)
   >
     <div
       :class="{
-        'lg:ml-2': isHover,
+        'ml-2': isHover,
       }"
       class="select-none w-full animation-all flex flex-row gap-2 items-end duration-500 ease-in-out delay-100"
     >
       <p
         :class="{
-          'lg:text-green-400': isHover,
+          'text-green-400': isHover,
         }" class="whitespace-nowrap animation-all duration-500 ease-in-out delay-100"
       >
         {{ props.label }}
