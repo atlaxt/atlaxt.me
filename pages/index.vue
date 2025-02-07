@@ -50,10 +50,6 @@ definePageMeta({
       />
     </div>
 
-    <!-- <div class="opacity-70 text-yellow-300">
-      <label> this page is under construction </label>
-    </div> -->
-
     <MyGithubLink class="flex w-full justify-center" />
   </NuxtLayout>
 </template>
