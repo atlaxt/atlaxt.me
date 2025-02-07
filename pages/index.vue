@@ -81,7 +81,5 @@ onMounted(() => {
         />
       </div>
     </div>
-
-    <MyGithubLink class="fixed bottom-0" />
   </NuxtLayout>
 </template>
