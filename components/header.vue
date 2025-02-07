@@ -4,8 +4,8 @@
       <p class="text-xl">
         ATLAS YİĞİT AYDIN
       </p>
-      <p class="text-sm">
-        FRONTEND DEVELOPER
+      <p class="text-md">
+        frontend_developer
       </p>
     </div>
     <MyLinkGithub />
