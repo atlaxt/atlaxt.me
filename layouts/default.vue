@@ -3,8 +3,8 @@ import { SpeedInsights } from '@vercel/speed-insights/nuxt'
 </script>
 
 <template>
-  <div class="w-screen justify-center flex h-screen fixed left-0 top-0 bg-black text-white doto">
-    <div class="flex flex-col items-start justify-between px-2 relative lg:w-96 md:w-10/12 w-full">
+  <div class="fixed top-0 left-0 w-screen h-screen flex flex-col barlow bg-black text-white doto">
+    <div class="w-full h-full flex justify-center">
       <slot />
     </div>
     <SpeedInsights />
