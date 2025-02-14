@@ -6,10 +6,10 @@ definePageMeta({
 })
 const projects = [
   {
-    label: 'STARS',
+    label: 'RATING',
     links: {
-      live: 'https://stars.atlasyigitaydin.com/',
-      github: 'https://github.com/atlasyigitaydin/stars',
+      live: 'https://rating.atlasyigitaydin.com/',
+      github: 'https://github.com/atlasyigitaydin/rating',
     },
   },
   {
