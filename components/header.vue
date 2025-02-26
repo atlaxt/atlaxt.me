@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full justify-between items-center">
     <div class="flex flex-col">
-      <p class="text-xl">
+      <p class="text-lg">
         ATLAS YİĞİT AYDIN
       </p>
       <p class="text-md">

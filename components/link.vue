@@ -29,7 +29,9 @@ const isHover = ref<boolean>(false)
       >
         {{ props.label }}
       </p>
-      <p class="text-xs mb-[2px] w-full">
+      <p
+        class="text-xs mb-[2px] w-full"
+      >
         {{ props.info }}
       </p>
     </div>

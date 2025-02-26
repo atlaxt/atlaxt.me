@@ -7,6 +7,7 @@ definePageMeta({
 const projects = [
   {
     label: 'RATING',
+    info: 'challenge',
     links: {
       live: 'https://rating.atlasyigitaydin.com/',
       github: 'https://github.com/atlasyigitaydin/rating',
@@ -14,17 +15,18 @@ const projects = [
   },
   {
     label: 'QR',
+    info: 'challenge',
     links: {
       live: 'https://qr.atlasyigitaydin.com/',
       github: 'https://github.com/atlasyigitaydin/qr',
     },
   },
   {
-    label: 'FOXIAN',
-    info: 'not responsive',
+    label: 'BORDER WHITE',
+    info: 'v0.0.1',
     links: {
-      live: 'https://foxian.atlasyigitaydin.com/',
-      github: 'https://github.com/atlasyigitaydin/foxian',
+      live: 'https://border-white.atlasyigitaydin.com/',
+      github: 'https://github.com/atlasyigitaydin/border-white',
     },
   },
 ]
@@ -56,7 +58,7 @@ onMounted(() => {
 
 <template>
   <NuxtLayout>
-    <div class="lg:w-96 md:w-10/12 w-full lg:px-0 md:px-0 px-2 flex flex-col h-full justify-start pb-12 items-start relative">
+    <div class="lg:w-96 md:w-10/12 w-full lg:px-0 md:px-0 px-2 flex flex-col h-full justify-start items-start relative">
       <Header />
 
       <div class="flex flex-col gap-4 w-full justify-center h-full">
@@ -80,6 +82,7 @@ onMounted(() => {
           :info="link.info"
         />
       </div>
+      <MyLinkProtokoi />
     </div>
   </NuxtLayout>
 </template>
