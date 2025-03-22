@@ -29,6 +29,14 @@ const projects = [
       github: 'https://github.com/atlasyigitaydin/border-white',
     },
   },
+  {
+    label: 'Git101',
+    info: 'document',
+    links: {
+      live: 'https://git101.atlasyigitaydin.com//',
+      github: 'https://github.com/atlasyigitaydin/git101',
+    },
+  },
 ]
 
 // const items = [
