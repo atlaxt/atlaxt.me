@@ -1,6 +1,6 @@
 <template>
   <a
-    href="https://github.com/atlasyigitaydin"
+    href="https://github.com/atlaxt"
     target="_blank"
     class="flex items-center gap-2 text-xs"
   >

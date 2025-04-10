@@ -10,7 +10,7 @@ const projects = [
     info: 'challenge',
     links: {
       live: 'https://rating.atlasyigitaydin.com/',
-      github: 'https://github.com/atlasyigitaydin/rating',
+      github: 'https://github.com/atlaxt/rating',
     },
   },
   {
@@ -18,7 +18,7 @@ const projects = [
     info: 'challenge',
     links: {
       live: 'https://qr.atlasyigitaydin.com/',
-      github: 'https://github.com/atlasyigitaydin/qr',
+      github: 'https://github.com/atlaxt/qr',
     },
   },
   {
@@ -26,7 +26,7 @@ const projects = [
     info: 'v0.0.1',
     links: {
       live: 'https://border-white.atlasyigitaydin.com/',
-      github: 'https://github.com/atlasyigitaydin/border-white',
+      github: 'https://github.com/atlaxt/border-white',
     },
   },
   {
@@ -34,7 +34,7 @@ const projects = [
     info: 'document',
     links: {
       live: 'https://git101.atlasyigitaydin.com//',
-      github: 'https://github.com/atlasyigitaydin/git101',
+      github: 'https://github.com/atlaxt/git101',
     },
   },
 ]
