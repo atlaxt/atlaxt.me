@@ -33,7 +33,7 @@ const projects = [
     label: 'Git101',
     info: 'document',
     links: {
-      live: 'https://git101.atlasyigitaydin.com//',
+      live: 'https://git101.atlaxt.com//',
       github: 'https://github.com/atlaxt/git101',
     },
   },
