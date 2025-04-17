@@ -6,35 +6,40 @@ definePageMeta({
 })
 const projects = [
   {
-    label: 'RATING',
-    info: 'challenge',
+    label: 'Git101',
     links: {
-      live: 'https://rating.atlasyigitaydin.com/',
-      github: 'https://github.com/atlaxt/rating',
+      live: 'https://git101.atlaxt.me/',
+      github: 'https://github.com/atlaxt/git101',
     },
   },
   {
-    label: 'QR',
-    info: 'challenge',
+    label: 'Emojix',
     links: {
-      live: 'https://qr.atlasyigitaydin.com/',
+      live: 'https://emojix.atlaxt.me/',
+      github: 'https://github.com/atlaxt/emojix',
+    },
+  },
+  {
+    label: 'ApiKoi',
+    links: {
+      live: 'https://apikoi.com/',
       github: 'https://github.com/atlaxt/qr',
     },
   },
   {
-    label: 'BORDER WHITE',
-    info: 'v0.0.1',
+    label: 'KoiJs - Vue',
+    disabled: true,
     links: {
-      live: 'https://border-white.atlasyigitaydin.com/',
-      github: 'https://github.com/atlaxt/border-white',
+      live: 'https://koijs.com/',
+      github: 'https://github.com/koijs-vue',
     },
   },
   {
-    label: 'Git101',
-    info: 'document',
+    label: 'KoiJs - React',
+    disabled: true,
     links: {
-      live: 'https://git101.atlaxt.me/',
-      github: 'https://github.com/atlaxt/git101',
+      live: 'https://koijs.com/',
+      github: 'https://github.com/koijs-react',
     },
   },
 ]
@@ -87,10 +92,10 @@ onMounted(() => {
           :key
           :label="link.label"
           :links="link.links"
-          :info="link.info"
+          :disabled="link.disabled"
         />
       </div>
-      <MyLinkProtokoi />
+      <!-- <MyLinkProtokoi /> -->
     </div>
   </NuxtLayout>
 </template>

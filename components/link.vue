@@ -2,6 +2,7 @@
 const props = defineProps<{
   label: string
   info?: string
+  disabled?: boolean
   links: {
     live: string
     github: string
@@ -13,7 +14,10 @@ const isHover = ref<boolean>(false)
 <template>
   <div
     class="relative flex items-center justify-between"
-    @mouseenter="isHover = true"
+    @mouseenter="() => {
+      if (!props.disabled)
+        isHover = true
+    }"
     @mouseleave="isHover = false"
   >
     <div
@@ -25,6 +29,7 @@ const isHover = ref<boolean>(false)
       <p
         :class="{
           'text-green-400': isHover,
+          'text-red-500 opacity-95': props.disabled,
         }" class="whitespace-nowrap animation-all duration-500 ease-in-out delay-100"
       >
         {{ props.label }}
