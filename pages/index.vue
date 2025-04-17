@@ -74,9 +74,6 @@ const projects = [
           :disabled="link.disabled"
         />
       </div>
-      <p class="">
-        {{ "Pixels with purpose, code with soul." }}
-      </p>
     </div>
   </NuxtLayout>
 </template>

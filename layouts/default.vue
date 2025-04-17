@@ -3,8 +3,11 @@
 
 <template>
   <div class="fixed top-0 left-0 w-screen h-screen flex flex-col bg-black text-white doto">
-    <div class="w-full h-full flex justify-center">
+    <div class="w-full h-full flex flex-col items-center">
       <slot />
+      <p class="mb-12">
+        Pixels with purpose, code with soul.
+      </p>
     </div>
   </div>
 </template>
