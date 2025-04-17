@@ -45,7 +45,11 @@ const isHover = ref<boolean>(false)
       <a
         :href="props.links.github"
         target="_blank"
-        class="flex items-center gap-2"
+        class="flex items-center gap-2 animation-all duration-500 ease-in-out delay-100"
+        :class="{
+          'opacity-100': isHover,
+          'opacity-60': !isHover,
+        }"
       >
         <Icon class="text-lg opacity-70" name="pixelarticons:github" />
       </a>
@@ -53,7 +57,11 @@ const isHover = ref<boolean>(false)
       <a
         :href="props.links.live"
         target="_blank"
-        class="flex items-center gap-2"
+        class="flex items-center gap-2 animation-all duration-500 ease-in-out delay-100"
+        :class="{
+          'opacity-100': isHover,
+          'opacity-60': !isHover,
+        }"
       >
         <Icon class="text-lg opacity-70" name="pixelarticons:external-link" />
       </a>
