@@ -14,7 +14,6 @@
   "dependencies": {
     "@nuxt/icon": "1.10.3",
     "@nuxtjs/color-mode": "3.5.2",
-    "@nuxtjs/google-adsense": "^3.0.0",
     "@tailwindcss/vite": "^4.0.3",
     "nuxt": "^3.15.4",
     "nuxt-gtag": "^3.0.2",
