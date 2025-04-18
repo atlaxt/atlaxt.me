@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxtjs/color-mode', '@nuxt/icon', 'nuxt-gtag'],
+  modules: ['@nuxtjs/color-mode', '@nuxt/icon', 'nuxt-gtag', '@nuxtjs/google-adsense'],
   colorMode: {
     classSuffix: '',
   },
@@ -26,5 +26,8 @@ export default defineNuxtConfig({
   },
   gtag: {
     id: 'G-05DNL7DCJ0',
+  },
+  googleAdsense: {
+    id: 'ca-pub-1948589981733097',
   },
 })
