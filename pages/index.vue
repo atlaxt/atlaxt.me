@@ -14,10 +14,10 @@ const projects = [
     },
   },
   {
-    label: 'Emojix',
+    label: 'imoji',
     links: {
-      live: 'https://emojix.atlaxt.me/',
-      github: 'https://github.com/atlaxt/emojix',
+      live: 'https://imoji.co/',
+      github: 'https://github.com/atlaxt/imoji',
     },
   },
   {
