@@ -7,6 +7,13 @@ definePageMeta({
 })
 const projects = [
   {
+    label: 'InkHub',
+    links: {
+      live: 'https://inkhub.atlaxt.me/',
+      github: 'https://github.com/atlaxt/InkHub',
+    },
+  },
+  {
     label: 'Git101',
     links: {
       live: 'https://git101.atlaxt.me/',
@@ -41,13 +48,6 @@ const projects = [
     links: {
       live: 'https://koijs.com/',
       github: 'https://github.com/koijs-react',
-    },
-  },
-  {
-    label: 'Border White',
-    links: {
-      live: 'https://border-white.atlasyigitaydin.com/',
-      github: 'https://github.com/atlaxt/border-white',
     },
   },
   {
