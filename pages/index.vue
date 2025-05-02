@@ -8,6 +8,7 @@ definePageMeta({
 const projects = [
   {
     label: 'InkHub',
+    loading: true,
     links: {
       live: 'https://inkhub.atlaxt.me/',
       github: 'https://github.com/atlaxt/InkHub',
@@ -29,6 +30,7 @@ const projects = [
   },
   {
     label: 'ApiKoi',
+    loading: true,
     links: {
       live: 'https://apikoi.com/',
       github: 'https://github.com/atlaxt/qr',
@@ -38,7 +40,6 @@ const projects = [
     label: 'KoiJs/Vue',
     disabled: true,
     links: {
-      live: 'https://koijs.com/',
       github: 'https://github.com/koijs-vue',
     },
   },
@@ -46,7 +47,6 @@ const projects = [
     label: 'KoiJs/React',
     disabled: true,
     links: {
-      live: 'https://koijs.com/',
       github: 'https://github.com/koijs-react',
     },
   },
@@ -72,8 +72,13 @@ const projects = [
           :label="link.label"
           :links="link.links"
           :disabled="link.disabled"
+          :loading="link.loading"
         />
       </div>
+
+      <p class="mb-12 sticky bottom-0 text-sm text-center text-gray-400 w-full">
+        Pixels with purpose, code with soul.
+      </p>
     </div>
   </NuxtLayout>
 </template>

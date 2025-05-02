@@ -3,6 +3,7 @@ const props = defineProps<{
   label: string
   info?: string
   disabled?: boolean
+  loading?: boolean
   links: {
     live: string
     github: string
@@ -26,6 +27,7 @@ const isHover = ref<boolean>(false)
       }"
       class="select-none w-full animation-all flex flex-row gap-2 items-end duration-500 ease-in-out delay-100"
     >
+      <Loading v-if="props.loading" />
       <p
         :class="{
           'text-green-400': isHover,
@@ -55,6 +57,7 @@ const isHover = ref<boolean>(false)
       </a>
 
       <a
+        v-if="props.links.live"
         :href="props.links.live"
         target="_blank"
         class="flex items-center gap-2 animation-all duration-500 ease-in-out delay-100"
