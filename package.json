@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "atlaxt": "git add -A . && git commit -m 'deploy' && git push -u origin master && pnpm generate && firebase deploy"
+    "atlaxt": "git add -A . && git commit -m 'deploy' && git push -u origin main && pnpm generate && firebase deploy"
   },
   "dependencies": {
     "@nuxt/icon": "1.10.3",
