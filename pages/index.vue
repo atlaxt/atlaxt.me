@@ -7,11 +7,26 @@ definePageMeta({
 })
 const projects = [
   {
+    label: 'ApiKoi',
+    loading: true,
+    links: {
+      live: 'https://apikoi.com/',
+      github: 'https://github.com/atlaxt/qr',
+    },
+  },
+  {
     label: 'InkHub',
     loading: true,
     links: {
       live: 'https://inkhub.atlaxt.me/',
       github: 'https://github.com/atlaxt/InkHub',
+    },
+  },
+  {
+    label: '100 css',
+    loading: true,
+    links: {
+      github: 'https://100-css.atlaxt.me/',
     },
   },
   {
@@ -26,14 +41,6 @@ const projects = [
     links: {
       live: 'https://imoji.co/',
       github: 'https://github.com/atlaxt/imoji',
-    },
-  },
-  {
-    label: 'ApiKoi',
-    loading: true,
-    links: {
-      live: 'https://apikoi.com/',
-      github: 'https://github.com/atlaxt/qr',
     },
   },
   {
