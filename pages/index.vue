@@ -26,7 +26,8 @@ const projects = [
     label: '100 css',
     loading: true,
     links: {
-      github: 'https://100-css.atlaxt.me/',
+      github: 'https://github.com/atlaxt/100-css',
+      live: 'https://100-css.atlaxt.me/',
     },
   },
   {
