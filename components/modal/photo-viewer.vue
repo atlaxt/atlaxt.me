@@ -29,7 +29,6 @@ onUnmounted(() => {
 
 <template>
   <div v-if="props.isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
-    <!-- Close button -->
     <button
       class="absolute top-4 z-60 right-4 text-white hover:text-gray-300"
       @click="props.onClose"
@@ -37,7 +36,6 @@ onUnmounted(() => {
       <Icon name="lucide:x" class="w-8 h-8" />
     </button>
 
-    <!-- Previous button -->
     <button
       class="absolute left-4 z-60 text-white hover:text-gray-300"
       @click="props.onPrev"
@@ -45,7 +43,6 @@ onUnmounted(() => {
       <Icon name="lucide:chevron-left" class="w-12 h-12" />
     </button>
 
-    <!-- Next button -->
     <button
       class="absolute right-4 z-60 text-white hover:text-gray-300"
       @click="props.onNext"
