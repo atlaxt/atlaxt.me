@@ -1,28 +1,20 @@
 import tailwindcss from '@tailwindcss/vite'
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  app: {
-    head: {
-      meta: [
-        { name: 'color-scheme', content: 'dark' },
-      ],
-      htmlAttrs: {
-        class: 'dark',
-      },
-    },
-  },
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+  modules: ['@nuxt/icon', '@nuxtjs/color-mode', 'nuxt-gtag'],
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxtjs/color-mode', '@nuxt/icon', 'nuxt-gtag'],
-  colorMode: {
-    classSuffix: '',
-  },
   vite: {
     plugins: [
       tailwindcss(),
     ],
+  },
+  colorMode: {
+    classSuffix: '',
+    preference: 'system',
+    fallback: 'dark',
+    storageKey: 'nuxt-color-mode',
   },
   gtag: {
     id: 'G-05DNL7DCJ0',

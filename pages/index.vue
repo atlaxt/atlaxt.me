@@ -1,92 +1,100 @@
 <script setup lang="ts">
-import Header from '~/components/header.vue'
-import Link from '~/components/link.vue'
-
 definePageMeta({
   name: 'home',
+  path: '/',
 })
-const projects = [
+
+const socialLinks = [
   {
-    label: 'ApiKoi',
-    loading: true,
-    links: {
-      live: 'https://apikoi.com/',
-      github: 'https://github.com/atlaxt/qr',
-    },
+    name: 'GitHub',
+    url: 'https://github.com/atlaxt',
+    icon: 'lucide:github',
   },
   {
-    label: 'InkHub',
-    loading: true,
-    links: {
-      live: 'https://inkhub.atlaxt.me/',
-      github: 'https://github.com/atlaxt/InkHub',
-    },
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/atlaxt',
+    icon: 'lucide:linkedin',
   },
   {
-    label: '100 css',
-    loading: true,
-    links: {
-      github: 'https://github.com/atlaxt/100-css',
-      live: 'https://100-css.atlaxt.me/',
-    },
-  },
-  {
-    label: 'Git101',
-    links: {
-      live: 'https://git101.atlaxt.me/',
-      github: 'https://github.com/atlaxt/git101',
-    },
-  },
-  {
-    label: 'imoji',
-    links: {
-      live: 'https://imoji.co/',
-      github: 'https://github.com/atlaxt/imoji',
-    },
-  },
-  {
-    label: 'KoiJs/Vue',
-    disabled: true,
-    links: {
-      github: 'https://github.com/koijs-vue',
-    },
-  },
-  {
-    label: 'KoiJs/React',
-    disabled: true,
-    links: {
-      github: 'https://github.com/koijs-react',
-    },
-  },
-  {
-    label: 'Qr',
-    links: {
-      live: 'https://qr.atlasyigitaydin.com/',
-      github: 'https://github.com/atlaxt/qr',
-    },
+    name: 'Instagram',
+    url: 'https://instagram.com/atlas.y.a',
+    icon: 'lucide:instagram',
   },
 ]
+
+const email = {
+  address: 'atlasyigitaydin@gmail.com',
+  icon: 'lucide:mail',
+}
 </script>
 
 <template>
-  <NuxtLayout>
-    <div class="lg:w-96 md:w-10/12 w-full lg:p-0 p-2 flex flex-col h-full justify-center items-start relative">
-      <Header />
+  <section class="lg:w-3xl  lg:px-0 px-2 flex flex-col gap-8 mx-auto mt-12">
+    <span class="text-4xl font-semibold tracking-tight text-balance"> Atlas Yiğit Aydın </span>
 
-      <div class="flex flex-col gap-4 w-full h-full justify-center">
-        <Link
-          v-for="(link, key) in projects"
-          :key
-          :label="link.label"
-          :links="link.links"
-          :disabled="link.disabled"
-          :loading="link.loading"
-        />
+    <p>
+      Hi! I'm Atlas Yiğit Aydın — a passionate frontend developer and digital creator.
+    </p>
+
+    <p>
+      I spend most of my time building fast, accessible, and user-focused interfaces. I enjoy creating tools and
+      projects that boost productivity and save developers time.
+    </p>
+
+    <p>
+      I'm currently working as a frontend developer at <strong>trex Digital Manufacturing</strong>, where I'm
+      responsible for building user interfaces for ERP systems and internal applications. Outside of work, I actively
+      contribute to the open-source ecosystem and build my own side projects.
+    </p>
+
+    <p>
+      While I mostly focus on developing UI components, developer tools, and test API services, my work isn't limited to
+      just those. I like crafting solutions based on different needs and taking ownership of the entire process from
+      start to finish.
+      You can find more details on the
+      <NuxtLink :to="{ name: 'projects' }" class="font-semibold dark:text-white text-black underline hover:opacity-80">
+        projects
+      </NuxtLink>
+      page.
+    </p>
+
+    <p>
+      Outside of code, I enjoy taking photos and collecting little things that catch my eye. If you're curious,
+      feel free to
+      <NuxtLink :to="{ name: 'photos' }" class="font-semibold dark:text-white text-black underline hover:opacity-80">
+        check out my photo collection.
+      </NuxtLink>
+    </p>
+
+    <p>
+      If we share common interests — or even if you just want to say hi — feel free to reach out. Who knows, we might
+      grab a coffee and create something together.
+    </p>
+
+    <div class="h-px w-sm bg-zinc-200 dark:bg-zinc-600" />
+
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-4">
+        <a
+          v-for="link in socialLinks"
+          :key="link.name"
+          :href="link.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-xl hover:text-zinc-600 dark:hover:text-zinc-400 transition-colors"
+        >
+          <Icon :name="link.icon" />
+        </a>
       </div>
-
-      <p class="mb-12 sticky bottom-0 text-sm text-center text-gray-400 w-full">
-        Pixels with purpose, code with soul.
-      </p>
+      <a
+        :href="`mailto:${email.address}`"
+        class="flex items-center gap-2 text-sm group"
+      >
+        <Icon :name="email.icon" class="text-xl" />
+        <span class="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform group-hover:after:scale-x-100">
+          {{ email.address }}
+        </span>
+      </a>
     </div>
-  </NuxtLayout>
+  </section>
 </template>

@@ -2,7 +2,7 @@
   // Disable the default formatter, use eslint instead
   "prettier.enable": false,
   "editor.formatOnSave": false,
-
+  "css.lint.unknownAtRules": "ignore",
   // Auto fix
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
@@ -33,7 +33,6 @@
     "html",
     "markdown",
     "json",
-    "json5",
     "jsonc",
     "yaml",
     "toml",
