@@ -2,7 +2,7 @@
   <div
     class="
     fixed left-0 top-0 w-screen h-screen
-    flex flex-col overflow-y-auto scroll-smooth
+    flex flex-col overflow-y-scroll scroll-smooth
     bg-gradient-to-b
     dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-900
     from-zinc-300 via-zinc-200 to-zinc-100
@@ -14,7 +14,8 @@
     <UiGren class="fixed" />
 
     <AppHeader class="" />
-
-    <slot />
+    <div class="w-full">
+      <slot />
+    </div>
   </div>
 </template>
