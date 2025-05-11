@@ -48,13 +48,13 @@ onMounted(() => {
         v-if="faviconUrl && showFavicon"
         :src="faviconUrl"
         :alt="`${props.project.name} favicon`"
-        class="w-6 h-6 flex-shrink-0 mt-1 object-contain"
+        class="w-8 h-8 flex-shrink-0 mt-1 object-contain"
         @error="showFavicon = false"
       >
       <Icon
         v-else
         :name="props.project.icon"
-        class="text-2xl flex-shrink-0 mt-1"
+        class="text-3xl flex-shrink-0 mt-1"
       />
       <div>
         <h3 class="font-medium text-lg">{{ props.project.name }}</h3>

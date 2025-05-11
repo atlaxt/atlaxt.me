@@ -21,6 +21,12 @@ const projects = {
     },
   ],
   starterTemplates: [
+    {
+      name: 'Synthia',
+      description: 'A stylish Nuxt 3 starter template with Nuxt UI, Tailwind, and modern auth flow.',
+      icon: 'i-lucide-layout-template',
+      link: 'https://synthia.atlaxt.me',
+    },
   ],
   developerTools: [
     {
