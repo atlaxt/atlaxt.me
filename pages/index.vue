@@ -3,29 +3,6 @@ definePageMeta({
   name: 'home',
   path: '/',
 })
-
-const socialLinks = [
-  {
-    name: 'GitHub',
-    url: 'https://github.com/atlaxt',
-    icon: 'lucide:github',
-  },
-  {
-    name: 'LinkedIn',
-    url: 'https://linkedin.com/in/atlaxt',
-    icon: 'lucide:linkedin',
-  },
-  {
-    name: 'Instagram',
-    url: 'https://instagram.com/atlas.y.a',
-    icon: 'lucide:instagram',
-  },
-]
-
-const email = {
-  address: 'atlasyigitaydin@gmail.com',
-  icon: 'lucide:mail',
-}
 </script>
 
 <template>
@@ -76,7 +53,7 @@ const email = {
     <div class="flex flex-col gap-4">
       <div class="flex items-center gap-4">
         <a
-          v-for="link in socialLinks"
+          v-for="link in useSocialLinks()"
           :key="link.name"
           :href="link.url"
           target="_blank"
@@ -87,12 +64,12 @@ const email = {
         </a>
       </div>
       <a
-        :href="`mailto:${email.address}`"
+        :href="`mailto:${useEmail().address}`"
         class="flex items-center gap-2 text-sm group"
       >
-        <Icon :name="email.icon" class="text-xl" />
+        <Icon :name="useEmail().icon" class="text-xl" />
         <span class="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform group-hover:after:scale-x-100">
-          {{ email.address }}
+          {{ useEmail().address }}
         </span>
       </a>
     </div>
