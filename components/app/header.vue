@@ -21,7 +21,7 @@ onMounted(() => {
       >
     </RouterLink>
 
-    <nav class="flex md:mt-0 mt-2 md:flex-row flex-col-reverse md:items-center items-end md:gap-8 gap-4" aria-label="Main navigation">
+    <nav class="flex md:flex-row flex-col-reverse md:items-center items-end md:gap-8 gap-4" aria-label="Main navigation">
       <div class="flex flex-row md:gap-8 gap-4 items-center">
         <RouterLink
           class="opacity-70 hover:opacity-100 flex flex-row items-center gap-2 duration-300"
@@ -48,7 +48,7 @@ onMounted(() => {
         </RouterLink>
       </div>
 
-      <div class="flex flex-row gap-4">
+      <div class="md:flex flex-row gap-4 hidden">
         <a
           v-for="(social, key) in useSocialLinks()" :key
           class="opacity-70 hover:opacity-100 duration-300 flex items-center"
