@@ -55,7 +55,8 @@ onUnmounted(() => {
       <img
         :src="props.photo.url"
         :alt="props.photo.name"
-        class="max-w-full max-h-full w-auto h-auto object-contain"
+        :draggable="false"
+        class="max-w-full max-h-full w-auto h-auto object-contain select-none"
       >
     </div>
   </div>

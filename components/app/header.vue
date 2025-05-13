@@ -16,12 +16,12 @@ onMounted(() => {
     <RouterLink :to="{ name: 'home' }" class="h-full" aria-label="Go to homepage">
       <img
         :src="isDark ? signWhite : signBlack"
-        class="h-full"
+        class="h-full select-none"
         :alt="isDark ? 'White logo' : 'Black logo'"
       >
     </RouterLink>
 
-    <nav class="flex flex-row items-center md:gap-8 gap-4" aria-label="Main navigation">
+    <nav class="flex flex-row items-center md:gap-8 gap-4 select-none" aria-label="Main navigation">
       <div class="flex flex-row md:gap-8 gap-4 items-center">
         <RouterLink
           class="opacity-70 hover:opacity-100 flex flex-row items-center gap-2 duration-300"
