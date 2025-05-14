@@ -73,19 +73,12 @@ useHead({
 </script>
 
 <template>
-  <NuxtLayout class="inter">
+  <NuxtLayout>
     <NuxtPage :transition="{ name: 'page', mode: 'out-in' }" />
   </NuxtLayout>
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
-.inter {
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-}
-
 .page-enter-active,
 .page-leave-active {
   transition: all 0.4s;
