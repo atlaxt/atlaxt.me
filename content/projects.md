@@ -9,7 +9,7 @@ projects:
   npmPackages:
     - name: 'nuxt-tawk-to'
       description: 'Nuxt 3 module for integrating Tawk.to live chat widget.'
-      icon: ''
+      icon: 'arcticons:sunbird'
       link: 'https://www.npmjs.com/package/nuxt-tawk-to'
 
     - name: '@koijs/table-vue'
