@@ -26,7 +26,7 @@ function formatTitle(key: string) {
     <section
       v-for="([key, items]) in sections"
       :id="key"
-      :key="key"
+      :key
       class="flex flex-col gap-6"
     >
       <a :href="`#${key}`" class="text-2xl group relative flex flex-row gap-2 items-center">
