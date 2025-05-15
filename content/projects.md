@@ -9,8 +9,8 @@ projects:
   npmPackages:
     - name: 'nuxt-tawk-to'
       description: 'Nuxt 3 module for integrating Tawk.to live chat widget.'
-      icon: 'lucide:table-2'
-      link: 'https://github.com/atlaxt/nuxt-tawk-to'
+      icon: ''
+      link: 'https://www.npmjs.com/package/nuxt-tawk-to'
 
     - name: '@koijs/table-vue'
       description: 'A lightweight, customizable Vue table component with sticky headers and zebra striping.'
