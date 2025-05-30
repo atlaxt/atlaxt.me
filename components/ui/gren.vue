@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="absolute inset-0 w-full h-full dark:lg:opacity-25 dark:opacity-30 lg:opacity-80 opacity-95 -z-[999]"
+    class="absolute inset-0 w-full h-full dark:lg:opacity-20 dark:opacity-30 lg:opacity-50 opacity-80 -z-[999]"
     viewBox="0 0 2000 2000"
     xmlns="http://www.w3.org/2000/svg"
     preserveAspectRatio="none"
