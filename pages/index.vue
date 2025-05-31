@@ -37,7 +37,7 @@ const email = useEmail()
       <a
         :href="`mailto:${email.address}`"
         class="flex items-center gap-2 text-sm group w-auto mt-2"
-        aria-label="E-posta gönder"
+        aria-label="e-mail"
       >
         <Icon :name="email.icon" class="text-xl" />
         <span
