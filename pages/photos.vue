@@ -35,7 +35,7 @@ function prevPhoto() {
 
 <template>
   <div class="px-4 pb-12 w-full h-full overflow-y-auto mt-12">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
       <div
         v-for="(photo, index) in photos"
         :key="index"
