@@ -9,8 +9,11 @@ const props = defineProps<{
 <template>
   <img
     :src="props.photo.url"
-    class="max-h-[400px] min-h-[300px] object-cover hover:scale-105 transition-transform duration-300 select-none"
+    class="w-full aspect-square object-cover hover:scale-105 transition-transform duration-300 select-none"
     :draggable="false"
+    width="260"
+    height="260"
+    loading="lazy"
     :alt="props.photo.name"
   >
 </template>

@@ -35,11 +35,11 @@ function prevPhoto() {
 
 <template>
   <div class="px-4 pb-12 w-full h-full overflow-y-auto mt-12">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+    <div class="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(260px,1fr))]">
       <div
         v-for="(photo, index) in photos"
         :key="index"
-        class="max-h-[500px] overflow-hidden flex justify-center"
+        class="overflow-hidden"
         @click="openPhoto(index)"
       >
         <CardPhoto :photo="photo" />
