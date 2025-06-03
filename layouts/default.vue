@@ -1,7 +1,7 @@
 <template>
   <div
     class="
-    fixed left-0 top-0 w-screen h-screen
+    fixed left-0 top-0 w-screen h-dvh
     flex flex-col overflow-y-scroll scroll-smooth
     bg-gradient-to-b
     dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-900

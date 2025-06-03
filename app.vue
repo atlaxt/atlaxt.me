@@ -61,8 +61,6 @@ useHead({
     { name: 'twitter:image', content: ogImage },
 
     { name: 'theme-color', content: '#18181B' },
-    { name: 'apple-mobile-web-app-capable', content: 'yes' },
-    { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
   ],
   link: [
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
