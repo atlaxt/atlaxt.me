@@ -11,14 +11,7 @@ const sections = computed(() => {
     return Object.entries(page.value.projects) as Array<[string, Array<Record<string, any>>]>
   else
     return []
-},
-)
-
-function formatTitle(key: string) {
-  return key
-    .replace(/([A-Z])/g, ' $1')
-    .replace(/^./, s => s.toUpperCase())
-}
+})
 </script>
 
 <template>

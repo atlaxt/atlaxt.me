@@ -26,11 +26,6 @@ function prevPhoto() {
     return
   selectedPhotoIndex.value = (selectedPhotoIndex.value - 1 + photos.length) % photos.length
 }
-
-// const photos = Object.values(import.meta.glob('../assets/photos/*.{jpg,jpeg}', {
-//   eager: true,
-//   import: 'default',
-// })) as string[]
 </script>
 
 <template>
