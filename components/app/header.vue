@@ -44,13 +44,13 @@ onMounted(() => {
           aria-label="View photos"
         >
           <Icon class="text-xl" name="lucide:camera" aria-hidden="true" />
-          <span class=""> Photos </span>
+          <!-- <span class=""> Photos </span> -->
         </RouterLink>
       </div>
 
       <div class="md:flex flex-row gap-4 hidden">
         <a
-          v-for="(social, key) in useSocialLinks()"
+          v-for="social in useSocialLinks()"
           :key="social.name"
           class="opacity-70 hover:opacity-100 duration-300 flex items-center"
           target="_blank"
