@@ -77,6 +77,8 @@ useHead({
 </template>
 
 <style>
+@import './assets/css/main.css';
+
 .page-enter-active,
 .page-leave-active {
   transition: all 0.4s;

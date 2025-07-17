@@ -13,20 +13,21 @@
     "atlaxt": "git add -A . && git commit -m 'deploy' && git push -u origin main && pnpm generate && firebase deploy"
   },
   "dependencies": {
-    "@nuxt/content": "^3.5.1",
+    "@nuxt/content": "^3.6.3",
     "@nuxt/icon": "1.12.0",
     "@nuxtjs/color-mode": "^3.5.2",
-    "@tailwindcss/vite": "^4.1.5",
+    "@tailwindcss/vite": "^4.1.11",
     "color-mode": "^0.1.0",
-    "nuxt": "^3.17.2",
-    "nuxt-gtag": "^3.0.2",
-    "tailwindcss": "^4.1.5",
-    "vue": "^3.5.13",
+    "nuxt": "^4.0.0",
+    "nuxt-gtag": "^3.0.3",
+    "tailwindcss": "^4.1.11",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vue": "^3.5.17",
     "vue-router": "^4.5.1",
-    "zod": "^3.24.4"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.13.0",
-    "eslint": "^9.26.0"
+    "@antfu/eslint-config": "^4.17.0",
+    "eslint": "^9.31.0"
   }
 }
