@@ -16,23 +16,17 @@ const email = useEmail()
 <template>
   <main class="lg:w-3xl lg:px-0 px-2 mx-auto mt-12">
     <ContentRenderer
+      v-if="value"
       :value="value"
       class="space-y-8 content-wrapper"
     />
 
     <div class="flex flex-col gap-2 mt-16">
       <div class="flex items-center gap-4">
-        <a
-          v-for="link in socialLinks"
-          :key="link.name"
-          :href="link.url"
-          target="_blank"
-          rel="noopener noreferrer"
-          :aria-label="link.name"
-          class="text-xl"
-        >
-          <Icon :name="link.icon" />
-        </a>
+        <CardSocial
+          v-for="link in socialLinks" :key="link.name"
+          :link
+        />
       </div>
       <a
         :href="`mailto:${email.address}`"

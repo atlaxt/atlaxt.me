@@ -1,9 +1,14 @@
-export function useSocialLinks() {
+export function useSocialLinks(): SocialLink[] {
   return [
     {
       name: 'GitHub',
       url: 'https://github.com/atlaxt',
       icon: 'lucide:github',
+    },
+    {
+      name: 'npm',
+      url: 'https://www.npmjs.com/~atlasyigitaydin',
+      icon: 'nonicons:npm-16',
     },
     {
       name: 'LinkedIn',
