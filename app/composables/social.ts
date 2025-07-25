@@ -17,7 +17,7 @@ export function useSocialLinks(): SocialLink[] {
     },
     {
       name: 'Instagram',
-      url: 'https://instagram.com/altaxt.me',
+      url: 'https://instagram.com/atlaxt.me',
       icon: 'lucide:instagram',
     },
     {
