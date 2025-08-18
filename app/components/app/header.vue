@@ -47,7 +47,7 @@ onMounted(() => {
           <span class="md:text-md text-sm"> Projects </span>
         </RouterLink>
 
-        <RouterLink
+        <!-- <RouterLink
           class="opacity-70 hover:opacity-100 duration-300 flex items-center gap-2"
           :class="{
             'opacity-100': currentRouteName === 'photos',
@@ -57,7 +57,7 @@ onMounted(() => {
         >
           <Icon class="md:text-xl text-md" name="lucide:camera" aria-hidden="true" />
           <span class="md:text-md text-sm"> Photos </span>
-        </RouterLink>
+        </RouterLink> -->
       </div>
 
       <div class="md:flex flex-row gap-4 hidden">
