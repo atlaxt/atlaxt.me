@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Project } from '~/types'
-
 const props = defineProps<{ project: Project }>()
 
 const faviconUrl = computed<string | undefined>(() => {

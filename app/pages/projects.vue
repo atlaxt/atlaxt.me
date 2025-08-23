@@ -8,7 +8,7 @@ const { data: page } = await useAsyncData(
 
 const sections = computed(() => {
   if (page.value)
-    return Object.entries(page.value.projects) as Array<[string, Array<Record<string, any>>]>
+    return Object.entries(page.value.projects) as Array<[string, Project[]]>
   else
     return []
 })
@@ -24,7 +24,7 @@ const sections = computed(() => {
         <span class="opacity-0 ml-1 group-hover:opacity-80 transition-opacity">#</span>
       </a>
       <div class="flex flex-col gap-4">
-        <CardProject v-for="item in items" :key="item.title" :project="item" />
+        <CardProject v-for="item in items" :key="item.name" :project="item" />
       </div>
     </section>
   </div>

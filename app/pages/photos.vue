@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import photos from '../photos/index'
+import photos from '../../photos/index'
 
 definePageMeta({
   name: 'photos',

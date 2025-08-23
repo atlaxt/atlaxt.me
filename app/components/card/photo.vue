@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Photo } from '~/types'
-
 const props = defineProps<{
   photo: Photo
 }>()

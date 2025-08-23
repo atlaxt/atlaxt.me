@@ -1,4 +1,4 @@
-import type { Photo, PhotoMate } from '../types'
+import type { Photo, PhotoMate } from '../app/types'
 
 const metaInfo = Object.entries(
   import.meta.glob<PhotoMate>('./**/*.json', {

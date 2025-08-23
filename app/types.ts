@@ -22,4 +22,13 @@ declare global {
     url: string
     icon: string
   }
+
+  export interface Book {
+    number: number
+    code: number
+    name: string
+    author: string
+    rate: number
+    isRead: boolean
+  }
 }

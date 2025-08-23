@@ -58,6 +58,17 @@ onMounted(() => {
           <Icon class="md:text-xl text-md" name="lucide:camera" aria-hidden="true" />
           <span class="md:text-md text-sm"> Photos </span>
         </RouterLink> -->
+        <RouterLink
+          class="opacity-70 hover:opacity-100 duration-300 flex items-center gap-2"
+          :class="{
+            'opacity-100': currentRouteName === 'photos',
+          }"
+          :to="{ name: 'books' }"
+          aria-label="View books"
+        >
+          <Icon class="md:text-xl text-md" name="lucide:book" aria-hidden="true" />
+          <span class="md:text-md text-sm"> Books </span>
+        </RouterLink>
       </div>
 
       <div class="md:flex flex-row gap-4 hidden">
