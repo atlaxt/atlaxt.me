@@ -39,7 +39,7 @@ projects:
     - name: 'imoji'
       description: 'A minimal emoji explorer with instant search and one-click copying.'
       icon: 'lucide:smile'
-      link: 'https://imoji.co'
+      link: 'https://imoji.atlaxt.me'
     - name: 'InkHub'
       description: 'A community-driven drawing platform for sharing creative work.'
       icon: 'lucide:brush'
