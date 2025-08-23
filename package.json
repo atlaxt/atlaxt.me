@@ -9,8 +9,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint",
-    "lint:fix": "eslint --fix",
-    "atlaxt": "git add -A . && git commit -m 'deploy' && git push -u origin main && pnpm generate && firebase deploy"
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@nuxt/content": "^3.6.3",
@@ -19,7 +18,6 @@
     "@tailwindcss/vite": "^4.1.11",
     "color-mode": "^0.1.0",
     "nuxt": "^4.0.0",
-    "nuxt-gtag": "^3.0.3",
     "tailwindcss": "^4.1.11",
     "vite-tsconfig-paths": "^5.1.4",
     "vue": "^3.5.17",
