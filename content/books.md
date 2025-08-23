@@ -1,7 +1,7 @@
 ---
 header: Modern Classic's
 
-description: My goal with this list is to as i read i rate the books all the modern classics. As I read, I rate the books and share my journey here. This page serves both as my personal reading journal and as a little guide for anyone interested in modern classics.
+description: My goal with this list is to read all the modern classics As I go, I rate the books and share my journey here This page serves as both my personal reading journal and a short guide for anyone interested in modern classics.
 
 maxim:
 
