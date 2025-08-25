@@ -1,3 +1,4 @@
+import process from 'node:process'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
@@ -19,4 +20,8 @@ export default defineNuxtConfig({
     fallback: 'dark',
     storageKey: 'nuxt-color-mode',
   },
+  runtimeConfig: {
+    githubToken: process.env.GITHUB_TOKEN,
+  },
+
 })
