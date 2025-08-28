@@ -1,8 +1,10 @@
 <script setup lang="ts">
+definePageMeta({ name: 'events' })
+
 const { events, fetchEvents, loading } = useEvents()
 
-onMounted(() => {
-  fetchEvents()
+onMounted(async () => {
+  await fetchEvents()
 })
 </script>
 
@@ -15,13 +17,15 @@ onMounted(() => {
       description
     </p>
 
-    <div class="flex flex-col mt-12 gap-4">
-      <CardGithubEvent
+    <CardGithubEventTimeline :events="events" />
+
+    <!-- <div class="flex flex-col mt-12 gap-4">
+      <CardGithubEventItem
         v-for="(event, key) in events"
         :key="key"
         :event="event"
       />
-    </div>
+    </div> -->
 
     <div v-if="loading" class="text-center my-4">
       loading...

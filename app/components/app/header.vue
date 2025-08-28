@@ -3,8 +3,6 @@ import signBlack from '~/assets/sign/sign_black.png'
 import signWhite from '~/assets/sign/sign_white.png'
 
 const mounted = ref<boolean>(false)
-const route = useRoute()
-const currentRouteName = computed(() => route.name)
 
 onMounted(() => {
   mounted.value = true
@@ -16,72 +14,32 @@ onMounted(() => {
     <RouterLink :to="{ name: 'home' }" class="h-full" aria-label="Go to homepage">
       <img
         :src="isDark ? signWhite : signBlack"
-        class="h-full select-none"
+        class="h-16 object-cover select-none"
         :alt="isDark ? 'White logo' : 'Black logo'"
       >
     </RouterLink>
 
-    <nav class="flex flex-row items-center md:gap-8 gap-4 select-none" aria-label="Main navigation">
-      <div class="flex flex-row md:gap-8 gap-4 items-center">
-        <!-- <RouterLink
-          class="opacity-70 hover:opacity-100 flex flex-row items-center gap-2 duration-300"
-          :class="{
-            'opacity-100': currentRouteName === 'home',
-          }"
-          :to="{ name: 'home' }"
-          aria-label="View projects"
-        >
-          <Icon class="md:text-xl text-md" name="heroicons:home" aria-hidden="true" />
-          <span class="md:text-md text-sm"> Home </span>
-        </RouterLink> -->
-
-        <RouterLink
-          class="opacity-70 hover:opacity-100 flex flex-row items-center gap-2 duration-300"
-          :class="{
-            'opacity-100': currentRouteName === 'projects',
-          }"
-          :to="{ name: 'projects' }"
-          aria-label="View projects"
-        >
-          <Icon class="md:text-xl text-md" name="lucide:folder-code" aria-hidden="true" />
-          <span class="md:text-md text-sm"> Projects </span>
-        </RouterLink>
-
-        <!-- <RouterLink
-          class="opacity-70 hover:opacity-100 duration-300 flex items-center gap-2"
-          :class="{
-            'opacity-100': currentRouteName === 'photos',
-          }"
-          :to="{ name: 'photos' }"
-          aria-label="View photos"
-        >
-          <Icon class="md:text-xl text-md" name="lucide:camera" aria-hidden="true" />
-          <span class="md:text-md text-sm"> Photos </span>
-        </RouterLink> -->
-        <RouterLink
-          class="opacity-70 hover:opacity-100 duration-300 flex items-center gap-2"
-          :class="{
-            'opacity-100': currentRouteName === 'photos',
-          }"
-          :to="{ name: 'books' }"
-          aria-label="View books"
-        >
-          <Icon class="md:text-xl text-md" name="lucide:book" aria-hidden="true" />
-          <span class="md:text-md text-sm"> Books </span>
-        </RouterLink>
+    <nav class="flex flex-row items-center md:gap-8 gap-6 select-none" aria-label="Main navigation">
+      <div class="flex flex-row md:gap-8 gap-6 items-center">
+        <LinkRoute
+          v-for="link in [
+            { to: 'home', label: 'Home', icon: 'heroicons:home' },
+            { to: 'projects', label: 'Projects', icon: 'lucide:folder-code' },
+            // { to: 'photos', label: 'Photos', icon: 'lucide:camera' },
+            { to: 'books', label: 'Books', icon: 'lucide:book' },
+            { to: 'events', label: 'Events', icon: 'lucide:clock' },
+          ]" :key="link.to" v-bind="link"
+        />
       </div>
 
       <div class="md:flex flex-row gap-4 hidden">
-        <a
+        <LinkSocial
           v-for="social in useSocialLinks()"
           :key="social.name"
-          class="opacity-70 hover:opacity-100 duration-300 flex items-center"
-          target="_blank"
-          :href="social.url"
-          :aria-label="`Go to ${social.name} profile`"
-        >
-          <Icon class="text-lg" :name="social.icon" aria-hidden="true" />
-        </a>
+          :name="social.name"
+          :url="social.url"
+          :icon="social.icon"
+        />
       </div>
       <button
         class="cursor-pointer opacity-70 hover:opacity-100 duration-300 flex items-center"
@@ -89,7 +47,7 @@ onMounted(() => {
         @click="toggleTheme"
       >
         <Icon
-          class="md:text-xl text-md"
+          class="text-xl"
           :name="`${isDark ? 'lucide:moon' : 'lucide:sun'}`"
           aria-hidden="true"
         />
