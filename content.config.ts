@@ -21,12 +21,12 @@ export default defineContentConfig({
 
     me: defineCollection({
       type: 'page',
-      source: './me.md',
+      source: 'me.md',
     }),
 
     projects: defineCollection({
       type: 'data',
-      source: './projects.md',
+      source: 'projects.md',
       schema: z.object({
         projects: z.object({
           documentation: z.array(projectItem),
@@ -43,7 +43,7 @@ export default defineContentConfig({
 
     books: defineCollection({
       type: 'data',
-      source: './books.md',
+      source: 'books.md',
       schema: z.object({
         header: z.string(),
         description: z.string(),
