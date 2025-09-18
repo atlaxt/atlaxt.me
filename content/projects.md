@@ -24,10 +24,10 @@ projects:
       link: 'https://synthia.atlaxt.me'
 
   developerTools:
-    - name: 'ApiKoi'
+    - name: 'Mockly'
       description: 'A mock data API service for rapid frontend prototyping.'
-      icon: 'lucide:fish'
-      link: 'https://apikoi.com'
+      icon: 'logos:faker'
+      link: 'https://mockly.atlaxt.me'
 
   generativeArts:
     - name: '100 CSS'
