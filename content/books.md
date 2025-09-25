@@ -13,7 +13,7 @@ books:
       rate:
 
     - number: 2
-      code: 9789944885263
+      code: 9789944885263F
       name: Bilinmeyen Bir Adanın Öyküsü
       author: Jose Saramago
       rate:
@@ -835,7 +835,7 @@ books:
       code: 9786052959411
       name: Canavar
       author: Stephen Crane
-      rate:
+      rate: 6
 
     - number: 140
       code: 9786052959435
