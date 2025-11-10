@@ -2,7 +2,7 @@
 @import "@nuxt/ui";
 
 @theme {
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: 'Figtree', sans-serif;
 }
 
 :root {
