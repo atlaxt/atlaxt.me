@@ -1,8 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
 @import "tailwindcss";
+@import "@nuxt/ui";
 
-@import "./scrollbar.css";
-@import "./typography.postcss";
+@theme {
+  --font-sans: 'Inter', sans-serif;
+}
 
-@custom-variant dark (&:where(.dark, .dark *));
+:root {
+  --ui-container: var(--container-5xl);
+}
+
+h1 {
+  @apply text-4xl md:text-5xl font-extrabold;
+}

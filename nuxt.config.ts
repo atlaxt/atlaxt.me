@@ -1,22 +1,10 @@
-import tailwindcss from '@tailwindcss/vite'
-
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
+  compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: [
-    '@nuxt/icon',
-    '@nuxtjs/color-mode',
-    '@nuxt/content',
-  ],
-  vite: {
-    plugins: [
-      tailwindcss(),
-    ],
-  },
-  colorMode: {
-    classSuffix: '',
-    preference: 'system',
-    fallback: 'dark',
-    storageKey: 'nuxt-color-mode',
+  modules: ['@nuxt/ui', '@nuxt/content'],
+  css: ['~/assets/css/main.css'],
+  content: {
+    experimental: { nativeSqlite: true },
   },
 })
