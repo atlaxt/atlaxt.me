@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
+
 interface GlassSurfaceProps {
   width?: string | number
   height?: string | number
@@ -36,7 +39,7 @@ interface GlassSurfaceProps {
     | 'plus-darker'
     | 'plus-lighter'
   className?: string
-  style?: any
+  style?: CSSProperties
 }
 
 const props = withDefaults(defineProps<GlassSurfaceProps>(), {

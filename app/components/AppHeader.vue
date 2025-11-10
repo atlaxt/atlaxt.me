@@ -2,6 +2,7 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
+const mounted = ref(false)
 
 const items = computed<NavigationMenuItem[]>(() => [
   {
@@ -28,23 +29,34 @@ const items = computed<NavigationMenuItem[]>(() => [
     active: route.path.startsWith('/books'),
   },
 ])
+onMounted(() => {
+  mounted.value = true
+})
 </script>
 
 <template>
   <div class="fixed top-2 sm:top-4 mx-auto left-1/2 transform -translate-x-1/2 z-10">
-    <UNavigationMenu
-      :items="items"
-      variant="link"
-      color="neutral"
-      class="bg-muted/80 backdrop-blur-sm rounded-full px-2 sm:px-4 border border-muted/50 shadow-lg shadow-neutral-950/5"
-      :ui="{
-        link: 'px-2 py-1',
-        linkLeadingIcon: 'hidden',
-      }"
+    <GlassSurface
+      v-if="mounted"
+      :width="400"
+      :height="60"
+      :border-width="0"
+      :displace="1"
+      :border-radius="40"
     >
-      <template #list-trailing>
-        <ColorModeButton />
-      </template>
-    </UNavigationMenu>
+      <UNavigationMenu
+        :items="items"
+        variant="link"
+        color="neutral"
+        :ui="{
+          link: 'px-2 py-1',
+          linkLeadingIcon: 'hidden',
+        }"
+      >
+        <template #list-trailing>
+          <ColorModeButton />
+        </template>
+      </UNavigationMenu>
+    </GlassSurface>
   </div>
 </template>

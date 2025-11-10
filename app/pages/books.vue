@@ -32,9 +32,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="lg:w-3xl lg:px-0 px-2 mx-auto mt-36 content-wrapper">
+  <div class="lg:w-3xl lg:px-0 px-2 mx-auto mt-36">
     <div class="flex flex-col">
-      <filter-checkbox v-if="books" v-model="showOnlyIsRead" label="Readed Only" />
       <button class="flex dark:text-zinc-600 text-zinc-500 flex-row items-center gap-1" @click="showOnlyIsRead = !showOnlyIsRead">
         <div class="w-4 h-4 rounded border dark:border-zinc-700 border-zinc-400 flex justify-center items-center ">
           <Icon v-if="showOnlyIsRead" name="lucide:check" />
