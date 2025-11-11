@@ -74,15 +74,14 @@ useHead({
   <div class="fixed inset-0 -z-10 overflow-hidden">
     <ColorBends
       :colors="['#ff5c7a', '#8a5cff', '#00ffd1']"
-      :rotation="30"
-      :speed="0.3"
-      :scale="1.2"
-      :frequency="1.4"
+      :rotation="80"
+      :speed="0.4"
+      :scale="2"
+      :frequency="1.5"
       :warp-strength="1.2"
       :mouse-influence="0.8"
       :parallax="2"
-      :noise="0.08"
-      class-name="brightness-400"
+      :noise="0.02"
     />
   </div>
 

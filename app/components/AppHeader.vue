@@ -41,7 +41,7 @@ onMounted(() => {
       :width="400"
       :height="60"
       :border-width="0"
-      :displace="1"
+      :displace="0.7"
       :border-radius="40"
     >
       <UNavigationMenu
