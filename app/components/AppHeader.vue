@@ -39,7 +39,7 @@ onMounted(() => {
     <GlassSurface
       v-if="mounted"
       :width="400"
-      :height="60"
+      :height="50"
       :border-width="0"
       :displace="0.7"
       :border-radius="40"
