@@ -1,8 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
 @import "tailwindcss";
+@import "@nuxt/ui";
 
-@import "./scrollbar.css";
-@import "./typography.postcss";
+@theme {
+  --font-sans: 'Figtree', sans-serif;
+}
 
-@custom-variant dark (&:where(.dark, .dark *));
+:root {
+  --ui-container: var(--container-5xl);
+}
+
+h1 {
+  @apply text-4xl md:text-5xl font-extrabold;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4b5563;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.dark * {
+  scrollbar-color: #4b5563 transparent;
+}

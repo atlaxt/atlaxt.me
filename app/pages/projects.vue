@@ -12,10 +12,16 @@ const sections = computed(() => {
   else
     return []
 })
+
+function formatTitle(key: string) {
+  return key
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, s => s.toUpperCase())
+}
 </script>
 
 <template>
-  <div class="lg:w-3xl lg:px-0 px-2 flex flex-col gap-6 mx-auto mt-12 content-wrapper">
+  <div class="lg:w-3xl lg:px-0 px-2 flex flex-col gap-6 mx-auto lg:mt-36 mt-24 content-wrapper">
     <section v-for="([key, items]) in sections" :id="key" :key="key" class="flex flex-col gap-6">
       <a :href="`#${key}`" class="text-2xl group relative flex flex-row gap-2 items-center">
         <h2 class="font-semibold tracking-tight">

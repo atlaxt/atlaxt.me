@@ -5,7 +5,7 @@ const title = computed(() => {
   const baseTitle = 'Atlas Yiğit Aydın | Frontend Developer'
   const pageName = route.name?.toString() || ''
 
-  if (!pageName || pageName === 'home')
+  if (!pageName || pageName === 'index')
     return baseTitle
   return `${pageName.charAt(0).toUpperCase() + pageName.slice(1)} | Atlas Yiğit Aydın`
 })
@@ -71,14 +71,34 @@ useHead({
 </script>
 
 <template>
-  <NuxtLayout>
-    <NuxtPage :transition="{ name: 'page', mode: 'out-in' }" />
-  </NuxtLayout>
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <ColorBends
+      :colors="['#ff5c7a', '#8a5cff', '#00ffd1']"
+      :rotation="80"
+      :speed="0.4"
+      :scale="2"
+      :frequency="1.5"
+      :warp-strength="1.2"
+      :mouse-influence="0.8"
+      :parallax="2"
+      :noise="0.02"
+    />
+  </div>
+
+  <div class="relative z-10">
+    <UApp>
+      <AppHeader />
+      <UMain>
+        <UContainer>
+          <NuxtPage :transition="{ name: 'page', mode: 'out-in' }" />
+        </UContainer>
+      </UMain>
+      <AppFooter />
+    </UApp>
+  </div>
 </template>
 
 <style>
-@import './assets/css/main.css';
-
 .page-enter-active,
 .page-leave-active {
   transition: all 0.4s;
