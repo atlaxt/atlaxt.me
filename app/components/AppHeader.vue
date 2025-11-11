@@ -15,15 +15,16 @@ const items = computed<NavigationMenuItem[]>(() => [
     active: route.path.startsWith('/projects'),
     to: '/projects',
   },
-  {
-    label: 'Design',
-    active: route.path.startsWith('/design'),
-    disabled: true,
-  },
-  {
-    label: 'Photos',
-    active: route.path.startsWith('/photos'),
-  },
+  // {
+  //   label: 'Design',
+  //   active: route.path.startsWith('/design'),
+  //   disabled: true,
+  // },
+  // {
+  //   label: 'Photos',
+  //   active: route.path.startsWith('/photos'),
+  //   to: '/photos',
+  // },
   {
     label: 'Books',
     to: '/books',
@@ -39,7 +40,7 @@ onMounted(() => {
   <div class="select-none fixed top-2 sm:top-4 mx-auto left-1/2 transform -translate-x-1/2 z-10">
     <GlassSurface
       v-if="mounted"
-      :width="400"
+      :width="320"
       :height="50"
       :border-width="0"
       :displace="0.7"
