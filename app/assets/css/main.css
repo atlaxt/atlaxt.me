@@ -13,6 +13,10 @@ h1 {
   @apply text-4xl md:text-5xl font-extrabold;
 }
 
+a {
+    @apply dark:text-white text-black font-semibold hover:opacity-80
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

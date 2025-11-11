@@ -40,7 +40,7 @@ onMounted(() => {
   <div class="select-none fixed top-2 sm:top-4 mx-auto left-1/2 transform -translate-x-1/2 z-10">
     <GlassSurface
       v-if="mounted"
-      :width="320"
+      :width="280"
       :height="50"
       :border-width="0"
       :displace="0.7"

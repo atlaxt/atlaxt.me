@@ -12,7 +12,6 @@ const { data: value } = await useAsyncData(
   <UPage class="w-full h-full lg:mt-36 mt-24">
     <ContentRenderer
       v-if="value"
-      class="mt-12"
       :value="value"
     />
   </UPage>
