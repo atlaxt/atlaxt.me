@@ -9,10 +9,7 @@ const { data: value } = await useAsyncData(
 </script>
 
 <template>
-  <UPage class="w-full h-full mt-36">
-    <!-- <div class="w-full flex justify-center">
-      <img class="h-24 rounded-full" :src="ppUrl">
-    </div> -->
+  <UPage class="w-full h-full lg:mt-36 mt-24">
     <ContentRenderer
       v-if="value"
       class="mt-12"

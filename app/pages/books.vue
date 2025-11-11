@@ -32,7 +32,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="lg:w-3xl lg:px-0 px-2 mx-auto mt-36">
+  <div class="lg:w-3xl lg:px-0 px-2 mx-auto lg:mt-36 mt-24">
     <u-checkbox v-model="showOnlyIsRead" color="neutral" label="Readed Only" />
     <h1 class="mt-2">
       {{ header }}

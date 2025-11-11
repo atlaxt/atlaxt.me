@@ -1,43 +1,46 @@
+import type { ButtonProps } from '@nuxt/ui'
+
 export function useSocial() {
-  const github: SocialLink = {
-    name: 'GitHub',
-    url: 'https://github.com/atlaxt',
+  const github: ButtonProps = {
+    // label: 'GitHub',
+    to: 'https://github.com/atlaxt',
     icon: 'lucide:github',
   }
 
   const npm = {
-    name: 'npm',
-    url: 'https://www.npmjs.com/~atlasyigitaydin',
+    // label: 'npm',
+    to: 'https://www.npmjs.com/~atlasyigitaydin',
     icon: 'nonicons:npm-16',
   }
 
-  const linkedIn: SocialLink = {
-    name: 'LinkedIn',
-    url: 'https://linkedin.com/in/atlaxt',
+  const linkedIn: ButtonProps = {
+    // label: 'LinkedIn',
+    to: 'https://linkedin.com/in/atlaxt',
     icon: 'lucide:linkedin',
   }
 
-  const instagram: SocialLink = {
-    name: 'Instagram',
-    url: 'https://instagram.com/atlaxt.me',
+  const instagram: ButtonProps = {
+    // label: 'Instagram',
+    to: 'https://instagram.com/atlaxt.me',
     icon: 'lucide:instagram',
   }
 
-  const x: SocialLink = {
-    name: 'X',
-    url: 'https://x.com/atlaxtt',
+  const x: ButtonProps = {
+    // label: 'X',
+    to: 'https://x.com/atlaxtt',
     icon: 'hugeicons:new-twitter',
   }
 
-  const bluesky: SocialLink = {
-    name: 'Bluesky',
-    url: 'https://bsky.app/profile/atlaxt.me',
+  const bluesky: ButtonProps = {
+    // label: 'Bluesky',
+    to: 'https://bsky.app/profile/atlaxt.me',
     icon: 'proicons:bluesky',
   }
 
-  const email = {
-    address: 'atlasyigitaydin@gmail.com',
+  const email: ButtonProps = {
+    label: 'atlasyigitaydin@gmail.com',
     icon: 'lucide:mail',
+    to: 'mailto:atlasyigitaydin@gmail.com',
   }
 
   return {

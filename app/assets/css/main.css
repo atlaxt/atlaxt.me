@@ -13,30 +13,38 @@ h1 {
   @apply text-4xl md:text-5xl font-extrabold;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4b5563;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.25) transparent;
+  scrollbar-color: #d1d5db transparent;
 }
 
-*::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.25);
-  border-radius: 10px;
-  transition: background 0.2s ease;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.35);
-}
-
-*::-webkit-scrollbar-corner {
-  background: transparent;
+.dark * {
+  scrollbar-color: #4b5563 transparent;
 }
