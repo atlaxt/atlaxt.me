@@ -130,7 +130,7 @@ books:
       code: 9786053606116
       name: Satranç
       author: Stefan Zweig
-      rate:
+      rate: 6
 
     - number: 22
       code: 9786053606604
