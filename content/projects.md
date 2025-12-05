@@ -11,7 +11,6 @@ projects:
       description: 'Nuxt 3 module for integrating Tawk.to live chat widget.'
       icon: 'arcticons:sunbird'
       link: 'https://nuxt-tawk-to.atlaxt.me/'
-
     - name: '@koijs/table-vue'
       description: 'A lightweight, customizable Vue table component with sticky headers and zebra striping.'
       icon: 'lucide:table-2'
@@ -40,6 +39,10 @@ projects:
       description: 'A minimal emoji explorer with instant search and one-click copying.'
       icon: 'lucide:smile'
       link: 'https://imoji.atlaxt.me'
+    - name: 'SnakeHub'
+      description: 'A Snake Game'
+      icon: 'lucide:smile'
+      link: 'https://snakehub.atlaxt.me'
     - name: 'InkHub'
       description: 'A community-driven drawing platform for sharing creative work.'
       icon: 'lucide:brush'
