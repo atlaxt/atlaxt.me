@@ -89,8 +89,8 @@ useHead({
   </div>
 
   <div class="relative z-10">
-    <Analytics />
     <SpeedInsights />
+    <Analytics />
     <UApp>
       <AppHeader />
       <UMain>
