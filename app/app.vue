@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Analytics } from '@vercel/analytics/nuxt'
+
 const route = useRoute()
 
 const title = computed(() => {
@@ -86,6 +88,7 @@ useHead({
   </div>
 
   <div class="relative z-10">
+    <Analytics />
     <UApp>
       <AppHeader />
       <UMain>
