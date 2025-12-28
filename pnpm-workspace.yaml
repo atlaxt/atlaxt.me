@@ -1,5 +1,2 @@
 onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - sharp
-  - vue-demi
+  - better-sqlite3

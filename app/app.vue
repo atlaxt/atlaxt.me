@@ -5,7 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/nuxt'
 const route = useRoute()
 
 const title = computed(() => {
-  const baseTitle = 'Atlas Yiğit Aydın | Frontend Developer'
+  const baseTitle = 'Atlas Yiğit Aydın | Web Developer'
   const pageName = route.name?.toString() || ''
 
   if (!pageName || pageName === 'index')
@@ -74,47 +74,58 @@ useHead({
 </script>
 
 <template>
-  <div class="fixed inset-0 -z-10 overflow-hidden">
-    <ColorBends
-      :colors="['#ff5c7a', '#8a5cff', '#00ffd1']"
-      :rotation="80"
-      :speed="0.4"
-      :scale="2"
-      :frequency="1.5"
-      :warp-strength="1.2"
-      :mouse-influence="0.8"
-      :parallax="2"
-      :noise="0.02"
-    />
-  </div>
+  <SpeedInsights />
+  <Analytics />
+  <NuxtLayout>
+    <div class="absolute w-screen top-0 z-9999 bg-amber-500 text-black overflow-hidden h-5 shadow-[0_0_30px_rgba(245,158,11,0.6)]">
+      <div class="absolute inset-0 opacity-10 hazard-stripes animate-slide-bg" />
 
-  <div class="relative z-10">
-    <SpeedInsights />
-    <Analytics />
-
-    <UApp>
-      <AppHeader />
-      <UMain>
-        <UContainer>
-          <NuxtPage :transition="{ name: 'page', mode: 'out-in' }" />
-        </UContainer>
-      </UMain>
-      <AppFooter />
-    </UApp>
-  </div>
+      <div class="relative flex items-center justify-center gap-3  px-4 font-bold tracking-widest uppercase text-xs md:text-sm">
+        <Icon name="lucide:construction" class="w-5 " />
+        <span class="drop-shadow-sm">Website is Under Construction</span>
+        <Icon name="lucide:construction" class="w-5 " />
+      </div>
+    </div>
+    <NuxtPage :transition="{ name: 'page', mode: 'in-out' }" />
+  </NuxtLayout>
 </template>
 
 <style>
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.4s;
+  transition: all 0.4s ease;
 }
 .page-enter-from {
   opacity: 0;
   transform: translateY(-1rem);
+  filter: blur(5px);
 }
 .page-leave-to {
   opacity: 0;
   transform: translateY(1rem);
+  filter: blur(5px);
+}
+
+.hazard-stripes {
+  background-image: linear-gradient(
+    45deg,
+    #000000 25%,
+    transparent 25%,
+    transparent 50%,
+    #000000 50%,
+    #000000 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 20px 20px;
+}
+
+@keyframes slide-bg {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}
+
+.animate-slide-bg {
+  animation: slide-bg 2s linear infinite;
 }
 </style>

@@ -1,13 +1,13 @@
 @import "tailwindcss";
-@import "@nuxt/ui";
 
-@theme {
-  --font-sans: 'Figtree', sans-serif;
+div {
+  font-family: Figtree, sans-serif;
 }
 
-:root {
-  --ui-container: var(--container-5xl);
+html {
+  scroll-behavior: smooth;
 }
+
 
 h1 {
   @apply text-4xl md:text-5xl font-extrabold;
