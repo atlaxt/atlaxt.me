@@ -71,23 +71,48 @@ useHead({
     { rel: 'alternate', hreflang: 'en', href: 'https://atlaxt.me' },
   ],
 })
+
+const isLoading = ref(true)
+
+onMounted(() => {
+  if (document.readyState === 'complete') {
+    finishLoading()
+  }
+  else {
+    window.addEventListener('load', finishLoading)
+    setTimeout(finishLoading, 3000)
+  }
+})
+
+function finishLoading() {
+  setTimeout(() => {
+    isLoading.value = false
+  }, 500)
+}
 </script>
 
 <template>
   <SpeedInsights />
   <Analytics />
-  <NuxtLayout>
-    <div class="absolute w-screen top-0 z-9999 bg-amber-500 text-black overflow-hidden h-5 shadow-[0_0_30px_rgba(245,158,11,0.6)]">
-      <div class="absolute inset-0 opacity-10 hazard-stripes animate-slide-bg" />
+  <div>
+    <div
+      class="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-700"
+      :class="{ 'opacity-0 pointer-events-none': !isLoading }"
+    >
+      <div class="text-white text-2xl font-bold animate-pulse">
+        YÜKLENİYOR...
+      </div>
+    </div>
 
-      <div class="relative flex items-center justify-center gap-3  px-4 font-bold tracking-widest uppercase text-xs md:text-sm">
+    <NuxtLayout>
+      <div class="relative py-1 flex items-center justify-center gap-3  px-4 font-bold tracking-widest uppercase text-xs md:text-sm">
         <Icon name="lucide:construction" class="w-5 " />
         <span class="drop-shadow-sm">Website is Under Construction</span>
         <Icon name="lucide:construction" class="w-5 " />
       </div>
-    </div>
-    <NuxtPage :transition="{ name: 'page', mode: 'in-out' }" />
-  </NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
 
 <style>

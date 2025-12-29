@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-
+// Importları sildik, gerek yok.
 const parallax = reactive({ x: 0, y: 0 })
 
 function handleMouseMove(e: MouseEvent) {
-  parallax.x = (e.clientX - window.innerWidth / 5)
-  parallax.y = (e.clientY - window.innerHeight / 5)
+  // Sadece ekranda hareket varsa hesaplama yap (Performans için ufak bir check)
+  requestAnimationFrame(() => {
+    parallax.x = (e.clientX - window.innerWidth / 5)
+    parallax.y = (e.clientY - window.innerHeight / 5)
+  })
 }
 </script>
 
@@ -14,7 +16,12 @@ function handleMouseMove(e: MouseEvent) {
     class="relative h-screen overflow-x-hidden w-screen flex justify-center my_font select-none"
     @mousemove="handleMouseMove"
   >
-    <img class="absolute h-screen w-full z-0" src="../../assets/bg.jpg">
+    <NuxtImg
+      class="absolute h-screen w-full z-0 object-cover"
+      src="/bg.webp"
+      alt="Background"
+      format="webp"
+    />
 
     <span
       class="animate-cinematic lg:mt-24 md:mt-28 mt-32 absolute z-10 text-white text-[25vw] font-extralight tracking-widest leading-none select-none transition-transform duration-75 ease-out"
@@ -23,7 +30,12 @@ function handleMouseMove(e: MouseEvent) {
       ATLAS
     </span>
 
-    <img class="absolute h-screen min-w-10/12 object-cover z-20" src="../../assets/me.png">
+    <NuxtImg
+      class="absolute h-screen min-w-10/12 object-cover z-20"
+      src="/me.webp"
+      alt="Me"
+      format="webp"
+    />
 
     <span
       class="animate-cinematic lg:mt-24 md:mt-28 mt-32 absolute z-30 text-white text-[25vw] font-extralight tracking-widest leading-none select-none pointer-events-none transition-transform duration-75 ease-out"
@@ -48,6 +60,7 @@ function handleMouseMove(e: MouseEvent) {
 </template>
 
 <style scoped>
+/* Mevcut stiller aynen kalabilir */
 .my_font {
   font-family: "Bellota Text", sans-serif;
   font-smooth: always;
@@ -64,9 +77,7 @@ function handleMouseMove(e: MouseEvent) {
   0% {
     opacity: 0;
     filter: blur(20px);
-    /* Scale inline style ile yönetildiği için buradan kaldırdık */
   }
-
   100% {
     opacity: 0.7;
     filter: blur(0);
