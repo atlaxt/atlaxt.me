@@ -2,12 +2,11 @@
 </script>
 
 <template>
-  <div class="fixed left-0 top-0 w-screen h-screen overflow-y-auto overflow-x-hidden bg-zinc-900 text-white">
-    <div class="fixed w-screen flex justify-center z-99 pt-3">
-      <AppNavbar />
-    </div>
-    <div class="flex flex-col">
+  <UMain>
+    <UContainer class="min-h-screen bg-default border-x border-default px-0 sm:px-0 lg:px-0">
+      <StarsBg class="fixed" />
+      <AppHeader />
       <slot />
-    </div>
-  </div>
+    </UContainer>
+  </UMain>
 </template>

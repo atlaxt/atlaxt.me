@@ -1,54 +1,11 @@
 @import "tailwindcss";
+@import "@nuxt/ui";
 
-div {
-  font-family: Figtree, sans-serif;
+@theme {
+  --font-sans: 'Google Sans', sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
+:root {
+  --ui-container: var(--container-5xl);
 }
 
-
-h1 {
-  @apply text-4xl md:text-5xl font-extrabold;
-}
-
-a {
-    @apply dark:text-white text-black font-semibold hover:opacity-80
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #4b5563;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #d1d5db transparent;
-}
-
-.dark * {
-  scrollbar-color: #4b5563 transparent;
-}
