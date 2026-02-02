@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 
+const route = useRoute()
+
 const items = computed<NavigationMenuItem[]>(() => [
   {
     label: $t('projects'),
+    active: route.path.startsWith('/projects'),
     to: '/projects',
   },
   // {
   //   label: $t('writings'),
+  //   active: route.path.startsWith('/writings'),
   //   to: '/writings',
   // },
   {
     label: $t('about_me'),
+    active: route.path.startsWith('/about'),
     to: '/about',
   },
 ])

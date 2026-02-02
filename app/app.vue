@@ -8,6 +8,12 @@ const { locale } = useI18n()
 
 useHead({
   title: 'Atlas Yiğit Aydın',
+  style: [
+    { innerHTML: ':root { --ui-primary: black; } .dark { --ui-primary: white; }', id: 'nuxt-ui-black-as-primary', tagPriority: -2 },
+  ],
+  script: [{
+    innerHTML: `document.querySelector('style#nuxt-ui-black-as-primary').innerHTML = ':root { --ui-primary: black; } .dark { --ui-primary: white; }';`,
+  }],
 })
 </script>
 
@@ -15,9 +21,13 @@ useHead({
   <UApp :locale="locales[locale]">
     <SpeedInsights />
     <Analytics />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <UMain>
+      <UContainer class="min-h-screen bg-default border-x border-default px-0 sm:px-0 lg:px-0">
+        <AppHeader />
+        <StarsBg class="fixed" />
+        <NuxtPage />
+      </UContainer>
+    </UMain>
   </UApp>
 </template>
 

@@ -2,6 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
+  runtimeConfig: {
+    public: {
+      siteUrl: 'https://atlaxt.me',
+      siteName: 'Atlas Yiğit Aydın',
+    },
+  },
+
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },

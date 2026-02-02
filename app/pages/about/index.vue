@@ -15,6 +15,7 @@ const { data } = await useAsyncData(async () => {
       <template #description>
         <ContentRenderer v-if="data" :value="data" />
       </template>
+      <!-- <img src="../../assets/me.png" class="rounded"> -->
     </UPageSection>
   </UPage>
 </template>

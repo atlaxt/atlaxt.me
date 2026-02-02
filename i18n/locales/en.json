@@ -2,6 +2,11 @@
   "projects": "Projects",
   "projects_desc": "Some of the projects I have worked on.",
   "writings": "Writings",
+  "writings_desc": "Blog posts and notes about web development.",
   "about_me": "About Me",
-  "works_at_trex": "Works at trex Digital Manufacturing"
+  "about_desc": "Learn more about my background, goals, and work approach.",
+  "site_description": "Nuxt-focused web developer crafting fast, accessible, and delightful user experiences.",
+  "works_at_trex": "Works at trex Digital Manufacturing",
+  "blogs": "Blogs",
+  "notes": "Notes"
 }
