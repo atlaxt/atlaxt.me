@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Collections } from '@nuxt/content'
 
-import type { TabsItem } from '@nuxt/ui'
+// import type { TabsItem } from '@nuxt/ui'
 
 // const items = computed<TabsItem[]>(() => [
 //   {

@@ -11,9 +11,6 @@ useHead({
   style: [
     { innerHTML: ':root { --ui-primary: black; } .dark { --ui-primary: white; }', id: 'nuxt-ui-black-as-primary', tagPriority: -2 },
   ],
-  script: [{
-    innerHTML: `document.querySelector('style#nuxt-ui-black-as-primary').innerHTML = ':root { --ui-primary: black; } .dark { --ui-primary: white; }';`,
-  }],
 })
 </script>
 

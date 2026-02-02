@@ -82,8 +82,6 @@ Sayfalar SSG gibi statik oluşturulur; ayrıca bir **yenileme penceresi** tanım
 
 ## Özet Karşılaştırma Tablosu
 
-Kafanda hızlı oturması için mini tablo:
-
 | Özellik | CSR | SSR | SSG | ISR |
 | :--- | :--- | :--- | :--- | :--- |
 | **SEO Uyumluluğu** | Düşük | Yüksek | Yüksek | Yüksek |
