@@ -3,16 +3,16 @@ import type { Collections } from '@nuxt/content'
 
 import type { TabsItem } from '@nuxt/ui'
 
-const items = computed<TabsItem[]>(() => [
-  {
-    label: $t('blogs'),
-    value: 'blogs',
-  },
-  // {
-  //   label: $t('notes'),
-  //   value: 'notes',
-  // },
-])
+// const items = computed<TabsItem[]>(() => [
+//   {
+//     label: $t('blogs'),
+//     value: 'blogs',
+//   },
+//   // {
+//   //   label: $t('notes'),
+//   //   value: 'notes',
+//   // },
+// ])
 const active = ref('blogs')
 
 const { locale } = useI18n()
@@ -25,8 +25,8 @@ const { data } = await useAsyncData(async () => {
 
 <template>
   <UPage>
-    <UPageSection :title="$t('writings')" :description="$t('writings_desc')" />
-    <UTabs v-model="active" variant="link" color="neutral" :content="false" :items="items" />
+    <!-- <UPageSection :title="$t('writings')" :description="$t('writings_desc')" />
+    <UTabs v-model="active" variant="link" color="neutral" :content="false" :items="items" /> -->
 
     <UContainer class="mt-4">
       <UBlogPosts v-if="data" orientation="vertical">

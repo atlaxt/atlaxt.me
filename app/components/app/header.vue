@@ -9,11 +9,11 @@ const items = computed<NavigationMenuItem[]>(() => [
     active: route.path.startsWith('/projects'),
     to: '/projects',
   },
-  // {
-  //   label: $t('writings'),
-  //   active: route.path.startsWith('/writings'),
-  //   to: '/writings',
-  // },
+  {
+    label: $t('writings'),
+    active: route.path.startsWith('/writings'),
+    to: '/writings',
+  },
   {
     label: $t('about_me'),
     active: route.path.startsWith('/about'),
