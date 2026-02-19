@@ -7,7 +7,7 @@ const { locale } = useI18n()
 // const slugParam = computed(() => Array.isArray(route.params.slug) ? route.params.slug.join('/') : route.params.slug)
 
 const { data: page } = await useAsyncData(async () => {
-  const collection = (`${route.query.write}_tr`) as keyof Pick<Collections, 'blogs_tr'>
+  const collection = (`${route.query.write}`) as keyof Pick<Collections, 'blogs'>
   return await queryCollection(collection).first()
 }, { watch: [locale] })
 

@@ -62,9 +62,9 @@ export default defineContentConfig({
       }),
     }),
 
-    blogs_tr: defineCollection({
+    blogs: defineCollection({
       type: 'data',
-      source: 'tr/blogs/*.md',
+      source: 'blogs/*.md',
       schema: z.object({
         title: z.string(),
         description: z.string(),
@@ -75,7 +75,7 @@ export default defineContentConfig({
 
     // notes_tr: defineCollection({
     //   type: 'data',
-    //   source: 'tr/notes/*.md',
+    //   source: 'notes/*.md',
     //   schema: z.object({
     //     title: z.string(),
     //     description: z.string(),
