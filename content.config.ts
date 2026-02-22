@@ -73,6 +73,18 @@ export default defineContentConfig({
       }),
     }),
 
+    books: defineCollection({
+      type: 'data',
+      source: 'books.yaml',
+      schema: z.object({
+        number: z.number(),
+        code: z.string(),
+        name: z.string(),
+        author: z.string(),
+        rate: z.number().nullable().optional(),
+      }),
+    }),
+
     // notes_tr: defineCollection({
     //   type: 'data',
     //   source: 'notes/*.md',

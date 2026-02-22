@@ -16,4 +16,12 @@ declare global {
     link: string
     category: ProjectCategory
   }
+
+  export interface Book {
+    number: number
+    code: string
+    name: string
+    author: string
+    rate?: number | null
+  }
 }

@@ -11,11 +11,19 @@ const { data } = await useAsyncData(async () => {
 
 <template>
   <UPage>
-    <UPageSection :title="$t('about_me')">
+    <UPageSection orientation="horizontal" :title="$t('about_me')">
       <template #description>
         <ContentRenderer v-if="data" :value="data" />
       </template>
-      <!-- <img src="../../assets/me.png" class="rounded"> -->
+      <img src="../../assets/me.png" class="rounded">
     </UPageSection>
+
+    <UContainer class="mt-24 mb-2 text-center">
+      <i18n-t keypath="books_cta_text" tag="label" class="text-muted" for="books_cta_link">
+        <NuxtLink to="/books" class="text-default hover:text-highlighted">
+          {{ $t('books_cta_link') }}
+        </NuxtLink>
+      </i18n-t>
+    </UContainer>
   </UPage>
 </template>
