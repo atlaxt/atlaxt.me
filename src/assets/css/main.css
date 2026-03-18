@@ -67,3 +67,18 @@ body {
 .prose a:hover {
   opacity: 1;
 }
+
+/* ─── Post içerik ────────────────────────────────────── */
+.post-content { color: var(--text-muted); line-height: 1.8; font-size: 0.9rem; }
+.post-content h2 { color: var(--text); font-size: 1rem; font-weight: 600; margin: 2.5rem 0 0.75rem; }
+.post-content h3 { color: var(--text); font-size: 0.875rem; font-weight: 600; margin: 2rem 0 0.5rem; }
+.post-content p  { margin-bottom: 1rem; }
+.post-content ul { list-style: none; padding: 0; margin: 0.75rem 0 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.post-content li::before { content: '—'; margin-right: 0.5rem; opacity: 0.4; }
+.post-content li { display: flex; }
+.post-content strong { color: var(--text); font-weight: 500; }
+.post-content code { font-family: monospace; font-size: 0.8em; background: var(--bg-subtle); padding: 0.15em 0.4em; border-radius: 4px; color: var(--text); }
+.post-content hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+.post-content table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 1.5rem 0; }
+.post-content th { text-align: left; color: var(--text); font-weight: 500; padding: 0.5rem 1rem 0.5rem 0; border-bottom: 1px solid var(--border); }
+.post-content td { padding: 0.5rem 1rem 0.5rem 0; border-bottom: 1px solid var(--border); opacity: 0.8; }

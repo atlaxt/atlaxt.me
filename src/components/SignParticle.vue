@@ -23,8 +23,8 @@ function parseSvgPath() {
   const m = t.match(/translate\(\s*([^,]+),\s*([^)]+)\)/)
   return {
     d,
-    tx: m ? parseFloat(m[1]) : 332,
-    ty: m ? parseFloat(m[2]) : 9,
+    tx: m ? parseFloat(m[1] ?? '332') : 332,
+    ty: m ? parseFloat(m[2] ?? '9') : 9,
   }
 }
 
@@ -52,7 +52,7 @@ function buildParticlePoints(): [number, number][] {
   const STEP = 4
   for (let y = 0; y < OFFSCREEN; y += STEP)
     for (let x = 0; x < OFFSCREEN; x += STEP)
-      if (data[(y * OFFSCREEN + x) * 4 + 3] > 128)
+      if ((data[(y * OFFSCREEN + x) * 4 + 3] ?? 0) > 128)
         pts.push([x, y])
 
   return pts

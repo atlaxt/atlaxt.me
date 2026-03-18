@@ -5,7 +5,6 @@ import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from '@tailwindcss/vite'
 
-// Minimal YAML plugin — list-of-objects formatını destekler
 function yamlPlugin(): Plugin {
   return {
     name: 'vite-yaml',
@@ -41,12 +40,124 @@ function yamlPlugin(): Plugin {
   }
 }
 
+// Inline dönüşümler: bold, italic, code, link
+function inlineHtml(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+?)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+?)`/g, '<code>$1</code>')
+    .replace(/\[([^\]]+?)\]\(([^)]+?)\)/g, '<a href="$2">$1</a>')
+}
+
+// Basit Markdown → HTML dönüştürücü
+function mdToHtml(md: string): string {
+  const lines = md.split('\n')
+  const out: string[] = []
+  let inList = false
+  let inTable = false
+  let tableBody = false
+
+  for (let i = 0; i < lines.length; i++) {
+    const raw     = lines[i]
+    const trimmed = raw.trim()
+
+    // Başlıklar
+    const h3 = trimmed.match(/^### (.+)/)
+    const h2 = trimmed.match(/^## (.+)/)
+    const h1 = trimmed.match(/^# (.+)/)
+    if (h1) { if (inList) { out.push('</ul>'); inList = false } out.push(`<h1>${inlineHtml(h1[1])}</h1>`); continue }
+    if (h2) { if (inList) { out.push('</ul>'); inList = false } out.push(`<h2>${inlineHtml(h2[1])}</h2>`); continue }
+    if (h3) { if (inList) { out.push('</ul>'); inList = false } out.push(`<h3>${inlineHtml(h3[1])}</h3>`); continue }
+
+    // Tablo
+    if (trimmed.startsWith('|')) {
+      if (inList) { out.push('</ul>'); inList = false }
+      const cells = trimmed.split('|').slice(1, -1).map(c => c.trim())
+      if (!inTable) {
+        out.push('<table><thead><tr>' + cells.map(c => `<th>${inlineHtml(c)}</th>`).join('') + '</tr></thead>')
+        inTable = true; tableBody = false
+      } else if (!tableBody && cells.every(c => /^[-: ]+$/.test(c))) {
+        out.push('<tbody>')
+        tableBody = true
+      } else {
+        out.push('<tr>' + cells.map(c => `<td>${inlineHtml(c)}</td>`).join('') + '</tr>')
+      }
+      continue
+    } else if (inTable) {
+      if (tableBody) out.push('</tbody>')
+      out.push('</table>')
+      inTable = false; tableBody = false
+    }
+
+    // Yatay çizgi
+    if (/^---+$/.test(trimmed)) {
+      if (inList) { out.push('</ul>'); inList = false }
+      out.push('<hr>')
+      continue
+    }
+
+    // Liste
+    if (/^\*\s+/.test(trimmed)) {
+      if (!inList) { out.push('<ul>'); inList = true }
+      out.push(`<li>${inlineHtml(trimmed.replace(/^\*\s+/, ''))}</li>`)
+      continue
+    } else if (inList) {
+      out.push('</ul>')
+      inList = false
+    }
+
+    // Boş satır
+    if (!trimmed) continue
+
+    // Paragraf
+    out.push(`<p>${inlineHtml(trimmed)}</p>`)
+  }
+
+  if (inList) out.push('</ul>')
+  if (inTable) { if (tableBody) out.push('</tbody>'); out.push('</table>') }
+
+  return out.join('\n')
+}
+
+// Markdown plugin — frontmatter + html export
+function mdPlugin(): Plugin {
+  return {
+    name: 'vite-md',
+    transform(_src, id) {
+      if (!id.endsWith('.md')) return
+
+      const text = readFileSync(id, 'utf-8')
+      const slug = id.split('/').pop()!.replace('.md', '')
+
+      // Frontmatter parse
+      const fmMatch = text.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
+      const frontmatter: Record<string, string> = {}
+      let content = text
+
+      if (fmMatch) {
+        for (const line of fmMatch[1].split('\n')) {
+          const ci = line.indexOf(':')
+          if (ci > 0) {
+            frontmatter[line.slice(0, ci).trim()] = line.slice(ci + 1).trim().replace(/^['"]|['"]$/g, '')
+          }
+        }
+        content = fmMatch[2]
+      }
+
+      const html = mdToHtml(content)
+
+      return `export default ${JSON.stringify({ frontmatter, html, slug })}`
+    },
+  }
+}
+
 export default defineConfig({
   plugins: [
     tailwindcss(),
     vue(),
     vueDevTools(),
     yamlPlugin(),
+    mdPlugin(),
   ],
   resolve: {
     alias: {

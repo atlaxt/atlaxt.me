@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import booksRaw from '../../content/books.yaml'
+import { useSeo } from '@/seo/useSeo'
 
 interface Book {
   number: string
@@ -10,7 +11,7 @@ interface Book {
   rate:   string
 }
 
-const books  = (booksRaw as Book[]).filter(b => b.name)
+const books  = (booksRaw as unknown as Book[]).filter(b => b.name)
 const search = ref('')
 
 const filtered = computed(() => {
@@ -19,6 +20,13 @@ const filtered = computed(() => {
   return books.filter(b =>
     b.name?.toLowerCase().includes(q) || b.author?.toLowerCase().includes(q)
   )
+})
+
+useSeo({
+  title: 'Kitaplık',
+  description: 'Okuduğum kitaplar ve puanlarım.',
+  canonicalPath: '/books',
+  type: 'website',
 })
 </script>
 

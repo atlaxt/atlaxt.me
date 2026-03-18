@@ -1,14 +1,19 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import SignParticle from '@/components/SignParticle.vue'
-
-const { t } = useI18n()
+import { useSeo } from '@/seo/useSeo'
 
 const links = [
   { label: 'GitHub',    href: 'https://github.com/atlaxt' },
   { label: 'LinkedIn',  href: 'https://linkedin.com/in/atlaxt' },
   { label: 'Instagram', href: 'https://instagram.com/atlaxt.me' },
 ]
+
+useSeo({
+  title: 'Atlas Yiğit Aydın',
+  description: "Web geliştirici — Nuxt ekosistemine odaklanan, UX'e önem veren.",
+  canonicalPath: '/',
+  type: 'website',
+})
 </script>
 
 <template>
@@ -19,7 +24,7 @@ const links = [
         Atlas Yiğit Aydın
       </h1>
       <p class="text-sm leading-relaxed max-w-xs" style="color: var(--text-muted);">
-        {{ t('home.tagline') }}
+        Öncelikli olarak Nuxt ekosistemine odaklanan bir Web Geliştiricisiyim. Nihai hedefim, yalnızca işlevsel kod yazmanın ötesine geçerek her üründe üst düzey Kullanıcı Deneyimi (UX) sunmak.
       </p>
       <!-- Şu an çalışılan yer -->
       <div class="inline-flex items-center gap-2 mt-6 text-sm" style="color: #4ade80;">

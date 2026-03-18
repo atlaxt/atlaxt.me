@@ -1,0 +1,94 @@
+import { computed, type ComputedRef } from 'vue'
+import { useRoute } from 'vue-router'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_NAME, toAbsoluteUrl } from './site'
+
+export interface SeoOptions {
+  title?: string | ComputedRef<string | undefined>
+  description?: string | ComputedRef<string | undefined>
+  image?: string | ComputedRef<string | undefined>
+  type?: 'website' | 'article'
+  canonicalPath?: string | ComputedRef<string | undefined>
+  publishedTime?: string | ComputedRef<string | undefined>
+  modifiedTime?: string | ComputedRef<string | undefined>
+  jsonLd?: Record<string, any> | ComputedRef<Record<string, any> | undefined>
+}
+
+function unwrap<T>(v: T | ComputedRef<T>): T {
+  return (v as any)?.value ?? (v as any)
+}
+
+export function useSeo(options: SeoOptions = {}) {
+  const route = useRoute()
+  const { locale } = useI18n()
+
+  const canonical = computed(() => {
+    const canonicalPath = unwrap(options.canonicalPath)
+    const path = canonicalPath || route.path
+    return toAbsoluteUrl(path)
+  })
+
+  const title = computed(() => {
+    const rawTitle = unwrap(options.title)
+    const t = rawTitle?.trim()
+    if (!t || t === SITE_NAME) return DEFAULT_TITLE
+    return `${t} — ${SITE_NAME}`
+  })
+
+  const description = computed(() => {
+    const d = unwrap(options.description)
+    return (d && d.trim()) || DEFAULT_DESCRIPTION
+  })
+
+  const image = computed(() => {
+    const img = unwrap(options.image)
+    return img ? toAbsoluteUrl(img) : undefined
+  })
+
+  const type = computed(() => options.type || 'website')
+
+  useHead(() => {
+    const meta: any[] = [
+      { name: 'description', content: description.value },
+      { property: 'og:site_name', content: SITE_NAME },
+      { property: 'og:title', content: title.value },
+      { property: 'og:description', content: description.value },
+      { property: 'og:type', content: type.value },
+      { property: 'og:url', content: canonical.value },
+      { name: 'twitter:title', content: title.value },
+      { name: 'twitter:description', content: description.value },
+      { name: 'twitter:card', content: image.value ? 'summary_large_image' : 'summary' },
+    ]
+
+    if (image.value) {
+      meta.push({ property: 'og:image', content: image.value })
+      meta.push({ name: 'twitter:image', content: image.value })
+    }
+
+    const publishedTime = unwrap(options.publishedTime)
+    const modifiedTime = unwrap(options.modifiedTime)
+    if (type.value === 'article') {
+      if (publishedTime) meta.push({ property: 'article:published_time', content: publishedTime })
+      if (modifiedTime) meta.push({ property: 'article:modified_time', content: modifiedTime })
+    }
+
+    const jsonLd = unwrap(options.jsonLd)
+
+    return {
+      title: title.value,
+      htmlAttrs: {
+        lang: locale.value || 'tr',
+      },
+      link: [
+        { rel: 'canonical', href: canonical.value },
+      ],
+      meta,
+      script: jsonLd
+        ? [{ type: 'application/ld+json', children: JSON.stringify(jsonLd) }]
+        : [],
+    }
+  })
+
+  return { canonical, title, description, image }
+}

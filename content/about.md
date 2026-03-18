@@ -1,8 +1,0 @@
----
-title: Hakkımda
-description: Nuxt odaklı bir web geliştiricisi olarak profesyonel ve kişisel projelerim, hedeflerim ve yaklaşımım.
----
-
-Yazılımla tanıştığım ilk günden beri, hayatımı bu zanaata adamış bir geliştiriciyim. Profesyonel kariyerimde; kapsamlı ön muhasebe uygulamaları, Üretim Yönetim Sistemleri ve karmaşık veri setlerini işleyen dashboard yapıları gibi web projelerinin geliştirme ve bakım süreçlerini üstleniyorum. Kurumsal sorumluluklarımın ötesinde, kişisel olarak da farklı kategorilerde sürekli yeni projeler üreterek yetkinliklerimi genişletiyorum.
-
-Benim için nihai hedef, sadece işleyen kodlar yazmanın ötesine geçmek. Geliştirdiğim her projede performansı ve erişilebilirliği ön planda tutarak, kullanıcı ile teknoloji arasındaki engelleri kaldıran üst düzey bir **Kullanıcı Deneyimi (UX)** sunmayı amaçlıyorum. Ortaya koyduğum her işle, kalitemi yansıtan bir standart oluşturmak ve adımı bu sektörde güvenilen bir marka haline getirmek istiyorum.

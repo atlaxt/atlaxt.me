@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useColorMode } from '@/composables/useColorMode'
 import signWhite from '@/assets/sign_white.png'
 import signBlack from '@/assets/sign_black.png'
 
-const { t, locale } = useI18n()
 const { isDark, toggle: toggleColorMode } = useColorMode()
 
 const scrolled = ref(false)
@@ -17,11 +15,7 @@ function onScroll() {
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
 onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
-function toggleLocale() {
-  const next = locale.value === 'tr' ? 'en' : 'tr'
-  locale.value = next
-  localStorage.setItem('locale', next)
-}
+
 </script>
 
 <template>
@@ -47,21 +41,21 @@ function toggleLocale() {
 
       <!-- Nav -->
       <nav class="flex items-center gap-8">
-        <!-- <RouterLink
+        <RouterLink
           to="/writings"
           class="text-sm transition-opacity hover:opacity-100"
           style="color: var(--text-muted);"
-          active-class="opacity-100 !text-[color:var(--text)]"
+          active-class="!opacity-100 !text-[color:var(--text)]"
         >
-          {{ t('nav.writings') }}
+          Yazılar
         </RouterLink>
-        <RouterLink
+        <!-- <RouterLink
           to="/about"
           class="text-sm transition-opacity hover:opacity-100"
           style="color: var(--text-muted);"
-          active-class="opacity-100 !text-[color:var(--text)]"
+          active-class="!opacity-100 !text-[color:var(--text)]"
         >
-          {{ t('nav.about') }}
+          Hakkımda
         </RouterLink> -->
 
         <RouterLink
@@ -75,14 +69,7 @@ function toggleLocale() {
 
         <!-- Controls -->
         <div class="flex items-center gap-4" style="color: var(--text-muted);">
-          <button
-            class="text-xs font-medium tracking-widest transition-opacity hover:opacity-60"
-            @click="toggleLocale"
-          >
-            {{ locale === 'tr' ? 'EN' : 'TR' }}
-          </button>
-
-          <button class="flex transition-opacity hover:opacity-60" @click="toggleColorMode($event)">
+<button class="flex transition-opacity hover:opacity-60" @click="toggleColorMode($event)">
             <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
             </svg>

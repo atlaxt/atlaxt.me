@@ -24,6 +24,11 @@ const router = createRouter({
       name: 'writings',
       component: () => import('@/views/WritingsView.vue'),
     },
+    {
+      path: '/writings/:slug',
+      name: 'post',
+      component: () => import('@/views/PostView.vue'),
+    },
   ],
   scrollBehavior: () => ({ top: 0 }),
 })
