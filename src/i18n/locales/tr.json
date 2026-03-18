@@ -1,0 +1,17 @@
+{
+  "nav": {
+    "writings": "Yazılar",
+    "about": "Hakkımda"
+  },
+  "home": {
+    "tagline": "Öncelikli olarak Nuxt ekosistemine odaklanan bir Web Geliştiricisiyim. Nihai hedefim, yalnızca işlevsel kod yazmanın ötesine geçerek her üründe üst düzey Kullanıcı Deneyimi (UX) sunmak."
+  },
+  "about": {
+    "title": "Hakkımda"
+  },
+  "writings": {
+    "title": "Yazılar",
+    "blogs": "Blog",
+    "notes": "Notlar"
+  }
+}

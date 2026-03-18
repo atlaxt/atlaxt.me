@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/* ─── Renk tokenleri ─────────────────────────────────── */
+:root {
+  --bg:          #ffffff;
+  --bg-subtle:   #f4f4f5;
+  --border:      #e4e4e7;
+  --text:        #09090b;
+  --text-muted:  #71717a;
+}
+
+.dark {
+  --bg:          #09090b;
+  --bg-subtle:   #18181b;
+  --border:      #27272a;
+  --text:        #fafafa;
+  --text-muted:  #a1a1aa;
+}
+
+/* ─── Tailwind v4 custom utilities ───────────────────── */
+@theme inline {
+  --color-page:        var(--bg);
+  --color-subtle:      var(--bg-subtle);
+  --color-border:      var(--border);
+  --color-ink:         var(--text);
+  --color-ink-muted:   var(--text-muted);
+  --font-sans:         'Figtree', system-ui, sans-serif;
+}
+
+/* ─── View Transition ────────────────────────────────── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* ─── Base ───────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Prose (ContentRenderer) ────────────────────────── */
+.prose {
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+.prose strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.prose a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.8;
+}
+
+.prose a:hover {
+  opacity: 1;
+}

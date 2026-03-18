@@ -1,0 +1,23 @@
+- name: Git101
+  description: Git sürüm kontrolü için yeni başlayanlara uygun bir rehber.
+  icon: 'logos:git-icon'
+  category: documentation
+  link: 'https://git101.atlaxt.me'
+
+- name: nuxt-tawk-to
+  description: Tawk.to canlı sohbet bileşenini entegre etmek için Nuxt 3 modülü.
+  icon: 'arcticons:sunbird'
+  category: npmPackages
+  link: 'https://nuxt-tawk-to.atlaxt.me/'
+
+- name: imoji
+  description: Anında arama ve tek tıkla kopyalama sunan minimal bir emoji gezgini.
+  icon: 'lucide:smile'
+  category: justForFun
+  link: 'https://imoji.atlaxt.me'
+
+- name: Mega Yapı
+  description: 'Profesyonel cam balkon, PVC doğrama ve ayna çözümleri.'
+  icon: 'icon-park:building-four'
+  category: works
+  link: 'https://www.yapimega.com'
