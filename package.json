@@ -1,15 +1,20 @@
 {
   "name": "atlaxt.me",
+  "type": "module",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
   "scripts": {
     "dev": "vite",
     "generate:seo": "node ./scripts/generate-seo-files.mjs",
     "build": "run-s generate:seo && run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build"
+    "type-check": "vue-tsc --build",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@unhead/vue": "^2.1.12",
@@ -20,19 +25,18 @@
     "vue-router": "^5.0.3"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^7.7.3",
     "@tailwindcss/vite": "^4.1.0",
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^24.11.0",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vue/tsconfig": "^0.8.1",
+    "eslint": "^10.0.3",
     "npm-run-all2": "^8.0.4",
     "tailwindcss": "^4.1.0",
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-vue-devtools": "^8.0.6",
     "vue-tsc": "^3.2.5"
-  },
-  "engines": {
-    "node": "^20.19.0 || >=22.12.0"
   }
 }

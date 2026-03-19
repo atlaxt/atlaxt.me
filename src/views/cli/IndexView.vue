@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import CliLayout from '@/layouts/CliLayout.vue'
 import CliCommand from '@/components/CliCommand.vue'
+import CliLayout from '@/layouts/CliLayout.vue'
 import { useSeo } from '@/seo/useSeo'
 
 useSeo({
@@ -13,7 +13,9 @@ useSeo({
 
 <template>
   <CliLayout>
-    <h1 class="text-lg font-semibold font-mono mb-4" style="color: var(--text);">atlaxt</h1>
+    <h1 class="text-lg font-semibold font-mono mb-4" style="color: var(--text);">
+      atlaxt
+    </h1>
 
     <p class="text-sm leading-relaxed mb-10" style="color: var(--text-muted);">
       Kendi geliştirdiğim CLI. Proje şablonlarını tek komutla GitHub'dan klonlar,
@@ -33,7 +35,9 @@ useSeo({
 
         <!-- Global kurulum -->
         <div class="mt-1">
-          <p class="text-xs mb-2" style="color: var(--text-muted); opacity: 0.4;">global kurulum</p>
+          <p class="text-xs mb-2" style="color: var(--text-muted); opacity: 0.4;">
+            global kurulum
+          </p>
           <CliCommand npm="npm i -g atlaxt" pnpm="pnpm add -g atlaxt" />
         </div>
       </div>

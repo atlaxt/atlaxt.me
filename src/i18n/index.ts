@@ -1,6 +1,6 @@
 import { createI18n } from 'vue-i18n'
-import tr from './locales/tr.json'
 import en from './locales/en.json'
+import tr from './locales/tr.json'
 
 const savedLocale = typeof window !== 'undefined'
   ? (localStorage.getItem('locale') ?? 'tr')

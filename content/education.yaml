@@ -1,0 +1,20 @@
+- degree: Bilgisayar Mühendisliği
+  level: Yüksek Lisans
+  school: null
+  initials: null
+  period: Planlanıyor
+  planned: true
+
+- degree: Yönetim Bilişim Sistemleri
+  level: Lisans
+  school: Anadolu Üniversitesi
+  initials: AÜ
+  period: Eki 2024 – Halen
+  planned: false
+
+- degree: Bilgisayar Programlama
+  level: Ön Lisans
+  school: Eskişehir Teknik Üniversitesi
+  initials: ESTÜ
+  period: 2021 – 2023
+  planned: false

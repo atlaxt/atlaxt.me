@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps<{
-  npm:    string
-  pnpm:   string
+  npm: string
+  pnpm: string
   label?: string
 }>()
 
 type PM = 'npm' | 'pnpm'
-const pm      = ref<PM>('npm')
-const copied  = ref(false)
+const pm = ref<PM>('npm')
+const copied = ref(false)
 const current = computed(() => pm.value === 'npm' ? props.npm : props.pnpm)
 
 function copy() {
@@ -23,19 +23,25 @@ function copy() {
 <template>
   <div>
     <div class="flex items-center justify-between mb-2">
-      <p v-if="label" class="text-xs uppercase tracking-widest" style="color: var(--text-muted); opacity: 0.5;">{{ label }}</p>
+      <p v-if="label" class="text-xs uppercase tracking-widest" style="color: var(--text-muted); opacity: 0.5;">
+        {{ label }}
+      </p>
       <span v-else />
       <div class="flex items-center" style="border: 1px solid var(--border);">
         <button
           class="text-xs px-2.5 py-1 transition-opacity"
           :style="pm === 'npm' ? 'background: var(--text); color: var(--bg);' : 'color: var(--text-muted); opacity: 0.5;'"
           @click="pm = 'npm'"
-        >npm</button>
+        >
+          npm
+        </button>
         <button
           class="text-xs px-2.5 py-1 transition-opacity"
           :style="pm === 'pnpm' ? 'background: var(--text); color: var(--bg);' : 'color: var(--text-muted); opacity: 0.5;'"
           @click="pm = 'pnpm'"
-        >pnpm</button>
+        >
+          pnpm
+        </button>
       </div>
     </div>
 
@@ -44,17 +50,17 @@ function copy() {
       <button
         class="flex items-center justify-center px-3 py-2.5 shrink-0 transition-opacity hover:opacity-60"
         style="color: var(--text-muted);"
-        @click="copy"
         :title="copied ? 'Kopyalandı' : 'Kopyala'"
+        @click="copy"
       >
         <!-- Kopyalandı: check -->
         <svg v-if="copied" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"/>
+          <polyline points="20 6 9 17 4 12" />
         </svg>
         <!-- Kopyala: clipboard -->
         <svg v-else xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
-          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+          <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
         </svg>
       </button>
     </div>

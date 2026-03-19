@@ -28,8 +28,8 @@ export default defineConfig({
 
 ```ts
 export default defineConfig({
-  build: { sourcemap: false },  // Inherited by all environments
-  optimizeDeps: { include: ['lib'] },  // Client only
+  build: { sourcemap: false }, // Inherited by all environments
+  optimizeDeps: { include: ['lib'] }, // Client only
   environments: {
     // SSR environment
     server: {},

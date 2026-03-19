@@ -26,7 +26,8 @@ Export a function to access command and mode:
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   if (command === 'serve') {
     return { /* dev config */ }
-  } else {
+  }
+  else {
     return { /* build config */ }
   }
 })
@@ -54,7 +55,7 @@ import { defineConfig, loadEnv } from 'vite'
 export default defineConfig(({ mode }) => {
   // Load env files from cwd, include all vars (empty prefix)
   const env = loadEnv(mode, process.cwd(), '')
-  
+
   return {
     define: {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
@@ -115,7 +116,7 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: path => path.replace(/^\/api/, ''),
       },
     },
   },

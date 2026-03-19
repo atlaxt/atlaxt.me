@@ -12,7 +12,9 @@ Animate enter/leave of a single element or component.
 ```vue
 <template>
   <Transition name="fade">
-    <div v-if="show">Content</div>
+    <div v-if="show">
+      Content
+    </div>
   </Transition>
 </template>
 
@@ -109,8 +111,10 @@ Render content to a different DOM location.
 
 ```vue
 <template>
-  <button @click="open = true">Open Modal</button>
-  
+  <button @click="open = true">
+    Open Modal
+  </button>
+
   <Teleport to="body">
     <div v-if="open" class="modal">
       Modal content rendered at body
@@ -236,7 +240,9 @@ Skip re-renders when dependencies unchanged. Use for performance optimization.
 
 Equivalent to `v-once` when empty:
 ```vue
-<div v-memo="[]">Never updates</div>
+<div v-memo="[]">
+Never updates
+</div>
 ```
 
 ## v-once
@@ -244,7 +250,9 @@ Equivalent to `v-once` when empty:
 Render once, skip all future updates.
 
 ```vue
-<span v-once>Static: {{ neverChanges }}</span>
+<span v-once>
+Static: {{ neverChanges }}
+</span>
 ```
 
 ## Custom Directives
@@ -254,7 +262,7 @@ Create reusable DOM manipulations.
 ```ts
 // Directive definition
 const vFocus: Directive<HTMLElement> = {
-  mounted: (el) => el.focus()
+  mounted: el => el.focus()
 }
 
 // Full hooks
@@ -298,7 +306,7 @@ const vColor: Directive<HTMLElement, string> = {
 ```ts
 // main.ts
 app.directive('focus', {
-  mounted: (el) => el.focus()
+  mounted: el => el.focus()
 })
 ```
 

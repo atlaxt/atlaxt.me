@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useColorMode } from '@/composables/useColorMode'
+import { onMounted, onUnmounted, ref } from 'vue'
 import signSvgRaw from '@/assets/sign_white.svg?raw'
+import { useColorMode } from '@/composables/useColorMode'
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const { isDark } = useColorMode()
 
 const REPEL_RADIUS = 55
-const REPEL_FORCE  = 1.6
-const SPRING       = 0.007   // çok düşük → yavaş, organik dönüş
-const DAMPING      = 0.94    // biraz daha fazla sürtünme → yavaş hareket
-const SCALE        = 0.78
-const OFFSCREEN    = 700
+const REPEL_FORCE = 1.6
+const SPRING = 0.007 // çok düşük → yavaş, organik dönüş
+const DAMPING = 0.94 // biraz daha fazla sürtünme → yavaş hareket
+const SCALE = 0.78
+const OFFSCREEN = 700
 
 // SVG'den ana path'i ve transform'u parse et
 function parseSvgPath() {
@@ -23,8 +23,8 @@ function parseSvgPath() {
   const m = t.match(/translate\(\s*([^,]+),\s*([^)]+)\)/)
   return {
     d,
-    tx: m ? parseFloat(m[1] ?? '332') : 332,
-    ty: m ? parseFloat(m[2] ?? '9') : 9,
+    tx: m ? Number.parseFloat(m[1] ?? '332') : 332,
+    ty: m ? Number.parseFloat(m[2] ?? '9') : 9,
   }
 }
 
@@ -41,47 +41,49 @@ function buildParticlePoints(): [number, number][] {
   octx.translate(tx * SCALE + (OFFSCREEN - 589 * SCALE) / 2, ty * SCALE)
   octx.scale(SCALE, SCALE)
   octx.strokeStyle = '#fff'
-  octx.lineWidth   = 14
-  octx.lineJoin    = 'round'
-  octx.lineCap     = 'round'
+  octx.lineWidth = 14
+  octx.lineJoin = 'round'
+  octx.lineCap = 'round'
   octx.stroke(new Path2D(d))
   octx.restore()
 
   const data = octx.getImageData(0, 0, OFFSCREEN, OFFSCREEN).data
   const pts: [number, number][] = []
   const STEP = 4
-  for (let y = 0; y < OFFSCREEN; y += STEP)
-    for (let x = 0; x < OFFSCREEN; x += STEP)
+  for (let y = 0; y < OFFSCREEN; y += STEP) {
+    for (let x = 0; x < OFFSCREEN; x += STEP) {
       if ((data[(y * OFFSCREEN + x) * 4 + 3] ?? 0) > 128)
         pts.push([x, y])
+    }
+  }
 
   return pts
 }
 
 class Particle {
   hx: number; hy: number
-  x:  number; y:  number
+  x: number; y: number
   vx = 0; vy = 0
-  size:      number
+  size: number
   baseAlpha: number
-  delay:     number
+  delay: number
 
   constructor(hx: number, hy: number, canvasW: number, canvasH: number) {
     this.hx = hx; this.hy = hy
     // Home'dan biraz uzakta, rastgele yönde başla
     const angle = Math.random() * Math.PI * 2
-    const dist  = Math.random() * 60 + 20
-    this.x  = hx + Math.cos(angle) * dist
-    this.y  = hy + Math.sin(angle) * dist
+    const dist = Math.random() * 60 + 20
+    this.x = hx + Math.cos(angle) * dist
+    this.y = hy + Math.sin(angle) * dist
     this.vx = (Math.random() - 0.5) * 1.5
     this.vy = (Math.random() - 0.5) * 1.5
-    this.size      = Math.random() * 1.4 + 0.4
+    this.size = Math.random() * 1.4 + 0.4
     this.baseAlpha = Math.random() * 0.35 + 0.5
-    this.delay     = 0
+    this.delay = 0
   }
 
   update(mx: number, my: number, ox: number, oy: number) {
-    const dx = mx - this.x, dy = my - this.y
+    const dx = mx - this.x; const dy = my - this.y
     const dist = Math.hypot(dx, dy)
     if (dist < REPEL_RADIUS && dist > 0) {
       const f = (REPEL_RADIUS - dist) / REPEL_RADIUS
@@ -92,12 +94,12 @@ class Particle {
     this.vx += (this.hx + ox - this.x) * SPRING
     this.vy += (this.hy + oy - this.y) * SPRING
     this.vx *= DAMPING; this.vy *= DAMPING
-    this.x  += this.vx; this.y  += this.vy
+    this.x += this.vx; this.y += this.vy
   }
 
   draw(ctx: CanvasRenderingContext2D, ox: number, oy: number, dark: boolean) {
-    const dx   = this.x - (this.hx + ox)
-    const dy   = this.y - (this.hy + oy)
+    const dx = this.x - (this.hx + ox)
+    const dy = this.y - (this.hy + oy)
     const glow = Math.min(Math.hypot(dx, dy) / 15, 1)
 
     let r: number, g: number, b: number
@@ -105,7 +107,8 @@ class Particle {
       r = Math.round(210 + 45 * glow)
       g = Math.round(210 + 45 * glow)
       b = Math.round(225 + 30 * glow)
-    } else {
+    }
+    else {
       r = Math.round(30 - 15 * glow)
       g = Math.round(30 - 15 * glow)
       b = Math.round(50 - 20 * glow)
@@ -120,20 +123,20 @@ class Particle {
 
 onMounted(() => {
   const canvas = canvasRef.value!
-  const ctx    = canvas.getContext('2d')!
+  const ctx = canvas.getContext('2d')!
 
   const rawPts = buildParticlePoints()
-  const xs = rawPts.map(p => p[0]), ys = rawPts.map(p => p[1])
-  const minX = Math.min(...xs), maxX = Math.max(...xs)
-  const minY = Math.min(...ys), maxY = Math.max(...ys)
-  const shapeW = maxX - minX, shapeH = maxY - minY
+  const xs = rawPts.map(p => p[0]); const ys = rawPts.map(p => p[1])
+  const minX = Math.min(...xs); const maxX = Math.max(...xs)
+  const minY = Math.min(...ys); const maxY = Math.max(...ys)
+  const shapeW = maxX - minX; const shapeH = maxY - minY
 
-  let offsetX = 0, offsetY = 0
+  let offsetX = 0; let offsetY = 0
 
   function resize() {
-    canvas.width  = canvas.offsetWidth
+    canvas.width = canvas.offsetWidth
     canvas.height = canvas.offsetHeight
-    offsetX = canvas.width  / 2 - minX - shapeW / 2
+    offsetX = canvas.width / 2 - minX - shapeW / 2
     offsetY = canvas.height / 2 - minY - shapeH / 2
   }
   resize()

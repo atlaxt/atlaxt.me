@@ -32,22 +32,27 @@ const router = createRouter({
     {
       path: '/cli',
       name: 'cli',
-      component: () => import('@/views/CliView.vue'),
+      component: () => import('@/views/cli/IndexView.vue'),
     },
     {
       path: '/cli/tools',
       name: 'cli-tools',
-      component: () => import('@/views/CliToolsView.vue'),
+      component: () => import('@/views/cli/ToolsView.vue'),
     },
     {
       path: '/cli/tools/:id',
       name: 'cli-tool-detail',
-      component: () => import('@/views/CliToolDetailView.vue'),
+      component: () => import('@/views/cli/ToolDetailView.vue'),
     },
     {
       path: '/cli/templates',
       name: 'cli-templates',
-      component: () => import('@/views/CliTemplatesView.vue'),
+      component: () => import('@/views/cli/TemplatesView.vue'),
+    },
+    {
+      path: '/feed',
+      name: 'feed',
+      component: () => import('@/views/FeedView.vue'),
     },
   ],
   scrollBehavior: () => ({ top: 0 }),

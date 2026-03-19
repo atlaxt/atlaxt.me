@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import VercelAnalytics from '@vercel/analytics'
 import VercelSpeedInsights from '@vercel/speed-insights'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 
 const transitionName = ref('fade')

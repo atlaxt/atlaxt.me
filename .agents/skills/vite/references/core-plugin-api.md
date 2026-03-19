@@ -25,14 +25,16 @@ function myPlugin(): Plugin {
 Modify config before resolution:
 
 ```ts
-const plugin = () => ({
-  name: 'add-alias',
-  config: () => ({
-    resolve: {
-      alias: { foo: 'bar' },
-    },
-  }),
-})
+function plugin() {
+  return {
+    name: 'add-alias',
+    config: () => ({
+      resolve: {
+        alias: { foo: 'bar' },
+      },
+    }),
+  }
+}
 ```
 
 ### configResolved
@@ -40,7 +42,7 @@ const plugin = () => ({
 Access final resolved config:
 
 ```ts
-const plugin = () => {
+function plugin() {
   let config: ResolvedConfig
   return {
     name: 'read-config',
@@ -59,15 +61,17 @@ const plugin = () => {
 Add custom middleware to dev server:
 
 ```ts
-const plugin = () => ({
-  name: 'custom-middleware',
-  configureServer(server) {
-    server.middlewares.use((req, res, next) => {
+function plugin() {
+  return {
+    name: 'custom-middleware',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
       // handle request
-      next()
-    })
-  },
-})
+        next()
+      })
+    },
+  }
+}
 ```
 
 Return function to run **after** internal middlewares:
@@ -87,12 +91,14 @@ configureServer(server) {
 Transform HTML entry files:
 
 ```ts
-const plugin = () => ({
-  name: 'html-transform',
-  transformIndexHtml(html) {
-    return html.replace(/<title>(.*?)<\/title>/, '<title>New Title</title>')
-  },
-})
+function plugin() {
+  return {
+    name: 'html-transform',
+    transformIndexHtml(html) {
+      return html.replace(/<title>(.*?)<\/title>/, '<title>New Title</title>')
+    },
+  }
+}
 ```
 
 Inject tags:
@@ -121,14 +127,15 @@ handleHotUpdate({ server, modules, timestamp }) {
 Serve virtual content without files on disk:
 
 ```ts
-const plugin = () => {
+function plugin() {
   const virtualModuleId = 'virtual:my-module'
-  const resolvedId = '\0' + virtualModuleId
+  const resolvedId = `\0${virtualModuleId}`
 
   return {
     name: 'virtual-module',
     resolveId(id) {
-      if (id === virtualModuleId) return resolvedId
+      if (id === virtualModuleId)
+        return resolvedId
     },
     load(id) {
       if (id === resolvedId) {

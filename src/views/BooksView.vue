@@ -1,24 +1,18 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import booksRaw from '../../content/books.yaml'
+import type { Book } from '@/types'
+import { computed, ref } from 'vue'
 import { useSeo } from '@/seo/useSeo'
+import booksRaw from '../../content/books.yaml'
 
-interface Book {
-  number: string
-  code:   string
-  name:   string
-  author: string
-  rate:   string
-}
-
-const books  = (booksRaw as unknown as Book[]).filter(b => b.name)
+const books = (booksRaw as unknown as Book[]).filter(b => b.name)
 const search = ref('')
 
 const filtered = computed(() => {
   const q = search.value.toLowerCase().trim()
-  if (!q) return books
+  if (!q)
+    return books
   return books.filter(b =>
-    b.name?.toLowerCase().includes(q) || b.author?.toLowerCase().includes(q)
+    b.name?.toLowerCase().includes(q) || b.author?.toLowerCase().includes(q),
   )
 })
 
@@ -32,7 +26,6 @@ useSeo({
 
 <template>
   <div class="px-8 py-16">
-
     <!-- Başlık + açıklama -->
     <div class="mb-10">
       <p class="text-sm leading-relaxed max-w-sm" style="color: var(--text-muted);">
@@ -59,7 +52,7 @@ useSeo({
             borderBottom: '1px solid var(--border)',
             paddingBottom: '1px',
           }"
-        />
+        >
       </div>
     </div>
 

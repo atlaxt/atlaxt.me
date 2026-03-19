@@ -1,0 +1,15 @@
+- name: Anthony Fu
+  url: 'https://antfu.me/feed.xml'
+  link: 'https://antfu.me'
+
+# - name: "Vue.js"
+#   url: "https://blog.vuejs.org/feed.rss"
+#   link: "https://blog.vuejs.org"
+
+# - name: "Nuxt"
+#   url: "https://nuxt.com/blog.xml"
+#   link: "https://nuxt.com/blog"
+
+# - name: "Nuxt UI"
+#   url: "https://github.com/nuxt/ui/releases.atom"
+#   link: "https://ui.nuxt.com"

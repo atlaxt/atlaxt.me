@@ -78,10 +78,10 @@ export default defineConfig({
 export default defineConfig({
   oxc: {
     jsx: {
-      runtime: 'automatic',  // or 'classic'
+      runtime: 'automatic', // or 'classic'
       importSource: 'react', // for automatic runtime
     },
-    jsxInject: `import React from 'react'`,  // auto-inject
+    jsxInject: `import React from 'react'`, // auto-inject
   },
 })
 ```

@@ -5,15 +5,25 @@ function escapeHtml(str: string): string {
     .replace(/>/g, '&gt;')
 }
 
-function inline(text: string): string {
-  return text
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*([^*]+?)\*/g, '<em>$1</em>')
-    .replace(/`([^`]+?)`/g, `<code>$1</code>`)
-    .replace(/\[([^\]]+?)\]\(([^)]+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+function resolveUrl(src: string, base?: string): string {
+  if (!base || src.startsWith('http'))
+    return src
+  return `${base.replace(/\/$/, '')}/${src.replace(/^\.?\//, '')}`
 }
 
-export function mdToHtml(md: string): string {
+function inline(text: string, base?: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, `<code>$1</code>`)
+    // Önce image: ![alt](src)
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) =>
+      `<img src="${resolveUrl(src, base)}" alt="${alt}" class="cli-readme-img" />`)
+    // Sonra link: [text](href)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+}
+
+export function mdToHtml(md: string, base?: string): string {
   const lines = md.split('\n')
   const out: string[] = []
   let i = 0
@@ -49,7 +59,7 @@ export function mdToHtml(md: string): string {
       closeList()
       const level = h[1]!.length
       const tag = `h${Math.min(level, 4)}`
-      out.push(`<${tag}>${inline(h[2]!)}</${tag}>`)
+      out.push(`<${tag}>${inline(h[2]!, base)}</${tag}>`)
       i++; continue
     }
 
@@ -64,7 +74,7 @@ export function mdToHtml(md: string): string {
     const ol = trimmed.match(/^\d+\.\s+(.+)/)
     if (ol) {
       if (!inList || !listOrdered) { closeList(); out.push('<ol>'); inList = true; listOrdered = true }
-      out.push(`<li>${inline(ol[1]!)}</li>`)
+      out.push(`<li>${inline(ol[1]!, base)}</li>`)
       i++; continue
     }
 
@@ -72,7 +82,7 @@ export function mdToHtml(md: string): string {
     const ul = trimmed.match(/^[-*]\s+(.+)/)
     if (ul) {
       if (!inList || listOrdered) { closeList(); out.push('<ul>'); inList = true; listOrdered = false }
-      out.push(`<li>${inline(ul[1]!)}</li>`)
+      out.push(`<li>${inline(ul[1]!, base)}</li>`)
       i++; continue
     }
 
@@ -84,7 +94,7 @@ export function mdToHtml(md: string): string {
 
     // Paragraph
     closeList()
-    out.push(`<p>${inline(trimmed)}</p>`)
+    out.push(`<p>${inline(trimmed, base)}</p>`)
     i++
   }
 

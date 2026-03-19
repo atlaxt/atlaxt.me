@@ -14,6 +14,8 @@ useSeo({
     <h1 class="text-2xl font-semibold mb-8" style="color: var(--text);">
       Hakkımda
     </h1>
-    <p style="color: var(--text-muted);">Yakında...</p>
+    <p style="color: var(--text-muted);">
+      Yakında...
+    </p>
   </div>
 </template>

@@ -1,37 +1,40 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useSeo } from '@/seo/useSeo'
 import { SITE_NAME, toAbsoluteUrl } from '@/seo/site'
+import { useSeo } from '@/seo/useSeo'
 
 interface Post {
-  frontmatter: { title: string; description: string; date: string; image?: string }
+  frontmatter: { title: string, description: string, date: string, image?: string }
   html: string
   slug: string
 }
 
-const route  = useRoute()
+const route = useRoute()
 const router = useRouter()
 
 const modules = import.meta.glob('../../content/blogs/*.md', { eager: true })
-const posts   = (Object.values(modules) as { default: Post }[]).map(m => m.default)
+const posts = (Object.values(modules) as { default: Post }[]).map(m => m.default)
 
 const post = computed(() =>
-  posts.find(p => p.slug === route.params.slug)
+  posts.find(p => p.slug === route.params.slug),
 )
 
 const canonicalPath = computed(() => (post.value ? `/writings/${post.value.slug}` : undefined))
 
 const publishedTime = computed(() => {
   const date = post.value?.frontmatter.date
-  if (!date) return undefined
+  if (!date)
+    return undefined
   const d = new Date(date)
-  if (Number.isNaN(d.getTime())) return undefined
+  if (Number.isNaN(d.getTime()))
+    return undefined
   return d.toISOString()
 })
 
 const jsonLd = computed(() => {
-  if (!post.value) return undefined
+  if (!post.value)
+    return undefined
 
   const headline = post.value.frontmatter.title
   const description = post.value.frontmatter.description
@@ -41,9 +44,9 @@ const jsonLd = computed(() => {
 
   const author = {
     '@type': 'Person',
-    name: SITE_NAME,
-    url: 'https://atlaxt.me',
-    sameAs: ['https://github.com/atlaxt', 'https://linkedin.com/in/atlaxt'],
+    'name': SITE_NAME,
+    'url': 'https://atlaxt.me',
+    'sameAs': ['https://github.com/atlaxt', 'https://linkedin.com/in/atlaxt'],
   }
 
   return {
@@ -55,17 +58,17 @@ const jsonLd = computed(() => {
         description,
         ...(image ? { image: [image] } : {}),
         ...(datePublished ? { datePublished, dateModified: datePublished } : {}),
-        inLanguage: 'tr-TR',
-        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        'inLanguage': 'tr-TR',
+        'mainEntityOfPage': { '@type': 'WebPage', '@id': url },
         author,
-        publisher: author,
+        'publisher': author,
       },
       {
         '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Ana Sayfa',  item: 'https://atlaxt.me' },
-          { '@type': 'ListItem', position: 2, name: 'Yazılar',    item: 'https://atlaxt.me/writings' },
-          { '@type': 'ListItem', position: 3, name: headline,     item: url },
+        'itemListElement': [
+          { '@type': 'ListItem', 'position': 1, 'name': 'Ana Sayfa', 'item': 'https://atlaxt.me' },
+          { '@type': 'ListItem', 'position': 2, 'name': 'Yazılar', 'item': 'https://atlaxt.me/writings' },
+          { '@type': 'ListItem', 'position': 3, 'name': headline, 'item': url },
         ],
       },
     ],
@@ -83,7 +86,8 @@ useSeo({
   jsonLd,
 })
 
-if (!post.value) router.replace('/writings')
+if (!post.value)
+  router.replace('/writings')
 </script>
 
 <template>
@@ -104,7 +108,7 @@ if (!post.value) router.replace('/writings')
       :alt="post.frontmatter.title"
       class="w-full rounded-md mb-10 object-cover"
       style="max-height: 360px;"
-    />
+    >
 
     <!-- Başlık -->
     <p class="text-xs tabular-nums mb-4" style="color: var(--text-muted);">

@@ -10,7 +10,7 @@ watch(isDark, (val) => {
 
 export function useColorMode() {
   function toggle(event?: MouseEvent) {
-    const x = event?.clientX ?? window.innerWidth  / 2
+    const x = event?.clientX ?? window.innerWidth / 2
     const y = event?.clientY ?? window.innerHeight / 2
 
     // View Transition API desteklenmiyorsa düz geç
@@ -25,7 +25,7 @@ export function useColorMode() {
 
     // Tıklanan noktadan dışa doğru dairesel açılma
     const radius = Math.hypot(
-      Math.max(x, window.innerWidth  - x),
+      Math.max(x, window.innerWidth - x),
       Math.max(y, window.innerHeight - y),
     )
 

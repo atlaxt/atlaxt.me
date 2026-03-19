@@ -1,10 +1,6 @@
 <script setup lang="ts">
+import type { Post } from '@/types'
 import { useSeo } from '@/seo/useSeo'
-
-interface Post {
-  frontmatter: { title: string; description: string; date: string; image?: string }
-  slug: string
-}
 
 const modules = import.meta.glob('../../content/blogs/*.md', { eager: true })
 

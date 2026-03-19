@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useColorMode } from '@/composables/useColorMode'
-import signWhite from '@/assets/sign_white.png'
+import { onMounted, onUnmounted, ref } from 'vue'
 import signBlack from '@/assets/sign_black.png'
+import signWhite from '@/assets/sign_white.png'
+import { useColorMode } from '@/composables/useColorMode'
 
 const { isDark, toggle: toggleColorMode } = useColorMode()
 
@@ -34,7 +34,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           :src="isDark ? signWhite : signBlack"
           alt="Atlas"
           class="h-7 w-auto"
-        />
+        >
       </RouterLink>
 
       <!-- Nav -->
@@ -56,14 +56,14 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           Hakkımda
         </RouterLink> -->
 
-        <RouterLink
-          to="/books"
+        <!-- <RouterLink
+          to="/feed"
           class="text-sm transition-opacity hover:opacity-100"
           style="color: var(--text-muted);"
           active-class="!opacity-100 !text-[color:var(--text)]"
         >
-          Kitaplık
-        </RouterLink>
+          Haberler
+        </RouterLink> -->
 
         <RouterLink
           to="/cli"
@@ -76,7 +76,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
         <!-- Controls -->
         <div class="flex items-center gap-4" style="color: var(--text-muted);">
-<button class="flex transition-opacity hover:opacity-60" @click="toggleColorMode($event)">
+          <button class="flex transition-opacity hover:opacity-60" @click="toggleColorMode($event)">
             <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
             </svg>

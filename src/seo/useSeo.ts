@@ -1,6 +1,7 @@
-import { computed, type ComputedRef } from 'vue'
-import { useRoute } from 'vue-router'
+import type { ComputedRef } from 'vue'
 import { useHead } from '@unhead/vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_NAME, toAbsoluteUrl } from './site'
 
 export interface SeoOptions {
@@ -30,7 +31,8 @@ export function useSeo(options: SeoOptions = {}) {
   const title = computed(() => {
     const rawTitle = unwrap(options.title)
     const t = rawTitle?.trim()
-    if (!t || t === SITE_NAME) return DEFAULT_TITLE
+    if (!t || t === SITE_NAME)
+      return DEFAULT_TITLE
     return `${t} — ${SITE_NAME}`
   })
 
@@ -50,31 +52,33 @@ export function useSeo(options: SeoOptions = {}) {
     const meta: any[] = [
       { name: 'description', content: description.value },
       // Open Graph
-      { property: 'og:site_name',   content: SITE_NAME },
-      { property: 'og:title',       content: title.value },
+      { property: 'og:site_name', content: SITE_NAME },
+      { property: 'og:title', content: title.value },
       { property: 'og:description', content: description.value },
-      { property: 'og:type',        content: type.value },
-      { property: 'og:url',         content: canonical.value },
-      { property: 'og:locale',      content: 'tr_TR' },
+      { property: 'og:type', content: type.value },
+      { property: 'og:url', content: canonical.value },
+      { property: 'og:locale', content: 'tr_TR' },
       // Twitter / X
-      { name: 'twitter:title',       content: title.value },
+      { name: 'twitter:title', content: title.value },
       { name: 'twitter:description', content: description.value },
-      { name: 'twitter:card',        content: image.value ? 'summary_large_image' : 'summary' },
-      { name: 'twitter:creator',     content: '@atlaxt' },
-      { name: 'twitter:site',        content: '@atlaxt' },
+      { name: 'twitter:card', content: image.value ? 'summary_large_image' : 'summary' },
+      { name: 'twitter:creator', content: '@atlaxt' },
+      { name: 'twitter:site', content: '@atlaxt' },
     ]
 
     if (image.value) {
-      meta.push({ property: 'og:image',       content: image.value })
-      meta.push({ property: 'og:image:alt',   content: title.value })
-      meta.push({ name:     'twitter:image',  content: image.value })
+      meta.push({ property: 'og:image', content: image.value })
+      meta.push({ property: 'og:image:alt', content: title.value })
+      meta.push({ name: 'twitter:image', content: image.value })
     }
 
     const publishedTime = unwrap(options.publishedTime)
-    const modifiedTime  = unwrap(options.modifiedTime)
+    const modifiedTime = unwrap(options.modifiedTime)
     if (type.value === 'article') {
-      if (publishedTime) meta.push({ property: 'article:published_time', content: publishedTime })
-      if (modifiedTime)  meta.push({ property: 'article:modified_time',  content: modifiedTime })
+      if (publishedTime)
+        meta.push({ property: 'article:published_time', content: publishedTime })
+      if (modifiedTime)
+        meta.push({ property: 'article:modified_time', content: modifiedTime })
       meta.push({ property: 'article:author', content: 'https://atlaxt.me' })
     }
 
