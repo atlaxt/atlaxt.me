@@ -14,8 +14,6 @@ function onScroll() {
 
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
 onUnmounted(() => window.removeEventListener('scroll', onScroll))
-
-
 </script>
 
 <template>
@@ -65,6 +63,15 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           active-class="!opacity-100 !text-[color:var(--text)]"
         >
           Kitaplık
+        </RouterLink>
+
+        <RouterLink
+          to="/cli"
+          class="text-sm transition-opacity hover:opacity-100"
+          style="color: var(--text-muted);"
+          active-class="!opacity-100 !text-[color:var(--text)]"
+        >
+          CLI
         </RouterLink>
 
         <!-- Controls -->

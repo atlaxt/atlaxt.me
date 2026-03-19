@@ -1,7 +1,17 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import VercelAnalytics from '@vercel/analytics'
 import VercelSpeedInsights from '@vercel/speed-insights'
 import AppHeader from '@/components/AppHeader.vue'
+
+const transitionName = ref('fade')
+
+const router = useRouter()
+router.beforeEach((to, from) => {
+  const isCli = (path: string) => path.startsWith('/cli')
+  transitionName.value = (isCli(to.path) && isCli(from.path)) ? '' : 'fade'
+})
 </script>
 
 <template>
@@ -12,7 +22,7 @@ import AppHeader from '@/components/AppHeader.vue'
       <AppHeader />
       <main>
         <RouterView v-slot="{ Component }">
-          <Transition name="fade" mode="out-in">
+          <Transition :name="transitionName" mode="out-in">
             <component :is="Component" />
           </Transition>
         </RouterView>

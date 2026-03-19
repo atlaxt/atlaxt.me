@@ -33,6 +33,13 @@ useSeo({
 <template>
   <div class="px-8 py-16">
 
+    <!-- Başlık + açıklama -->
+    <div class="mb-10">
+      <p class="text-sm leading-relaxed max-w-sm" style="color: var(--text-muted);">
+        Modern klasiklerin hepsini okumayı hedefliyorum; okuduklarımı burada puanlıyorum.
+      </p>
+    </div>
+
     <!-- Başlık satırı -->
     <div class="flex items-baseline justify-between mb-10">
       <span class="text-xs tracking-widest uppercase" style="color: var(--text-muted);">

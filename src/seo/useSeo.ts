@@ -1,7 +1,6 @@
 import { computed, type ComputedRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { useHead } from '@unhead/vue'
-import { useI18n } from 'vue-i18n'
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_NAME, toAbsoluteUrl } from './site'
 
 export interface SeoOptions {
@@ -21,7 +20,6 @@ function unwrap<T>(v: T | ComputedRef<T>): T {
 
 export function useSeo(options: SeoOptions = {}) {
   const route = useRoute()
-  const { locale } = useI18n()
 
   const canonical = computed(() => {
     const canonicalPath = unwrap(options.canonicalPath)
@@ -51,38 +49,41 @@ export function useSeo(options: SeoOptions = {}) {
   useHead(() => {
     const meta: any[] = [
       { name: 'description', content: description.value },
-      { property: 'og:site_name', content: SITE_NAME },
-      { property: 'og:title', content: title.value },
+      // Open Graph
+      { property: 'og:site_name',   content: SITE_NAME },
+      { property: 'og:title',       content: title.value },
       { property: 'og:description', content: description.value },
-      { property: 'og:type', content: type.value },
-      { property: 'og:url', content: canonical.value },
-      { name: 'twitter:title', content: title.value },
+      { property: 'og:type',        content: type.value },
+      { property: 'og:url',         content: canonical.value },
+      { property: 'og:locale',      content: 'tr_TR' },
+      // Twitter / X
+      { name: 'twitter:title',       content: title.value },
       { name: 'twitter:description', content: description.value },
-      { name: 'twitter:card', content: image.value ? 'summary_large_image' : 'summary' },
+      { name: 'twitter:card',        content: image.value ? 'summary_large_image' : 'summary' },
+      { name: 'twitter:creator',     content: '@atlaxt' },
+      { name: 'twitter:site',        content: '@atlaxt' },
     ]
 
     if (image.value) {
-      meta.push({ property: 'og:image', content: image.value })
-      meta.push({ name: 'twitter:image', content: image.value })
+      meta.push({ property: 'og:image',       content: image.value })
+      meta.push({ property: 'og:image:alt',   content: title.value })
+      meta.push({ name:     'twitter:image',  content: image.value })
     }
 
     const publishedTime = unwrap(options.publishedTime)
-    const modifiedTime = unwrap(options.modifiedTime)
+    const modifiedTime  = unwrap(options.modifiedTime)
     if (type.value === 'article') {
       if (publishedTime) meta.push({ property: 'article:published_time', content: publishedTime })
-      if (modifiedTime) meta.push({ property: 'article:modified_time', content: modifiedTime })
+      if (modifiedTime)  meta.push({ property: 'article:modified_time',  content: modifiedTime })
+      meta.push({ property: 'article:author', content: 'https://atlaxt.me' })
     }
 
     const jsonLd = unwrap(options.jsonLd)
 
     return {
       title: title.value,
-      htmlAttrs: {
-        lang: locale.value || 'tr',
-      },
-      link: [
-        { rel: 'canonical', href: canonical.value },
-      ],
+      htmlAttrs: { lang: 'tr' },
+      link: [{ rel: 'canonical', href: canonical.value }],
       meta,
       script: jsonLd
         ? [{ type: 'application/ld+json', children: JSON.stringify(jsonLd) }]

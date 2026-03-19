@@ -39,16 +39,36 @@ const jsonLd = computed(() => {
   const url = toAbsoluteUrl(`/writings/${post.value.slug}`)
   const datePublished = publishedTime.value
 
+  const author = {
+    '@type': 'Person',
+    name: SITE_NAME,
+    url: 'https://atlaxt.me',
+    sameAs: ['https://github.com/atlaxt', 'https://linkedin.com/in/atlaxt'],
+  }
+
   return {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline,
-    description,
-    ...(image ? { image: [image] } : {}),
-    ...(datePublished ? { datePublished, dateModified: datePublished } : {}),
-    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-    author: { '@type': 'Person', name: SITE_NAME },
-    publisher: { '@type': 'Person', name: SITE_NAME },
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        headline,
+        description,
+        ...(image ? { image: [image] } : {}),
+        ...(datePublished ? { datePublished, dateModified: datePublished } : {}),
+        inLanguage: 'tr-TR',
+        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        author,
+        publisher: author,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Ana Sayfa',  item: 'https://atlaxt.me' },
+          { '@type': 'ListItem', position: 2, name: 'Yazılar',    item: 'https://atlaxt.me/writings' },
+          { '@type': 'ListItem', position: 3, name: headline,     item: url },
+        ],
+      },
+    ],
   }
 })
 

@@ -1,0 +1,15 @@
+- name: starter-vue-nuxtui
+  desc: "Vue 3 + Nuxt UI başlangıç şablonu."
+  href: "https://github.com/atlaxt/starter-vue-nuxtui"
+
+- name: starter-nuxt-nuxtui
+  desc: "Nuxt 3 + Nuxt UI başlangıç şablonu."
+  href: "https://github.com/atlaxt/starter-nuxt-nuxtui"
+
+- name: starter-nuxt-primevue
+  desc: "Nuxt 3 + PrimeVue başlangıç şablonu."
+  href: "https://github.com/atlaxt/starter-nuxt-primevue"
+
+- name: starter-vue-primevue
+  desc: "Vue 3 + PrimeVue başlangıç şablonu."
+  href: "https://github.com/atlaxt/starter-vue-primevue"

@@ -29,6 +29,26 @@ const router = createRouter({
       name: 'post',
       component: () => import('@/views/PostView.vue'),
     },
+    {
+      path: '/cli',
+      name: 'cli',
+      component: () => import('@/views/CliView.vue'),
+    },
+    {
+      path: '/cli/tools',
+      name: 'cli-tools',
+      component: () => import('@/views/CliToolsView.vue'),
+    },
+    {
+      path: '/cli/tools/:id',
+      name: 'cli-tool-detail',
+      component: () => import('@/views/CliToolDetailView.vue'),
+    },
+    {
+      path: '/cli/templates',
+      name: 'cli-templates',
+      component: () => import('@/views/CliTemplatesView.vue'),
+    },
   ],
   scrollBehavior: () => ({ top: 0 }),
 })

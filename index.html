@@ -5,11 +5,32 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Atlas Yiğit Aydın</title>
-    <meta name="description" content="Web geliştirici — Nuxt ekosistemine odaklanan, UX'e önem veren." />
+    <meta name="description" content="Web geliştirici — Vue ekosistemine odaklanan, UX'e önem veren." />
+
+    <!-- Fallback Open Graph (Vue mount'tan önce tarayıcı/bot için) -->
+    <meta property="og:site_name"   content="Atlas Yiğit Aydın" />
+    <meta property="og:title"       content="Atlas Yiğit Aydın" />
+    <meta property="og:description" content="Web geliştirici — Vue ekosistemine odaklanan, UX'e önem veren." />
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content="https://atlaxt.me/" />
+    <meta property="og:locale"      content="tr_TR" />
+
+    <!-- Fallback Twitter / X -->
+    <meta name="twitter:card"        content="summary" />
+    <meta name="twitter:site"        content="@atlaxt" />
+    <meta name="twitter:creator"     content="@atlaxt" />
+    <meta name="twitter:title"       content="Atlas Yiğit Aydın" />
+    <meta name="twitter:description" content="Web geliştirici — Vue ekosistemine odaklanan, UX'e önem veren." />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://atlaxt.me/" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <!-- Dark mode: ekranı flash olmadan doğru temayı uygula -->
+
+    <!-- Dark mode: flash olmadan doğru temayı uygula -->
     <script>
       ;(function () {
         const stored = localStorage.getItem('color-mode')
