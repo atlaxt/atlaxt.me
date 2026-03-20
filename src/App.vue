@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import VercelAnalytics from '@vercel/analytics'
-import VercelSpeedInsights from '@vercel/speed-insights'
+import { Analytics as VercelAnalytics } from '@vercel/analytics/vue'
+import { SpeedInsights as VercelSpeedInsights } from '@vercel/speed-insights/vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
