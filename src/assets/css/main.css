@@ -136,7 +136,6 @@ body {
   );
   background-size: 400% 100%;
   animation: shine-sweep 3s linear infinite;
-  transition: animation-duration 0.3s;
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -146,10 +145,6 @@ body {
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
-}
-
-.shine-border:hover::before {
-  animation-duration: 1.2s;
 }
 
 .dark .shine-border::before {
@@ -163,10 +158,6 @@ body {
   );
   background-size: 400% 100%;
   animation: shine-sweep 3s linear infinite;
-}
-
-.dark .shine-border:hover::before {
-  animation-duration: 1.2s;
 }
 
 /* ─── CLI README ─────────────────────────────────────────────── */

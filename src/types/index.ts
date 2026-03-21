@@ -1,3 +1,10 @@
+// ─── Fotoğraflar ─────────────────────────────────────────────
+export interface Photo {
+  file: string
+  alt?: string
+  location?: string
+}
+
 // ─── Kitaplık ────────────────────────────────────────────────
 export interface Book {
   number: string

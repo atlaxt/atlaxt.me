@@ -54,6 +54,11 @@ const router = createRouter({
       name: 'feed',
       component: () => import('@/views/FeedView.vue'),
     },
+    {
+      path: '/photos',
+      name: 'photos',
+      component: () => import('@/views/PhotosView.vue'),
+    },
   ],
   scrollBehavior: () => ({ top: 0 }),
 })

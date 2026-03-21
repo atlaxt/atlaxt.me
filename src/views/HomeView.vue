@@ -83,6 +83,20 @@ const jsonLd = {
   ],
 }
 
+function setShineDuration(sec: number) {
+  const el = document.querySelector('.shine-border')
+  if (!el)
+    return
+  for (const anim of el.getAnimations({ subtree: true })) {
+    if (anim instanceof CSSAnimation && anim.animationName === 'shine-sweep') {
+      const oldDuration = (anim.effect?.getComputedTiming().duration as number) ?? 3000
+      const progress = (anim.currentTime as number) / oldDuration
+      anim.effect?.updateTiming({ duration: sec * 1000 })
+      anim.currentTime = progress * sec * 1000
+    }
+  }
+}
+
 useSeo({
   title: 'Atlas Yiğit Aydın',
   description: 'Web geliştirici — Vue ekosistemine odaklanan, UX\'e önem veren.',
@@ -114,6 +128,8 @@ useSeo({
           to="/cli"
           class="shine-border inline-flex items-center gap-3 mt-6 px-4 py-2 text-sm font-mono"
           style="color: var(--text-muted);"
+          @mouseenter="setShineDuration(1.2)"
+          @mouseleave="setShineDuration(3)"
         >
           <span style="color: var(--text-muted); opacity: 0.5;">$</span>
           <span style="color: var(--text);">npx atlaxt</span>
@@ -131,13 +147,22 @@ useSeo({
           >{{ link.label }}</a>
         </div>
 
-        <RouterLink
-          to="/books"
-          class="text-sm transition-opacity hover:opacity-100 opacity-50 mt-2 inline-block"
-          style="color: var(--text);"
-        >
-          Kitaplık
-        </RouterLink>
+        <div class="flex items-center gap-5 mt-2">
+          <RouterLink
+            to="/books"
+            class="text-sm transition-opacity hover:opacity-100 opacity-50"
+            style="color: var(--text);"
+          >
+            Kitaplık
+          </RouterLink>
+          <RouterLink
+            to="/photos"
+            class="text-sm transition-opacity hover:opacity-100 opacity-50"
+            style="color: var(--text);"
+          >
+            Fotoğraflar
+          </RouterLink>
+        </div>
       </div>
 
       <!-- Sağ: Particle imza -->

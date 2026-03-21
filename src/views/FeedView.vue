@@ -9,13 +9,22 @@ const sources = feedsRaw as unknown as FeedSource[]
 
 const items = ref<FeedItem[]>([])
 const loading = ref(true)
-const selected = ref<string | null>(null)
+const selected = ref<Set<string>>(new Set())
+
+function toggle(name: string) {
+  const next = new Set(selected.value)
+  if (next.has(name))
+    next.delete(name)
+  else
+    next.add(name)
+  selected.value = next
+}
 
 const filtered = computed(() => {
   const base = items.value.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
-  if (!selected.value)
+  if (!selected.value.size)
     return base
-  return base.filter(i => i.source === selected.value)
+  return base.filter(i => selected.value.has(i.source))
 })
 
 const sourceNames = computed(() => [...new Set(items.value.map(i => i.source))])
@@ -64,13 +73,13 @@ useSeo({
 </script>
 
 <template>
-  <div class="px-8 py-16 max-w-2xl">
+  <div class="px-8 py-16">
     <div class="mb-10">
       <h1 class="text-xl font-semibold mb-3" style="color: var(--text);">
         Haberler
       </h1>
       <p class="text-sm leading-relaxed" style="color: var(--text-muted);">
-        Vue ekosisteminde gezinirken düzenli okuduğum kaynaklar. Aynı sularda yüzüyorsanız bookmark'lamaya değer.
+        Düzenli okuduğum kaynaklar. Benimle aynı yolda gidiyorsanız işinize yarayabilir.
       </p>
     </div>
 
@@ -79,8 +88,8 @@ useSeo({
       <div class="flex items-center gap-2">
         <button
           class="text-xs px-3 py-1 transition-opacity"
-          :style="!selected ? 'background: var(--text); color: var(--bg);' : 'border: 1px solid var(--border); color: var(--text-muted); opacity: 0.6;'"
-          @click="selected = null"
+          :style="!selected.size ? 'background: var(--text); color: var(--bg);' : 'border: 1px solid var(--border); color: var(--text-muted); opacity: 0.6;'"
+          @click="selected = new Set()"
         >
           Tümü
         </button>
@@ -95,8 +104,8 @@ useSeo({
           v-for="src in srcs"
           :key="src.name"
           class="inline-flex items-center gap-1.5 text-xs px-3 py-1 transition-opacity"
-          :style="selected === src.name ? 'background: var(--text); color: var(--bg);' : 'border: 1px solid var(--border); color: var(--text-muted); opacity: 0.6;'"
-          @click="selected = src.name"
+          :style="selected.has(src.name) ? 'background: var(--text); color: var(--bg);' : 'border: 1px solid var(--border); color: var(--text-muted); opacity: 0.6;'"
+          @click="toggle(src.name)"
         >
           <img :src="favicon(src.link)" class="w-3 h-3 rounded-sm" alt="" aria-hidden="true">
           {{ src.name }}
