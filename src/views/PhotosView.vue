@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Photo } from '@/types'
-import { onUnmounted, ref } from 'vue'
+import { computed, onUnmounted, ref } from 'vue'
 import { useSeo } from '@/seo/useSeo'
 import photosRaw from '../../content/photos.yaml'
 
@@ -22,6 +22,19 @@ function full(file: string) {
 // Lightbox
 const lightboxIndex = ref<number | null>(null)
 
+const currentPhoto = computed(() => {
+  const i = lightboxIndex.value
+  if (i === null)
+    return null
+  return photos[i] ?? null
+})
+
+const currentNumber = computed(() => {
+  if (lightboxIndex.value === null)
+    return 0
+  return lightboxIndex.value + 1
+})
+
 function open(i: number) {
   lightboxIndex.value = i
   document.body.style.overflow = 'hidden'
@@ -35,6 +48,10 @@ function close() {
 function onKey(e: KeyboardEvent) {
   if (lightboxIndex.value === null)
     return
+  if (!photos.length) {
+    close()
+    return
+  }
   if (e.key === 'ArrowLeft')
     lightboxIndex.value = (lightboxIndex.value - 1 + photos.length) % photos.length
   else if (e.key === 'ArrowRight')
@@ -83,15 +100,15 @@ useSeo({
     <Teleport to="body">
       <Transition name="lb">
         <div
-          v-if="lightboxIndex !== null"
+          v-if="currentPhoto"
           class="fixed inset-0 z-50 flex items-center justify-center"
           style="background: rgba(0,0,0,0.92); backdrop-filter: blur(8px);"
           @click="close"
         >
           <!-- Fotoğraf -->
           <img
-            :src="full(photos[lightboxIndex].file)"
-            :alt="photos[lightboxIndex].alt ?? photos[lightboxIndex].file"
+            :src="full(currentPhoto.file)"
+            :alt="currentPhoto.alt ?? currentPhoto.file"
             class="no-drag max-h-[90vh] max-w-[90vw] object-contain"
             draggable="false"
             @dragstart.prevent
@@ -99,7 +116,7 @@ useSeo({
 
           <!-- Sayaç -->
           <span class="absolute bottom-5 left-1/2 -translate-x-1/2 text-xs" style="color: rgba(255,255,255,0.3);">
-            {{ lightboxIndex + 1 }} / {{ photos.length }}
+            {{ currentNumber }} / {{ photos.length }}
           </span>
         </div>
       </Transition>
