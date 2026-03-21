@@ -19,6 +19,21 @@ function full(file: string) {
   return `/_vercel/image?url=${encodeURIComponent(`/photos/${file}`)}&w=1920&q=85`
 }
 
+function direct(file: string) {
+  return `/photos/${file}`
+}
+
+function onImgError(e: Event, file: string) {
+  const el = e.target as HTMLImageElement | null
+  if (!el)
+    return
+  const fallback = direct(file)
+  // Döngüye girmesin
+  if (el.src.endsWith(fallback))
+    return
+  el.src = fallback
+}
+
 // Lightbox
 const lightboxIndex = ref<number | null>(null)
 
@@ -92,6 +107,7 @@ useSeo({
           decoding="async"
           draggable="false"
           @dragstart.prevent
+          @error="onImgError($event, photo.file)"
         >
       </button>
     </div>
@@ -112,6 +128,7 @@ useSeo({
             class="no-drag max-h-[90vh] max-w-[90vw] object-contain"
             draggable="false"
             @dragstart.prevent
+            @error="onImgError($event, currentPhoto.file)"
           >
 
           <!-- Sayaç -->
