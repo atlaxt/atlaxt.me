@@ -7,16 +7,31 @@ import photosRaw from '../../content/photos.yaml'
 const photos = photosRaw as unknown as Photo[]
 
 // Dev'de doğrudan, production'da Vercel Image Optimization ile
+function vercelImage(file: string, w: number, q: number) {
+  return `/_vercel/image?url=${encodeURIComponent(`/photos/${file}`)}&w=${w}&q=${q}`
+}
+
 function thumb(file: string) {
   if (import.meta.env.DEV)
     return `/photos/${file}`
-  return `/_vercel/image?url=${encodeURIComponent(`/photos/${file}`)}&w=800&q=75`
+  // Masonry'de kart genişliği çoğunlukla 220-360px bandında; 800px fazla ağır kalıyor.
+  return vercelImage(file, 480, 60)
 }
 
 function full(file: string) {
   if (import.meta.env.DEV)
     return `/photos/${file}`
-  return `/_vercel/image?url=${encodeURIComponent(`/photos/${file}`)}&w=1920&q=85`
+  return vercelImage(file, 1920, 85)
+}
+
+function thumbSrcSet(file: string): string | undefined {
+  if (import.meta.env.DEV)
+    return undefined
+  return [
+    `${vercelImage(file, 320, 55)} 320w`,
+    `${vercelImage(file, 480, 60)} 480w`,
+    `${vercelImage(file, 800, 70)} 800w`,
+  ].join(', ')
 }
 
 function direct(file: string) {
@@ -44,11 +59,25 @@ const currentPhoto = computed(() => {
   return photos[i] ?? null
 })
 
-const currentNumber = computed(() => {
+function prev() {
   if (lightboxIndex.value === null)
-    return 0
-  return lightboxIndex.value + 1
-})
+    return
+  if (!photos.length) {
+    close()
+    return
+  }
+  lightboxIndex.value = (lightboxIndex.value - 1 + photos.length) % photos.length
+}
+
+function next() {
+  if (lightboxIndex.value === null)
+    return
+  if (!photos.length) {
+    close()
+    return
+  }
+  lightboxIndex.value = (lightboxIndex.value + 1) % photos.length
+}
 
 function open(i: number) {
   lightboxIndex.value = i
@@ -60,6 +89,59 @@ function close() {
   document.body.style.overflow = ''
 }
 
+const suppressNextClick = ref(false)
+const touch = ref<{ x: number, y: number, t: number } | null>(null)
+
+function onOverlayClick() {
+  if (suppressNextClick.value) {
+    suppressNextClick.value = false
+    return
+  }
+  close()
+}
+
+function onTouchStart(e: TouchEvent) {
+  if (lightboxIndex.value === null)
+    return
+  if (e.touches.length !== 1)
+    return
+  const p = e.touches[0]!
+  touch.value = { x: p.clientX, y: p.clientY, t: performance.now() }
+}
+
+function onTouchEnd(e: TouchEvent) {
+  if (!touch.value)
+    return
+  const end = e.changedTouches[0]
+  if (!end) {
+    touch.value = null
+    return
+  }
+
+  const dx = end.clientX - touch.value.x
+  const dy = end.clientY - touch.value.y
+  const dt = performance.now() - touch.value.t
+  touch.value = null
+
+  // Yatay swipe: yeterince uzun + dikeyden belirgin + hızlı
+  if (dt > 900)
+    return
+  if (Math.abs(dx) < 50)
+    return
+  if (Math.abs(dx) < Math.abs(dy) * 1.2)
+    return
+
+  suppressNextClick.value = true
+  if (dx < 0)
+    next()
+  else
+    prev()
+}
+
+function onTouchCancel() {
+  touch.value = null
+}
+
 function onKey(e: KeyboardEvent) {
   if (lightboxIndex.value === null)
     return
@@ -68,9 +150,9 @@ function onKey(e: KeyboardEvent) {
     return
   }
   if (e.key === 'ArrowLeft')
-    lightboxIndex.value = (lightboxIndex.value - 1 + photos.length) % photos.length
+    prev()
   else if (e.key === 'ArrowRight')
-    lightboxIndex.value = (lightboxIndex.value + 1) % photos.length
+    next()
   else
     close()
 }
@@ -102,6 +184,8 @@ useSeo({
         <img
           :src="thumb(photo.file)"
           :alt="photo.alt ?? photo.file"
+          :srcset="thumbSrcSet(photo.file)"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 220px"
           class="no-drag w-full block transition-opacity duration-300 group-hover:opacity-80"
           loading="lazy"
           decoding="async"
@@ -119,7 +203,10 @@ useSeo({
           v-if="currentPhoto"
           class="fixed inset-0 z-50 flex items-center justify-center"
           style="background: rgba(0,0,0,0.92); backdrop-filter: blur(8px);"
-          @click="close"
+          @click="onOverlayClick"
+          @touchstart="onTouchStart"
+          @touchend="onTouchEnd"
+          @touchcancel="onTouchCancel"
         >
           <!-- Fotoğraf -->
           <img
@@ -130,11 +217,6 @@ useSeo({
             @dragstart.prevent
             @error="onImgError($event, currentPhoto.file)"
           >
-
-          <!-- Sayaç -->
-          <span class="absolute bottom-5 left-1/2 -translate-x-1/2 text-xs" style="color: rgba(255,255,255,0.3);">
-            {{ currentNumber }} / {{ photos.length }}
-          </span>
         </div>
       </Transition>
     </Teleport>
