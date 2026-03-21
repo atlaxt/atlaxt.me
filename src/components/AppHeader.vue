@@ -12,36 +12,12 @@ function onScroll() {
   scrolled.value = window.scrollY > 10
 }
 
-function isTypingTarget(target: EventTarget | null) {
-  const el = target as HTMLElement | null
-  if (!el)
-    return false
-  const tag = el.tagName
-  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT')
-    return true
-  return el.isContentEditable
-}
-
-function onKeydown(e: KeyboardEvent) {
-  if (e.defaultPrevented)
-    return
-  if (e.ctrlKey || e.metaKey || e.altKey)
-    return
-  if (isTypingTarget(e.target))
-    return
-  if (e.key !== 't' && e.key !== 'T')
-    return
-  toggleColorMode()
-}
-
 onMounted(() => {
   window.addEventListener('scroll', onScroll, { passive: true })
-  window.addEventListener('keydown', onKeydown)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
-  window.removeEventListener('keydown', onKeydown)
 })
 </script>
 
