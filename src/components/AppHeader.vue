@@ -56,14 +56,14 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           Hakkımda
         </RouterLink> -->
 
-        <!-- <RouterLink
+        <RouterLink
           to="/feed"
           class="text-sm transition-opacity hover:opacity-100"
           style="color: var(--text-muted);"
           active-class="!opacity-100 !text-[color:var(--text)]"
         >
           Haberler
-        </RouterLink> -->
+        </RouterLink>
 
         <RouterLink
           to="/cli"

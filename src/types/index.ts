@@ -58,6 +58,7 @@ export interface FeedSource {
   name: string
   url: string
   link: string
+  category?: string
 }
 
 export interface FeedItem {

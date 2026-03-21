@@ -20,8 +20,31 @@ const filtered = computed(() => {
 
 const sourceNames = computed(() => [...new Set(items.value.map(i => i.source))])
 
+const categories = computed(() => {
+  const cats = new Map<string, FeedSource[]>()
+  for (const src of sources) {
+    if (!sourceNames.value.includes(src.name))
+      continue
+    const cat = src.category ?? 'Diğer'
+    if (!cats.has(cat))
+      cats.set(cat, [])
+    cats.get(cat)!.push(src)
+  }
+  return cats
+})
+
 function formatDate(d: Date): string {
   return d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
+function favicon(url: string): string {
+  try {
+    const domain = new URL(url).hostname
+    return `https://www.google.com/s2/favicons?domain=${domain}&sz=16`
+  }
+  catch {
+    return ''
+  }
 }
 
 onMounted(async () => {
@@ -47,29 +70,38 @@ useSeo({
         Haberler
       </h1>
       <p class="text-sm leading-relaxed" style="color: var(--text-muted);">
-        Takip ettiğim kaynaklardan toplanan güncel içerikler.
-        Vue, Nuxt ve ekosisteminden kim ne yazıyor, ne yayınlıyor.
+        Vue ekosisteminde gezinirken düzenli okuduğum kaynaklar. Aynı sularda yüzüyorsanız bookmark'lamaya değer.
       </p>
     </div>
 
     <!-- Filtre -->
-    <div class="flex items-center gap-2 flex-wrap mb-10">
-      <button
-        class="text-xs px-3 py-1 transition-opacity"
-        :style="!selected ? 'background: var(--text); color: var(--bg);' : 'border: 1px solid var(--border); color: var(--text-muted); opacity: 0.6;'"
-        @click="selected = null"
+    <div class="mb-10 flex flex-col gap-4">
+      <div class="flex items-center gap-2">
+        <button
+          class="text-xs px-3 py-1 transition-opacity"
+          :style="!selected ? 'background: var(--text); color: var(--bg);' : 'border: 1px solid var(--border); color: var(--text-muted); opacity: 0.6;'"
+          @click="selected = null"
+        >
+          Tümü
+        </button>
+      </div>
+      <div
+        v-for="[cat, srcs] in categories"
+        :key="cat"
+        class="flex items-center gap-2 flex-wrap"
       >
-        Tümü
-      </button>
-      <button
-        v-for="name in sourceNames"
-        :key="name"
-        class="text-xs px-3 py-1 transition-opacity"
-        :style="selected === name ? 'background: var(--text); color: var(--bg);' : 'border: 1px solid var(--border); color: var(--text-muted); opacity: 0.6;'"
-        @click="selected = name"
-      >
-        {{ name }}
-      </button>
+        <span class="text-xs w-16 shrink-0" style="color: var(--text-muted); opacity: 0.4;">{{ cat }}</span>
+        <button
+          v-for="src in srcs"
+          :key="src.name"
+          class="inline-flex items-center gap-1.5 text-xs px-3 py-1 transition-opacity"
+          :style="selected === src.name ? 'background: var(--text); color: var(--bg);' : 'border: 1px solid var(--border); color: var(--text-muted); opacity: 0.6;'"
+          @click="selected = src.name"
+        >
+          <img :src="favicon(src.link)" class="w-3 h-3 rounded-sm" alt="" aria-hidden="true">
+          {{ src.name }}
+        </button>
+      </div>
     </div>
 
     <!-- Loading -->
@@ -98,10 +130,13 @@ useSeo({
               :href="item.sourceLink"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-xs hover:opacity-100 transition-opacity"
+              class="inline-flex items-center gap-1.5 text-xs hover:opacity-100 transition-opacity"
               style="color: var(--text-muted); opacity: 0.6;"
               @click.stop
-            >{{ item.source }}</a>
+            >
+              <img :src="favicon(item.sourceLink)" class="w-3 h-3 rounded-sm" alt="" aria-hidden="true">
+              {{ item.source }}
+            </a>
             <span style="color: var(--border);">·</span>
             <span class="text-xs" style="color: var(--text-muted); opacity: 0.5;">{{ formatDate(item.date) }}</span>
           </div>

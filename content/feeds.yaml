@@ -1,15 +1,69 @@
 - name: Anthony Fu
   url: 'https://antfu.me/feed.xml'
   link: 'https://antfu.me'
+  category: Vue
 
-# - name: "Vue.js"
-#   url: "https://blog.vuejs.org/feed.rss"
-#   link: "https://blog.vuejs.org"
+- name: Vue.js
+  url: 'https://blog.vuejs.org/feed.rss'
+  link: 'https://blog.vuejs.org'
+  category: Vue
 
-# - name: "Nuxt"
-#   url: "https://nuxt.com/blog.xml"
-#   link: "https://nuxt.com/blog"
+- name: Nuxt
+  url: 'https://nuxt.com/blog/rss.xml'
+  link: 'https://nuxt.com/blog'
+  category: Vue
 
-# - name: "Nuxt UI"
-#   url: "https://github.com/nuxt/ui/releases.atom"
-#   link: "https://ui.nuxt.com"
+- name: Daniel Roe
+  url: 'https://roe.dev/rss.xml'
+  link: 'https://roe.dev'
+  category: Vue
+
+- name: Atinux
+  url: 'https://atinux.com/rss.xml'
+  link: 'https://atinux.com'
+  category: Vue
+
+- name: Atinux PRs
+  url: 'https://prs.atinux.com/rss'
+  link: 'https://prs.atinux.com'
+  category: Vue
+
+- name: CSS-Tricks
+  url: 'https://css-tricks.com/feed/'
+  link: 'https://css-tricks.com'
+  category: Frontend
+
+- name: Smashing Magazine
+  url: 'https://www.smashingmagazine.com/feed/'
+  link: 'https://www.smashingmagazine.com'
+  category: Frontend
+
+- name: Josh W Comeau
+  url: 'https://www.joshwcomeau.com/rss.xml'
+  link: 'https://www.joshwcomeau.com'
+  category: Frontend
+
+- name: Daring Fireball
+  url: 'https://daringfireball.net/feeds/main'
+  link: 'https://daringfireball.net'
+  category: Apple
+
+- name: Six Colors
+  url: 'https://feedpress.me/sixcolors'
+  link: 'https://sixcolors.com'
+  category: Apple
+
+- name: Troy Hunt
+  url: 'https://www.troyhunt.com/feed/'
+  link: 'https://www.troyhunt.com'
+  category: Güvenlik
+
+- name: Krebs on Security
+  url: 'https://krebsonsecurity.com/feed/'
+  link: 'https://krebsonsecurity.com'
+  category: Güvenlik
+
+- name: Schneier on Security
+  url: 'https://www.schneier.com/feed/atom/'
+  link: 'https://www.schneier.com'
+  category: Güvenlik
