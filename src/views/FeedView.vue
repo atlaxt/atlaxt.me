@@ -10,6 +10,7 @@ const sources = feedsRaw as unknown as FeedSource[]
 const items = ref<FeedItem[]>([])
 const loading = ref(true)
 const selected = ref<Set<string>>(new Set())
+const showRssSources = ref(false)
 
 function toggle(name: string) {
   const next = new Set(selected.value)
@@ -34,6 +35,17 @@ const categories = computed(() => {
   for (const src of sources) {
     if (!sourceNames.value.includes(src.name))
       continue
+    const cat = src.category ?? 'Diğer'
+    if (!cats.has(cat))
+      cats.set(cat, [])
+    cats.get(cat)!.push(src)
+  }
+  return cats
+})
+
+const rssCategories = computed(() => {
+  const cats = new Map<string, FeedSource[]>()
+  for (const src of sources) {
     const cat = src.category ?? 'Diğer'
     if (!cats.has(cat))
       cats.set(cat, [])
@@ -81,6 +93,82 @@ useSeo({
       <p class="text-sm leading-relaxed" style="color: var(--text-muted);">
         Düzenli okuduğum kaynaklar. Benimle aynı yolda gidiyorsanız işinize yarayabilir.
       </p>
+    </div>
+
+    <!-- RSS Kaynakları (isteğe bağlı) -->
+    <div class="mb-10 flex flex-col gap-3">
+      <button
+        type="button"
+        class="text-xs px-3 py-1 transition-opacity self-start"
+        :style="showRssSources ? 'background: var(--text); color: var(--bg);' : 'border: 1px solid var(--border); color: var(--text-muted); opacity: 0.6;'"
+        @click="showRssSources = !showRssSources"
+      >
+        RSS kaynakları {{ showRssSources ? 'gizle' : 'göster' }}
+      </button>
+
+      <div v-if="showRssSources" style="border: 1px solid var(--border);">
+        <div class="px-4 py-3" style="border-bottom: 1px solid var(--border);">
+          <p class="text-xs uppercase tracking-widest" style="color: var(--text-muted); opacity: 0.6;">
+            RSS Kaynakları
+          </p>
+        </div>
+
+        <div class="px-4 py-3 flex flex-col gap-4">
+          <div
+            v-for="[cat, srcs] in rssCategories"
+            :key="cat"
+            class="flex flex-col gap-2"
+          >
+            <p class="text-xs" style="color: var(--text-muted); opacity: 0.5;">
+              {{ cat }}
+            </p>
+
+            <div class="flex flex-col">
+              <div
+                v-for="src in srcs"
+                :key="src.name"
+                class="flex items-start justify-between gap-4 py-2"
+                style="border-top: 1px solid var(--border);"
+              >
+                <div class="min-w-0">
+                  <a
+                    :href="src.link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 text-sm transition-opacity hover:opacity-60"
+                    style="color: var(--text);"
+                  >
+                    <img :src="favicon(src.link)" class="w-3 h-3 rounded-sm" alt="" aria-hidden="true">
+                    <span class="truncate">{{ src.name }}</span>
+                  </a>
+
+                  <div class="text-xs mt-1" style="color: var(--text-muted); opacity: 0.65;">
+                    <a
+                      :href="src.url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="transition-opacity hover:opacity-100"
+                      style="opacity: 0.9;"
+                    >
+                      {{ src.url }}
+                    </a>
+                  </div>
+                </div>
+
+                <a
+                  :href="src.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs shrink-0 mt-0.5 transition-opacity hover:opacity-60"
+                  style="color: var(--text-muted);"
+                >
+                  RSS
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Filtre -->

@@ -119,7 +119,7 @@ class Particle {
     // Ekranın dışından, çok daha uzaktan gelsin
     const angle = Math.random() * Math.PI * 2
     // Başlangıç mesafesi (kısaltıldı)
-    const dist = Math.max(canvasW, canvasH) * 0.4 + 0
+    const dist = Math.max(canvasW, canvasH) * 0.4
     this.x = homeX + Math.cos(angle) * dist
     this.y = homeY + Math.sin(angle) * dist
 

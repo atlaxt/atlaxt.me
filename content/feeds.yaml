@@ -18,11 +18,6 @@
   link: 'https://roe.dev'
   category: Vue
 
-- name: Atinux
-  url: 'https://atinux.com/rss.xml'
-  link: 'https://atinux.com'
-  category: Vue
-
 - name: Atinux PRs
   url: 'https://prs.atinux.com/rss'
   link: 'https://prs.atinux.com'
