@@ -41,13 +41,50 @@ function parseItems(xml: Document, sourceName: string, sourceLink: string): Feed
   return items
 }
 
+const DEV_PROXIES = [
+  (url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+  (url: string) => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+]
+
+async function fetchRaw(url: string): Promise<string | null> {
+  // Production: use our own Vercel serverless function (no CORS issues)
+  if (import.meta.env.PROD) {
+    try {
+      const res = await fetch(`/api/feed?url=${encodeURIComponent(url)}`, {
+        signal: AbortSignal.timeout(12_000),
+      })
+      if (res.ok)
+        return await res.text()
+    }
+    catch {}
+    return null
+  }
+
+  // Dev: fall back to public CORS proxies
+  for (const makeProxy of DEV_PROXIES) {
+    try {
+      const res = await fetch(makeProxy(url), { signal: AbortSignal.timeout(8000) })
+      if (!res.ok)
+        continue
+      const contentType = res.headers.get('content-type') ?? ''
+      if (contentType.includes('application/json')) {
+        const { contents } = await res.json()
+        return contents
+      }
+      return await res.text()
+    }
+    catch {
+      continue
+    }
+  }
+  return null
+}
+
 export async function fetchFeed(url: string, sourceName: string, sourceLink: string): Promise<FeedItem[]> {
   try {
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`
-    const res = await fetch(proxy)
-    if (!res.ok)
+    const contents = await fetchRaw(url)
+    if (!contents)
       return []
-    const { contents } = await res.json()
     return parseItems(parseXml(contents), sourceName, sourceLink)
   }
   catch {

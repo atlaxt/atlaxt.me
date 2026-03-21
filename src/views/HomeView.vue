@@ -112,8 +112,8 @@ useSeo({
 
         <RouterLink
           to="/cli"
-          class="inline-flex items-center gap-3 mt-6 px-4 py-2 text-sm font-mono transition-opacity hover:opacity-60"
-          style="background: var(--bg-subtle); color: var(--text-muted);"
+          class="shine-border inline-flex items-center gap-3 mt-6 px-4 py-2 text-sm font-mono"
+          style="color: var(--text-muted);"
         >
           <span style="color: var(--text-muted); opacity: 0.5;">$</span>
           <span style="color: var(--text);">npx atlaxt</span>
