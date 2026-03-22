@@ -1,6 +1,6 @@
 import type { ComputedRef } from 'vue'
 import { useHead } from '@unhead/vue'
-import { computed } from 'vue'
+import { computed, isRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_NAME, toAbsoluteUrl } from './site'
 
@@ -16,7 +16,7 @@ export interface SeoOptions {
 }
 
 function unwrap<T>(v: T | ComputedRef<T>): T {
-  return (v as any)?.value ?? (v as any)
+  return isRef(v) ? v.value : v
 }
 
 export function useSeo(options: SeoOptions = {}) {

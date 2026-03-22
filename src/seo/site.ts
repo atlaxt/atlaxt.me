@@ -9,9 +9,9 @@ export function getSiteUrl(): string {
   return String(raw).replace(/\/$/, '')
 }
 
-export function toAbsoluteUrl(pathOrUrl: string): string {
-  if (!pathOrUrl)
-    return pathOrUrl
+export function toAbsoluteUrl(pathOrUrl: string | undefined): string {
+  if (!pathOrUrl || typeof pathOrUrl !== 'string')
+    return getSiteUrl()
   if (/^https?:\/\//i.test(pathOrUrl))
     return pathOrUrl
   if (pathOrUrl.startsWith('/'))

@@ -51,6 +51,7 @@ function inlineHtml(text: string): string {
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    .replace(/==(.+?)==/g, '<span class="hl-wrap">$1</span>')
 }
 
 // Basit Markdown → HTML dönüştürücü
@@ -69,17 +70,42 @@ function mdToHtml(md: string): string {
     const h3 = trimmed.match(/^### (.+)/)
     const h2 = trimmed.match(/^## (.+)/)
     const h1 = trimmed.match(/^# (.+)/)
-    if (h1) { if (inList) { out.push('</ul>'); inList = false } out.push(`<h1>${inlineHtml(h1[1])}</h1>`); continue }
-    if (h2) { if (inList) { out.push('</ul>'); inList = false } out.push(`<h2>${inlineHtml(h2[1])}</h2>`); continue }
-    if (h3) { if (inList) { out.push('</ul>'); inList = false } out.push(`<h3>${inlineHtml(h3[1])}</h3>`); continue }
+    if (h1) {
+      if (inList) {
+        out.push('</ul>')
+        inList = false
+      }
+      out.push(`<h1>${inlineHtml(h1[1])}</h1>`)
+      continue
+    }
+    if (h2) {
+      if (inList) {
+        out.push('</ul>')
+        inList = false
+      }
+      out.push(`<h2>${inlineHtml(h2[1])}</h2>`)
+      continue
+    }
+    if (h3) {
+      if (inList) {
+        out.push('</ul>')
+        inList = false
+      }
+      out.push(`<h3>${inlineHtml(h3[1])}</h3>`)
+      continue
+    }
 
     // Tablo
     if (trimmed.startsWith('|')) {
-      if (inList) { out.push('</ul>'); inList = false }
+      if (inList) {
+        out.push('</ul>')
+        inList = false
+      }
       const cells = trimmed.split('|').slice(1, -1).map(c => c.trim())
       if (!inTable) {
         out.push(`<table><thead><tr>${cells.map(c => `<th>${inlineHtml(c)}</th>`).join('')}</tr></thead>`)
-        inTable = true; tableBody = false
+        inTable = true
+        tableBody = false
       }
       else if (!tableBody && cells.every(c => /^[-: ]+$/.test(c))) {
         out.push('<tbody>')
@@ -94,19 +120,26 @@ function mdToHtml(md: string): string {
       if (tableBody)
         out.push('</tbody>')
       out.push('</table>')
-      inTable = false; tableBody = false
+      inTable = false
+      tableBody = false
     }
 
     // Yatay çizgi
     if (/^-{3,}$/.test(trimmed)) {
-      if (inList) { out.push('</ul>'); inList = false }
+      if (inList) {
+        out.push('</ul>')
+        inList = false
+      }
       out.push('<hr>')
       continue
     }
 
     // Liste
     if (/^\*\s+/.test(trimmed)) {
-      if (!inList) { out.push('<ul>'); inList = true }
+      if (!inList) {
+        out.push('<ul>')
+        inList = true
+      }
       out.push(`<li>${inlineHtml(trimmed.replace(/^\*\s+/, ''))}</li>`)
       continue
     }
@@ -127,7 +160,8 @@ function mdToHtml(md: string): string {
     out.push('</ul>')
   if (inTable) {
     if (tableBody)
-      out.push('</tbody>'); out.push('</table>')
+      out.push('</tbody>')
+    out.push('</table>')
   }
 
   return out.join('\n')

@@ -44,5 +44,15 @@
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
+
+    <!-- Highlight rough-edge SVG filter — site genelinde kullanılır -->
+    <svg id="hl-svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none">
+      <defs>
+        <filter id="hl-rough" x="-8%" y="-300%" width="116%" height="700%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.018 0.08" numOctaves="4" seed="5" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+    </svg>
   </body>
 </html>
