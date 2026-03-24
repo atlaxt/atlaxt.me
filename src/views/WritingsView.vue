@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Post } from '@/types'
+import PageHeader from '@/components/PageHeader.vue'
 import { toAbsoluteUrl } from '@/seo/site'
 import { useSeo } from '@/seo/useSeo'
 
@@ -42,9 +43,7 @@ useSeo({
 
 <template>
   <div class="px-8 py-16">
-    <p class="text-xs tracking-widest uppercase mb-12" style="color: var(--text-muted);">
-      Yazılar
-    </p>
+    <PageHeader :crumbs="[{ label: 'Yazılar', to: '/writings' }]" />
 
     <div class="flex flex-col">
       <RouterLink

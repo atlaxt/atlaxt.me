@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import PageHeader from '@/components/PageHeader.vue'
 import { SITE_NAME, toAbsoluteUrl } from '@/seo/site'
 import { useSeo } from '@/seo/useSeo'
 
@@ -92,14 +93,7 @@ if (!post.value)
 
 <template>
   <div v-if="post" class="px-8 py-16 w-full">
-    <!-- Geri -->
-    <RouterLink
-      to="/writings"
-      class="text-xs transition-opacity hover:opacity-60 inline-flex items-center gap-2 mb-12"
-      style="color: var(--text-muted);"
-    >
-      ← Yazılar
-    </RouterLink>
+    <PageHeader :crumbs="[{ label: 'Yazılar', to: '/writings' }, { label: post.frontmatter.title }]" />
 
     <!-- Kapak görseli -->
     <img

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Book, EducationEntry, ExperienceEntry, FeedItem, FeedSource, Photo, Post } from '@/types'
-import { onMounted, ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
+import { onBeforeRouteLeave } from 'vue-router'
 import SectionLabel from '@/components/SectionLabel.vue'
 import SignParticle from '@/components/SignParticle.vue'
 import { fetchFeed } from '@/composables/useFeeds'
@@ -38,7 +39,22 @@ const recentBooks = (booksRaw as unknown as Book[])
 const feedItems = ref<FeedItem[]>([])
 const feedLoading = ref(true)
 
+const HOME_SCROLL_KEY = 'home-scroll-y'
+
+onBeforeRouteLeave(() => {
+  sessionStorage.setItem(HOME_SCROLL_KEY, String(window.scrollY))
+})
+
 onMounted(async () => {
+  const saved = sessionStorage.getItem(HOME_SCROLL_KEY)
+  if (saved) {
+    sessionStorage.removeItem(HOME_SCROLL_KEY)
+    nextTick(() => window.scrollTo({ top: Number(saved), behavior: 'instant' }))
+  }
+  else {
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+
   if (import.meta.env.DEV) {
     feedLoading.value = false
     return

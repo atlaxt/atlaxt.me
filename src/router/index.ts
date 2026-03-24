@@ -60,7 +60,13 @@ const router = createRouter({
       component: () => import('@/views/PhotosView.vue'),
     },
   ],
-  scrollBehavior: () => ({ top: 0 }),
+  scrollBehavior: (to, _from, savedPosition) => {
+    if (savedPosition)
+      return savedPosition
+    if (to.path === '/')
+      return false
+    return new Promise(resolve => setTimeout(() => resolve({ top: 0 }), 180))
+  },
 })
 
 export default router

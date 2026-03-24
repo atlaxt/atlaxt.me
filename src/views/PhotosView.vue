@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Photo } from '@/types'
 import { computed, onUnmounted, ref } from 'vue'
+import PageHeader from '@/components/PageHeader.vue'
 import { useSeo } from '@/seo/useSeo'
 import photosRaw from '../../content/photos.yaml'
 
@@ -186,7 +187,8 @@ useSeo({
 </script>
 
 <template>
-  <div class="px-8 py-8">
+  <div class="px-8 py-16">
+    <PageHeader :crumbs="[{ label: 'Fotoğraflar', to: '/photos' }]" />
     <!-- Masonry grid -->
     <div v-if="photos.length" class="masonry-grid">
       <button

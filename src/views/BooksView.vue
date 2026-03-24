@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Book } from '@/types'
 import { computed, ref } from 'vue'
+import PageHeader from '@/components/PageHeader.vue'
 import { useSeo } from '@/seo/useSeo'
 import booksRaw from '../../content/books.yaml'
 
@@ -41,18 +42,12 @@ useSeo({
 
 <template>
   <div class="px-8 py-16">
-    <!-- Başlık + açıklama -->
-    <div class="mb-10">
-      <p class="text-sm leading-relaxed max-w-sm" style="color: var(--text-muted);">
-        Modern klasiklerin hepsini okumayı hedefliyorum; okuduklarımı burada puanlıyorum.
-      </p>
-    </div>
+    <PageHeader :crumbs="[{ label: 'Kitaplık', to: '/books' }]" />
 
-    <!-- Başlık satırı -->
+    <!-- Arama satırı -->
     <div class="flex items-baseline justify-between mb-10">
-      <span class="text-xs tracking-widest uppercase" style="color: var(--text-muted);">
-        Kitaplık
-        <span class="ml-2 opacity-50">{{ filtered.length }}</span>
+      <span class="text-xs" style="color: var(--text-muted); opacity: 0.4;">
+        {{ filtered.length }} kitap
       </span>
 
       <div class="flex items-baseline gap-6">

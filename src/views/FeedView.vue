@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FeedItem, FeedSource } from '@/types'
 import { computed, onMounted, ref } from 'vue'
+import PageHeader from '@/components/PageHeader.vue'
 import { fetchFeed } from '@/composables/useFeeds'
 import { useSeo } from '@/seo/useSeo'
 import feedsRaw from '../../content/feeds.yaml'
@@ -105,14 +106,7 @@ useSeo({
 
 <template>
   <div class="px-8 py-16">
-    <div class="mb-10">
-      <h1 class="text-xl font-semibold mb-3" style="color: var(--text);">
-        Haberler
-      </h1>
-      <p class="text-sm leading-relaxed" style="color: var(--text-muted);">
-        Düzenli okuduğum kaynaklar. Benimle aynı yolda gidiyorsanız işinize yarayabilir.
-      </p>
-    </div>
+    <PageHeader :crumbs="[{ label: 'Haberler', to: '/feed' }]" />
 
     <!-- RSS Kaynakları (isteğe bağlı) -->
     <div class="mb-10 flex flex-col gap-3">
