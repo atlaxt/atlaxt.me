@@ -51,7 +51,7 @@ const route = useRoute()
               v-for="tool in tools"
               :key="tool.id"
               :to="`/cli/tools/${tool.id}`"
-              class="text-xs py-1 text-left transition-opacity hover:opacity-100 font-mono"
+              class="text-xs py-1 text-left transition-opacity hover:opacity-100"
               :style="route.path === `/cli/tools/${tool.id}` ? 'color: var(--text);' : 'color: var(--text-muted); opacity: 0.6;'"
             >
               {{ tool.package.split('/')[1] }}
