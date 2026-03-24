@@ -2,7 +2,6 @@
 title: 'Modern Web Render Stratejileri: CSR, SSR, SSG ve ISR'
 description: 'CSR/SSR/SSG/ISR kafamda nasıl ayrılıyor? Hız, SEO ve maliyet tarafında pratik bir özet.'
 date: '2026-02-01'
-image: '/writings/rendering_strategies_cover.jpg'
 ---
 
 Bir projeye başlarken ben genelde iki şeye takılıyorum: sayfa **ne kadar hızlı açılıyor** ve arama motorları **bu sayfayı ne kadar rahat anlayabiliyor**. Render stratejisi seçimi bu ikisini baya etkiliyor.
