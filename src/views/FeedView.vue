@@ -54,7 +54,26 @@ const rssCategories = computed(() => {
   return cats
 })
 
+function isToday(d: Date): boolean {
+  const now = new Date()
+  return d.getFullYear() === now.getFullYear()
+    && d.getMonth() === now.getMonth()
+    && d.getDate() === now.getDate()
+}
+
+function isYesterday(d: Date): boolean {
+  const yest = new Date()
+  yest.setDate(yest.getDate() - 1)
+  return d.getFullYear() === yest.getFullYear()
+    && d.getMonth() === yest.getMonth()
+    && d.getDate() === yest.getDate()
+}
+
 function formatDate(d: Date): string {
+  if (isToday(d))
+    return 'Bugün'
+  if (isYesterday(d))
+    return 'Dün'
   return d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
@@ -235,7 +254,12 @@ useSeo({
               {{ item.source }}
             </a>
             <span style="color: var(--border);">·</span>
-            <span class="text-xs" style="color: var(--text-muted); opacity: 0.5;">{{ formatDate(item.date) }}</span>
+            <span
+              class="text-xs font-medium"
+              :style="isToday(item.date)
+                ? 'color: var(--text);'
+                : 'color: var(--text-muted); opacity: 0.5;'"
+            >{{ formatDate(item.date) }}</span>
           </div>
         </div>
         <span class="text-sm shrink-0 mt-0.5" style="color: var(--text-muted);">↗</span>

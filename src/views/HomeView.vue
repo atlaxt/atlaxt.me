@@ -63,7 +63,20 @@ function favicon(url: string): string {
   }
 }
 
+function isFeedToday(d: Date): boolean {
+  const now = new Date()
+  return d.getFullYear() === now.getFullYear()
+    && d.getMonth() === now.getMonth()
+    && d.getDate() === now.getDate()
+}
+
 function feedDate(d: Date): string {
+  if (isFeedToday(d))
+    return 'Bugün'
+  const yest = new Date()
+  yest.setDate(yest.getDate() - 1)
+  if (d.getFullYear() === yest.getFullYear() && d.getMonth() === yest.getMonth() && d.getDate() === yest.getDate())
+    return 'Dün'
   return d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })
 }
 
@@ -340,7 +353,12 @@ useSeo({
               <img :src="favicon(item.sourceLink)" class="w-3 h-3 rounded-sm" alt="" aria-hidden="true">
               <span class="text-xs" style="color: var(--text-muted); opacity: 0.6;">{{ item.source }}</span>
               <span style="color: var(--border);">·</span>
-              <span class="text-xs" style="color: var(--text-muted); opacity: 0.5;">{{ feedDate(item.date) }}</span>
+              <span
+                class="text-xs font-medium"
+                :style="isFeedToday(item.date)
+                  ? 'color: var(--text);'
+                  : 'color: var(--text-muted); opacity: 0.5;'"
+              >{{ feedDate(item.date) }}</span>
             </div>
           </div>
           <span class="text-sm shrink-0 mt-0.5" style="color: var(--text-muted);">↗</span>
