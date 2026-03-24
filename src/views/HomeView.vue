@@ -182,7 +182,7 @@ useSeo({
           Öncelikli olarak Nuxt ekosistemine odaklanan bir Web Geliştiricisiyim. Nihai hedefim, yalnızca işlevsel kod yazmanın ötesine geçerek her üründe üst düzey Kullanıcı Deneyimi (UX) sunmak.
         </p>
         <!-- Şu an çalışılan yer -->
-        <div class="inline-flex items-center gap-2 mt-6 text-sm" style="color: #4ade80;">
+        <div class="inline-flex items-center gap-2 mt-6 text-xs" style="color: #4ade80;">
           <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse shrink-0" />
           trex Digital Manufacturing'da çalışıyor
         </div>

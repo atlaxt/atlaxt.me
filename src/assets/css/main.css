@@ -24,7 +24,7 @@
   --color-border:      var(--border);
   --color-ink:         var(--text);
   --color-ink-muted:   var(--text-muted);
-  --font-sans:         'Figtree', system-ui, sans-serif;
+  --font-sans:         'Outfit', system-ui, sans-serif;
 }
 
 /* ─── View Transition ────────────────────────────────── */
