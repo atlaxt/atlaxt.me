@@ -16,11 +16,26 @@ const filtered = computed(() => {
   )
 })
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  'name': 'Kitaplık — Atlas Yiğit Aydın',
+  'description': 'Okuduğum kitaplar ve puanlarım.',
+  'url': 'https://atlaxt.me/books',
+  'numberOfItems': books.length,
+  'itemListElement': books.map((b, i) => ({
+    '@type': 'ListItem',
+    'position': i + 1,
+    'name': b.name,
+  })),
+}
+
 useSeo({
   title: 'Kitaplık',
-  description: 'Okuduğum kitaplar ve puanlarım.',
+  description: `Okuduğum ${books.length}+ kitap ve puanlarım. Modern klasiklerin hepsini okumayı hedefliyorum.`,
   canonicalPath: '/books',
   type: 'website',
+  jsonLd,
 })
 </script>
 

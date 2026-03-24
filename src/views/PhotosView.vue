@@ -163,11 +163,25 @@ onUnmounted(() => {
   document.body.style.overflow = ''
 })
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  'name': 'Fotoğraflar — Atlas Yiğit Aydın',
+  'description': 'Objektifimden kareler.',
+  'url': 'https://atlaxt.me/photos',
+  'author': {
+    '@type': 'Person',
+    'name': 'Atlas Yiğit Aydın',
+    'url': 'https://atlaxt.me',
+  },
+}
+
 useSeo({
   title: 'Fotoğraflar',
-  description: 'Objektifimden kareler.',
+  description: 'Objektifimden kareler. Seyahat, mimari ve gündelik hayattan fotoğraflar.',
   canonicalPath: '/photos',
   type: 'website',
+  jsonLd,
 })
 </script>
 

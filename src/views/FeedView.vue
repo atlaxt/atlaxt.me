@@ -78,7 +78,7 @@ onMounted(async () => {
 
 useSeo({
   title: 'Haberler',
-  description: 'Vue, Nuxt ve ekosisteminden takip ettiğim güncel içerikler.',
+  description: 'Vue, Nuxt ve web ekosisteminden düzenli takip ettiğim kaynaklar ve güncel içerikler.',
   canonicalPath: '/feed',
   type: 'website',
 })

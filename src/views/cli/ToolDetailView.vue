@@ -29,6 +29,7 @@ useSeo({
   description: tool.value?.desc ?? '',
   canonicalPath: `/cli/tools/${route.params.id}`,
   type: 'website',
+  noindex: true,
 })
 </script>
 

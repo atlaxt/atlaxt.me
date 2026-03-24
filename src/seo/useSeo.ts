@@ -13,6 +13,7 @@ export interface SeoOptions {
   publishedTime?: string | ComputedRef<string | undefined>
   modifiedTime?: string | ComputedRef<string | undefined>
   jsonLd?: Record<string, any> | ComputedRef<Record<string, any> | undefined>
+  noindex?: boolean
 }
 
 function unwrap<T>(v: T | ComputedRef<T>): T {
@@ -49,8 +50,12 @@ export function useSeo(options: SeoOptions = {}) {
   const type = computed(() => options.type || 'website')
 
   useHead(() => {
+    const robotsContent = options.noindex ? 'noindex, nofollow' : 'index, follow'
+
     const meta: any[] = [
       { name: 'description', content: description.value },
+      { name: 'author', content: SITE_NAME },
+      { name: 'robots', content: robotsContent },
       // Open Graph
       { property: 'og:site_name', content: SITE_NAME },
       { property: 'og:title', content: title.value },
@@ -69,7 +74,10 @@ export function useSeo(options: SeoOptions = {}) {
     if (image.value) {
       meta.push({ property: 'og:image', content: image.value })
       meta.push({ property: 'og:image:alt', content: title.value })
+      meta.push({ property: 'og:image:width', content: '1200' })
+      meta.push({ property: 'og:image:height', content: '630' })
       meta.push({ name: 'twitter:image', content: image.value })
+      meta.push({ name: 'twitter:image:alt', content: title.value })
     }
 
     const publishedTime = unwrap(options.publishedTime)

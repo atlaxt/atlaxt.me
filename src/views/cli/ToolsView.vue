@@ -13,6 +13,7 @@ useSeo({
   description: 'atlaxt CLI araçları.',
   canonicalPath: '/cli/tools',
   type: 'website',
+  noindex: true,
 })
 </script>
 
