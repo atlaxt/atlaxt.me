@@ -7,7 +7,6 @@ import photosRaw from '../../content/photos.yaml'
 
 const photos = photosRaw as unknown as Photo[]
 
-// Dev'de doğrudan, production'da Vercel Image Optimization ile
 function vercelImage(file: string, w: number, q: number) {
   return `/_vercel/image?url=${encodeURIComponent(`/photos/${file}`)}&w=${w}&q=${q}`
 }
@@ -15,8 +14,7 @@ function vercelImage(file: string, w: number, q: number) {
 function thumb(file: string) {
   if (import.meta.env.DEV)
     return `/photos/${file}`
-  // Masonry'de kart genişliği çoğunlukla 220-360px bandında; 800px fazla ağır kalıyor.
-  return vercelImage(file, 480, 60)
+  return vercelImage(file, 640, 60)
 }
 
 function full(file: string) {
@@ -29,9 +27,9 @@ function thumbSrcSet(file: string): string | undefined {
   if (import.meta.env.DEV)
     return undefined
   return [
-    `${vercelImage(file, 320, 55)} 320w`,
-    `${vercelImage(file, 480, 60)} 480w`,
-    `${vercelImage(file, 800, 70)} 800w`,
+    `${vercelImage(file, 384, 55)} 384w`,
+    `${vercelImage(file, 640, 60)} 640w`,
+    `${vercelImage(file, 828, 70)} 828w`,
   ].join(', ')
 }
 
