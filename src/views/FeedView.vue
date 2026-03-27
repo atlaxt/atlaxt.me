@@ -101,6 +101,19 @@ useSeo({
   description: 'Vue, Nuxt ve web ekosisteminden düzenli takip ettiğim kaynaklar ve güncel içerikler.',
   canonicalPath: '/feed',
   type: 'website',
+  jsonLd: {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    'name': 'Haberler — Atlas Yiğit Aydın',
+    'description': 'Vue, Nuxt ve web ekosisteminden düzenli takip edilen kaynaklar.',
+    'url': 'https://atlaxt.me/feed',
+    'inLanguage': 'tr-TR',
+    'author': {
+      '@type': 'Person',
+      'name': 'Atlas Yiğit Aydın',
+      'url': 'https://atlaxt.me',
+    },
+  },
 })
 </script>
 
