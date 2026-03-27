@@ -1,5 +1,6 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -8,8 +9,6 @@ const root = path.resolve(__dirname, '..')
 
 const CONTENT_DIR = path.join(root, 'content', 'blogs')
 const PUBLIC_DIR = path.join(root, 'public')
-
-const process = require('node:process')
 
 function getSiteUrl() {
   const raw = process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://atlaxt.me'

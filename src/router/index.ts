@@ -59,6 +59,11 @@ const router = createRouter({
       name: 'photos',
       component: () => import('@/views/PhotosView.vue'),
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('@/views/NotFoundView.vue'),
+    },
   ],
   scrollBehavior: (to, _from, savedPosition) => {
     if (savedPosition)
