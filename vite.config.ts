@@ -1,10 +1,14 @@
 import type { Plugin } from 'vite'
-import { readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
+
+import { dirname, resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 function yamlPlugin(): Plugin {
   return {
@@ -167,6 +171,39 @@ function mdToHtml(md: string): string {
   return out.join('\n')
 }
 
+// Photo meta plugin — thumbnail boyutlarından landscape hesaplar
+function photoMetaPlugin(): Plugin {
+  const VIRTUAL = 'virtual:photo-meta'
+  const RESOLVED = `\0${VIRTUAL}`
+
+  return {
+    name: 'vite-photo-meta',
+    resolveId(id) {
+      if (id === VIRTUAL)
+        return RESOLVED
+    },
+    async load(id) {
+      if (id !== RESOLVED)
+        return
+
+      const thumbDir = resolve(__dirname, 'public/photos/thumbs')
+      if (!existsSync(thumbDir))
+        return `export default {}`
+
+      const files = readdirSync(thumbDir).filter(f => /\.(jpg|jpeg|png)$/i.test(f))
+      const meta: Record<string, boolean> = {}
+
+      const sharp = (await import('sharp')).default
+      for (const file of files) {
+        const { width = 0, height = 0 } = await sharp(resolve(thumbDir, file)).metadata()
+        meta[file] = width > height
+      }
+
+      return `export default ${JSON.stringify(meta)}`
+    },
+  }
+}
+
 // Markdown plugin — frontmatter + html export
 function mdPlugin(): Plugin {
   return {
@@ -207,6 +244,7 @@ export default defineConfig({
     vueDevTools(),
     yamlPlugin(),
     mdPlugin(),
+    photoMetaPlugin(),
   ],
   resolve: {
     alias: {

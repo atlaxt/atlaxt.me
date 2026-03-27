@@ -60,6 +60,12 @@ export interface Template {
   href: string
 }
 
+// ─── Sözler ───────────────────────────────────────────────────
+export interface Quote {
+  text: string
+  author?: string
+}
+
 // ─── Feed ─────────────────────────────────────────────────────
 export interface FeedSource {
   name: string

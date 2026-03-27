@@ -1,13 +1,10 @@
 {
   "permissions": {
+    "additionalDirectories": [
+      "C:\\Users\\yigitaydin\\GitHub\\atlaxt.me\\public\\photos"
+    ],
     "allow": [
-      "Bash(do file:*)",
-      "Bash(done)",
-      "Bash(git -C /c/Users/yigitaydin/GitHub/atlaxt.me ls-files --error-unmatch public/photos/)",
-      "Bash(git -C /c/Users/yigitaydin/GitHub/atlaxt.me status public/photos/)",
-      "Bash(git -C /c/Users/yigitaydin/GitHub/atlaxt.me ls-files public/photos/)",
-      "Bash(git -C /c/Users/yigitaydin/GitHub/atlaxt.me log --oneline -5 -- public/photos/)",
-      "Bash(git -C /c/Users/yigitaydin/GitHub/atlaxt.me show 6acf8f4 --stat)"
+      "Bash(node -e \":*)"
     ]
   }
 }

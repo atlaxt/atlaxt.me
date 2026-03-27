@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "generate:seo": "node ./scripts/generate-seo-files.mjs",
+    "generate:thumbs": "node ./scripts/generate-thumbs.mjs",
     "build": "run-s generate:seo && run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -33,6 +34,7 @@
     "@vue/tsconfig": "^0.8.1",
     "eslint": "^10.0.3",
     "npm-run-all2": "^8.0.4",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.1.0",
     "typescript": "~5.9.3",
     "vite": "^7.3.1",

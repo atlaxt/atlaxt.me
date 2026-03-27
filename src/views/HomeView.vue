@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { Book, EducationEntry, ExperienceEntry, FeedItem, FeedSource, Photo, Post } from '@/types'
+import type { Book, EducationEntry, ExperienceEntry, FeedItem, FeedSource, Photo, Post, Quote } from '@/types'
+import photoMeta from 'virtual:photo-meta'
 import { nextTick, onMounted, ref } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import SectionLabel from '@/components/SectionLabel.vue'
@@ -11,6 +12,14 @@ import educationRaw from '../../content/education.yaml'
 import experienceRaw from '../../content/experience.yaml'
 import feedsRaw from '../../content/feeds.yaml'
 import photosRaw from '../../content/photos.yaml'
+import quotesRaw from '../../content/quotes.yaml'
+
+// ─── Günün sözü ─────────────────────────────────────────────────
+const quotes = quotesRaw as unknown as Quote[]
+const QUOTE_KEY = 'quote-index'
+const quoteIndex = Number(localStorage.getItem(QUOTE_KEY) ?? 0) % quotes.length
+localStorage.setItem(QUOTE_KEY, String((quoteIndex + 1) % quotes.length))
+const currentQuote = quotes[quoteIndex]!
 
 // ─── Son yazılar ────────────────────────────────────────────────
 const modules = import.meta.glob('../../content/blogs/*.md', { eager: true })
@@ -21,12 +30,12 @@ const recentPosts = (Object.values(modules) as { default: Post }[])
   .slice(0, 3)
 
 // ─── Son fotoğraflar ────────────────────────────────────────────
-const recentPhotos = (photosRaw as unknown as Photo[]).slice(-3)
+const recentPhotos = (photosRaw as unknown as Photo[])
+  .filter(p => (photoMeta as Record<string, boolean>)[p.file])
+  .slice(-6)
 
 function thumb(file: string) {
-  if (import.meta.env.DEV)
-    return `/photos/${file}`
-  return `/_vercel/image?url=${encodeURIComponent(`/photos/${file}`)}&w=400&q=65`
+  return `/photos/thumbs/${file}`
 }
 
 // ─── En beğenilen kitaplar ──────────────────────────────────────
@@ -296,36 +305,6 @@ useSeo({
       </div>
     </div>
 
-    <!-- ─── Son kitaplar ─────────────────────────────────────────── -->
-    <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
-      <div class="flex items-baseline justify-between mb-8">
-        <SectionLabel>Kitaplık</SectionLabel>
-        <RouterLink
-          to="/books"
-          class="text-xs transition-opacity hover:opacity-100 opacity-40"
-          style="color: var(--text);"
-        >
-          tümü →
-        </RouterLink>
-      </div>
-      <div class="flex flex-col">
-        <div
-          v-for="book in recentBooks"
-          :key="book.number"
-          class="flex items-baseline justify-between py-4"
-          style="border-bottom: 1px solid var(--border);"
-        >
-          <div class="flex items-baseline gap-3 min-w-0">
-            <span class="text-sm truncate" style="color: var(--text);">{{ book.name }}</span>
-            <span class="text-xs shrink-0 hidden sm:inline" style="color: var(--text-muted);">{{ book.author }}</span>
-          </div>
-          <span v-if="book.rate" class="text-xs shrink-0 ml-6 tabular-nums" style="color: var(--text-muted);">
-            {{ book.rate }} / 10
-          </span>
-        </div>
-      </div>
-    </div>
-
     <!-- ─── Son haberler ─────────────────────────────────────────── -->
     <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
       <div class="flex items-baseline justify-between mb-8">
@@ -438,7 +417,9 @@ useSeo({
             <div>
               <p
                 class="text-sm font-medium"
-                :style="edu.planned ? 'color: var(--text-muted);' : 'color: var(--text);'"
+                :class="{
+                  'text-muted': edu.planned,
+                }"
               >
                 {{ edu.degree }}
               </p>
@@ -463,6 +444,36 @@ useSeo({
       </div>
     </div>
 
+    <!-- ─── Son kitaplar ─────────────────────────────────────────── -->
+    <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
+      <div class="flex items-baseline justify-between mb-8">
+        <SectionLabel>Kitaplık</SectionLabel>
+        <RouterLink
+          to="/books"
+          class="text-xs transition-opacity hover:opacity-100 opacity-40"
+          style="color: var(--text);"
+        >
+          tümü →
+        </RouterLink>
+      </div>
+      <div class="flex flex-col">
+        <div
+          v-for="book in recentBooks"
+          :key="book.number"
+          class="flex items-baseline justify-between py-4"
+          style="border-bottom: 1px solid var(--border);"
+        >
+          <div class="flex items-baseline gap-3 min-w-0">
+            <span class="text-sm truncate" style="color: var(--text);">{{ book.name }}</span>
+            <span class="text-xs shrink-0 hidden sm:inline" style="color: var(--text-muted);">{{ book.author }}</span>
+          </div>
+          <span v-if="book.rate" class="text-xs shrink-0 ml-6 tabular-nums" style="color: var(--text-muted);">
+            {{ book.rate }} / 10
+          </span>
+        </div>
+      </div>
+    </div>
+
     <!-- ─── Fotoğraflar (Pinterest grid) ────────────────────────── -->
     <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
       <div class="flex items-baseline justify-between mb-8">
@@ -475,63 +486,120 @@ useSeo({
           tümü →
         </RouterLink>
       </div>
-      <div class="photo-pinterest">
-        <RouterLink
-          v-for="photo in recentPhotos"
-          :key="photo.file"
-          to="/photos"
-          class="photo-card"
-        >
-          <img
-            :src="thumb(photo.file)"
-            :alt="photo.alt ?? photo.file"
-            loading="lazy"
-            decoding="async"
-            draggable="false"
+      <div class="photo-peek-wrap">
+        <div class="photo-masonry">
+          <RouterLink
+            v-for="photo in recentPhotos"
+            :key="photo.file"
+            to="/photos"
+            class="photo-item"
           >
-        </RouterLink>
+            <img
+              :src="thumb(photo.file)"
+              :alt="photo.alt ?? photo.file"
+              loading="lazy"
+              decoding="async"
+              draggable="false"
+            >
+          </RouterLink>
+        </div>
+        <div class="photo-fade" />
       </div>
+    </div>
+
+    <!-- ─── Günün sözü ───────────────────────────────────────────── -->
+    <div class="px-8 py-20 w-full">
+      <blockquote class="quote-block max-w-lg mx-auto text-center">
+        <p class="quote-text">
+          <span class="quote-mark">"</span>{{ currentQuote.text }}<span class="quote-mark">"</span>
+        </p>
+        <footer v-if="currentQuote.author" class="quote-author">
+          {{ currentQuote.author }}
+        </footer>
+      </blockquote>
     </div>
   </div>
 </template>
 
 <style scoped>
-.photo-pinterest {
-  columns: 3 220px;
-  gap: 14px;
+.quote-block {
+  opacity: 0.28;
+  transition: opacity 0.4s ease;
 }
 
-.photo-card {
+.quote-block:hover {
+  opacity: 0.6;
+}
+
+.quote-text {
+  font-size: 0.8rem;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.quote-mark {
+  font-size: 1.6rem;
+  font-style: normal;
+  line-height: 0;
+  vertical-align: -0.3em;
+  opacity: 0.35;
+  font-family: Georgia, serif;
+  margin: 0 0.1em;
+}
+
+.quote-author {
+  margin-top: 0.75rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.photo-peek-wrap {
+  position: relative;
+  max-height: 340px;
+  overflow: hidden;
+}
+
+.photo-masonry {
+  columns: 3 180px;
+  gap: 8px;
+}
+
+.photo-item {
   display: block;
   break-inside: avoid;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.13), 0 1px 4px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
 }
 
-.photo-card:hover {
-  transform: translateY(-3px);
-}
-
-.dark .photo-card {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45), 0 1px 4px rgba(0, 0, 0, 0.3);
-}
-
-.photo-card img {
+.photo-item img {
   width: 100%;
   height: auto;
   display: block;
+  transition: opacity 0.3s ease;
+}
+
+.photo-item:hover img {
+  opacity: 0.8;
+}
+
+.photo-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 220px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--bg) 80%);
 }
 
 @media (max-width: 640px) {
-  .photo-pinterest {
+  .photo-masonry {
     columns: 2 140px;
-    gap: 8px;
-  }
-  .photo-card {
-    margin-bottom: 8px;
   }
 }
 </style>

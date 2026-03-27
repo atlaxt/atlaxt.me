@@ -9,20 +9,12 @@ const photos = photosRaw as unknown as Photo[]
 
 const GITHUB_RAW = 'https://raw.githubusercontent.com/atlaxt/atlaxt.me/main/public/photos'
 
-function githubUrl(file: string) {
-  return `${GITHUB_RAW}/${file}`
-}
-
 function thumb(file: string) {
-  if (import.meta.env.DEV)
-    return `/photos/${file}`
-  return githubUrl(file)
+  return `/photos/thumbs/${file}`
 }
 
 function full(file: string) {
-  if (import.meta.env.DEV)
-    return `/photos/${file}`
-  return githubUrl(file)
+  return `${GITHUB_RAW}/${file}`
 }
 
 function thumbSrcSet(_file: string): string | undefined {
@@ -30,9 +22,7 @@ function thumbSrcSet(_file: string): string | undefined {
 }
 
 function direct(file: string) {
-  if (import.meta.env.DEV)
-    return `/photos/${file}`
-  return githubUrl(file)
+  return `/photos/thumbs/${file}`
 }
 
 function onImgError(e: Event, file: string) {
@@ -190,7 +180,7 @@ useSeo({
     <!-- Masonry grid -->
     <div v-if="photos.length" class="masonry-grid">
       <button
-        v-for="(photo, i) in photos"
+        v-for="(photo, i) in photos.reverse()"
         :key="photo.file"
         class="masonry-item group"
         @click="open(i)"
