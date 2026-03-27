@@ -17,7 +17,7 @@ router.beforeEach((to, from) => {
 <template>
   <VercelAnalytics />
   <VercelSpeedInsights />
-  <div class="min-h-screen" style="background: var(--bg); color: var(--text);">
+  <div class="min-h-screen overflow-x-hidden" style="background: var(--bg); color: var(--text);">
     <div class="max-w-4xl mx-auto">
       <AppHeader />
       <main>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FeedItem, FeedSource } from '@/types'
 import { computed, onMounted, ref } from 'vue'
+import PageHeader from '@/components/PageHeader.vue'
 import { fetchFeed } from '@/composables/useFeeds'
 import { useSeo } from '@/seo/useSeo'
 import feedsRaw from '../../content/feeds.yaml'
@@ -54,7 +55,26 @@ const rssCategories = computed(() => {
   return cats
 })
 
+function isToday(d: Date): boolean {
+  const now = new Date()
+  return d.getFullYear() === now.getFullYear()
+    && d.getMonth() === now.getMonth()
+    && d.getDate() === now.getDate()
+}
+
+function isYesterday(d: Date): boolean {
+  const yest = new Date()
+  yest.setDate(yest.getDate() - 1)
+  return d.getFullYear() === yest.getFullYear()
+    && d.getMonth() === yest.getMonth()
+    && d.getDate() === yest.getDate()
+}
+
 function formatDate(d: Date): string {
+  if (isToday(d))
+    return 'Bugün'
+  if (isYesterday(d))
+    return 'Dün'
   return d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
@@ -78,7 +98,7 @@ onMounted(async () => {
 
 useSeo({
   title: 'Haberler',
-  description: 'Vue, Nuxt ve ekosisteminden takip ettiğim güncel içerikler.',
+  description: 'Vue, Nuxt ve web ekosisteminden düzenli takip ettiğim kaynaklar ve güncel içerikler.',
   canonicalPath: '/feed',
   type: 'website',
 })
@@ -86,14 +106,7 @@ useSeo({
 
 <template>
   <div class="px-8 py-16">
-    <div class="mb-10">
-      <h1 class="text-xl font-semibold mb-3" style="color: var(--text);">
-        Haberler
-      </h1>
-      <p class="text-sm leading-relaxed" style="color: var(--text-muted);">
-        Düzenli okuduğum kaynaklar. Benimle aynı yolda gidiyorsanız işinize yarayabilir.
-      </p>
-    </div>
+    <PageHeader :crumbs="[{ label: 'Haberler', to: '/feed' }]" />
 
     <!-- RSS Kaynakları (isteğe bağlı) -->
     <div class="mb-10 flex flex-col gap-3">
@@ -235,7 +248,12 @@ useSeo({
               {{ item.source }}
             </a>
             <span style="color: var(--border);">·</span>
-            <span class="text-xs" style="color: var(--text-muted); opacity: 0.5;">{{ formatDate(item.date) }}</span>
+            <span
+              class="text-xs font-medium"
+              :style="isToday(item.date)
+                ? 'color: var(--text);'
+                : 'color: var(--text-muted); opacity: 0.5;'"
+            >{{ formatDate(item.date) }}</span>
           </div>
         </div>
         <span class="text-sm shrink-0 mt-0.5" style="color: var(--text-muted);">↗</span>

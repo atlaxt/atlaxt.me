@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Post } from '@/types'
+import PageHeader from '@/components/PageHeader.vue'
+import { toAbsoluteUrl } from '@/seo/site'
 import { useSeo } from '@/seo/useSeo'
 
 const modules = import.meta.glob('../../content/blogs/*.md', { eager: true })
@@ -9,19 +11,39 @@ const posts = (Object.values(modules) as { default: Post }[])
   .filter(p => p?.frontmatter)
   .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date))
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  'name': 'Yazılar — Atlas Yiğit Aydın',
+  'url': toAbsoluteUrl('/writings'),
+  'description': 'Yazılım geliştirme, tasarım ve öğrenme üzerine yazılar.',
+  'inLanguage': 'tr-TR',
+  'author': {
+    '@type': 'Person',
+    'name': 'Atlas Yiğit Aydın',
+    'url': 'https://atlaxt.me',
+  },
+  'blogPost': posts.map(p => ({
+    '@type': 'BlogPosting',
+    'headline': p.frontmatter.title,
+    'description': p.frontmatter.description,
+    'datePublished': new Date(p.frontmatter.date).toISOString(),
+    'url': toAbsoluteUrl(`/writings/${p.slug}`),
+  })),
+}
+
 useSeo({
   title: 'Yazılar',
-  description: 'Blog yazıları ve notlar.',
+  description: 'Yazılım geliştirme, tasarım ve öğrenme üzerine yazılar.',
   canonicalPath: '/writings',
   type: 'website',
+  jsonLd,
 })
 </script>
 
 <template>
   <div class="px-8 py-16">
-    <p class="text-xs tracking-widest uppercase mb-12" style="color: var(--text-muted);">
-      Yazılar
-    </p>
+    <PageHeader :crumbs="[{ label: 'Yazılar', to: '/writings' }]" />
 
     <div class="flex flex-col">
       <RouterLink

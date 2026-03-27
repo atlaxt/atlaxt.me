@@ -13,6 +13,7 @@ useSeo({
   description: 'atlaxt CLI proje şablonları.',
   canonicalPath: '/cli/templates',
   type: 'website',
+  noindex: true,
 })
 </script>
 

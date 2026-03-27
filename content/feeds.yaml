@@ -19,7 +19,7 @@
   category: Vue
 
 - name: Atinux PRs
-  url: 'https://prs.atinux.com/rss'
+  url: 'https://prs.atinux.com/feed.xml'
   link: 'https://prs.atinux.com'
   category: Vue
 
