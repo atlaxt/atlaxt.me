@@ -20,12 +20,12 @@ const router = createRouter({
       component: () => import('@/views/AboutView.vue'),
     },
     {
-      path: '/writings',
-      name: 'writings',
-      component: () => import('@/views/WritingsView.vue'),
+      path: '/blog',
+      name: 'blog',
+      component: () => import('@/views/BlogView.vue'),
     },
     {
-      path: '/writings/:slug',
+      path: '/blog/:slug',
       name: 'post',
       component: () => import('@/views/PostView.vue'),
     },
@@ -65,7 +65,7 @@ const router = createRouter({
       return savedPosition
     if (to.path === '/')
       return false
-    return new Promise(resolve => setTimeout(() => resolve({ top: 0 }), 180))
+    return new Promise(resolve => setTimeout(resolve, 180, { top: 0 }))
   },
 })
 

@@ -9,6 +9,8 @@ const root = path.resolve(__dirname, '..')
 const CONTENT_DIR = path.join(root, 'content', 'blogs')
 const PUBLIC_DIR = path.join(root, 'public')
 
+const process = require('node:process')
+
 function getSiteUrl() {
   const raw = process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://atlaxt.me'
   return String(raw).replace(/\/$/, '')
@@ -71,7 +73,7 @@ function buildSitemap({ siteUrl, posts }) {
 
   const staticRoutes = [
     { path: '/', changefreq: 'weekly', priority: 1.0 },
-    { path: '/writings', changefreq: 'weekly', priority: 0.8 },
+    { path: '/blog', changefreq: 'weekly', priority: 0.8 },
     { path: '/books', changefreq: 'monthly', priority: 0.6 },
     { path: '/about', changefreq: 'monthly', priority: 0.3 },
   ]
@@ -90,7 +92,7 @@ function buildSitemap({ siteUrl, posts }) {
   for (const p of posts) {
     const lastmod = p.frontmatter.date ? new Date(p.frontmatter.date).toISOString() : now
     urls.push({
-      loc: `${siteUrl}/writings/${p.slug}`,
+      loc: `${siteUrl}/blog/${p.slug}`,
       lastmod,
       changefreq: 'yearly',
       priority: 0.7,

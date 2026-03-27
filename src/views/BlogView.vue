@@ -9,14 +9,14 @@ const modules = import.meta.glob('../../content/blogs/*.md', { eager: true })
 const posts = (Object.values(modules) as { default: Post }[])
   .map(m => m.default)
   .filter(p => p?.frontmatter)
-  .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date))
+  .sort((a, b) => b.frontmatter.date?.localeCompare(a.frontmatter.date))
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Blog',
-  'name': 'Yazılar — Atlas Yiğit Aydın',
-  'url': toAbsoluteUrl('/writings'),
-  'description': 'Yazılım geliştirme, tasarım ve öğrenme üzerine yazılar.',
+  'name': 'Blog — Atlas Yiğit Aydın',
+  'url': toAbsoluteUrl('/blog'),
+  'description': 'Yazılım geliştirme, tasarım ve öğrenme üzerine blog.',
   'inLanguage': 'tr-TR',
   'author': {
     '@type': 'Person',
@@ -27,15 +27,15 @@ const jsonLd = {
     '@type': 'BlogPosting',
     'headline': p.frontmatter.title,
     'description': p.frontmatter.description,
-    'datePublished': new Date(p.frontmatter.date).toISOString(),
-    'url': toAbsoluteUrl(`/writings/${p.slug}`),
+    'datePublished': p.frontmatter.date ? new Date(p.frontmatter.date).toISOString() : '',
+    'url': toAbsoluteUrl(`/blog/${p.slug}`),
   })),
 }
 
 useSeo({
-  title: 'Yazılar',
-  description: 'Yazılım geliştirme, tasarım ve öğrenme üzerine yazılar.',
-  canonicalPath: '/writings',
+  title: 'Blog',
+  description: 'Yazılım geliştirme, tasarım ve öğrenme üzerine blog.',
+  canonicalPath: '/blog',
   type: 'website',
   jsonLd,
 })
@@ -43,13 +43,13 @@ useSeo({
 
 <template>
   <div class="px-8 py-16">
-    <PageHeader :crumbs="[{ label: 'Yazılar', to: '/writings' }]" />
+    <PageHeader :crumbs="[{ label: 'Blog', to: '/blog' }]" />
 
     <div class="flex flex-col">
       <RouterLink
         v-for="post in posts"
         :key="post.slug"
-        :to="`/writings/${post.slug}`"
+        :to="`/blog/${post.slug}`"
         class="flex flex-col py-6 border-b transition-opacity hover:opacity-70"
         style="border-color: var(--border);"
       >

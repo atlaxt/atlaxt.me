@@ -266,9 +266,9 @@ useSeo({
     <!-- ─── Son yazılar ─────────────────────────────────────────── -->
     <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
       <div class="flex items-baseline justify-between mb-8">
-        <SectionLabel>Yazılar</SectionLabel>
+        <SectionLabel>Blog</SectionLabel>
         <RouterLink
-          to="/writings"
+          to="/blog"
           class="text-xs transition-opacity hover:opacity-100 opacity-40"
           style="color: var(--text);"
         >
@@ -279,7 +279,7 @@ useSeo({
         <RouterLink
           v-for="post in recentPosts"
           :key="post.slug"
-          :to="`/writings/${post.slug}`"
+          :to="`/blog/${post.slug}`"
           class="flex flex-col py-5 transition-opacity hover:opacity-70"
           style="border-bottom: 1px solid var(--border);"
         >
@@ -380,7 +380,7 @@ useSeo({
           <span class="text-sm shrink-0 mt-0.5" style="color: var(--text-muted);">↗</span>
         </a>
         <p v-if="!feedItems.length" class="text-sm py-6 font-mono" style="color: var(--text-muted); opacity: 0.35;">
-          {{ isDev ? 'lokaldeyisiniz' : 'içerik yüklenemedi.' }}
+          {{ isDev ? '-- Lokaldesiniz --' : 'içerik yüklenemedi.' }}
         </p>
       </div>
     </div>

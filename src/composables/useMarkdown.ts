@@ -31,7 +31,10 @@ export function mdToHtml(md: string, base?: string): string {
   let listOrdered = false
 
   const closeList = () => {
-    if (inList) { out.push(listOrdered ? '</ol>' : '</ul>'); inList = false }
+    if (inList) {
+      out.push(listOrdered ? '</ol>' : '</ul>')
+      inList = false
+    }
   }
 
   while (i < lines.length) {
@@ -60,36 +63,51 @@ export function mdToHtml(md: string, base?: string): string {
       const level = h[1]!.length
       const tag = `h${Math.min(level, 4)}`
       out.push(`<${tag}>${inline(h[2]!, base)}</${tag}>`)
-      i++; continue
+      i++
+      continue
     }
 
     // HR
     if (/^(-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
       closeList()
       out.push('<hr>')
-      i++; continue
+      i++
+      continue
     }
 
     // Ordered list
     const ol = trimmed.match(/^\d+\.\s+(.+)/)
     if (ol) {
-      if (!inList || !listOrdered) { closeList(); out.push('<ol>'); inList = true; listOrdered = true }
+      if (!inList || !listOrdered) {
+        closeList()
+        out.push('<ol>')
+        inList = true
+        listOrdered = true
+      }
       out.push(`<li>${inline(ol[1]!, base)}</li>`)
-      i++; continue
+      i++
+      continue
     }
 
     // Unordered list
     const ul = trimmed.match(/^[-*]\s+(.+)/)
     if (ul) {
-      if (!inList || listOrdered) { closeList(); out.push('<ul>'); inList = true; listOrdered = false }
+      if (!inList || listOrdered) {
+        closeList()
+        out.push('<ul>')
+        inList = true
+        listOrdered = false
+      }
       out.push(`<li>${inline(ul[1]!, base)}</li>`)
-      i++; continue
+      i++
+      continue
     }
 
     // Blank line
     if (!trimmed) {
       closeList()
-      i++; continue
+      i++
+      continue
     }
 
     // Paragraph

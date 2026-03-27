@@ -21,7 +21,7 @@ const post = computed(() =>
   posts.find(p => p.slug === route.params.slug),
 )
 
-const canonicalPath = computed(() => (post.value ? `/writings/${post.value.slug}` : undefined))
+const canonicalPath = computed(() => (post.value ? `/blog/${post.value.slug}` : undefined))
 
 const publishedTime = computed(() => {
   const date = post.value?.frontmatter.date
@@ -40,7 +40,7 @@ const jsonLd = computed(() => {
   const headline = post.value.frontmatter.title
   const description = post.value.frontmatter.description
   const image = post.value.frontmatter.image ? toAbsoluteUrl(post.value.frontmatter.image) : undefined
-  const url = toAbsoluteUrl(`/writings/${post.value.slug}`)
+  const url = toAbsoluteUrl(`/blog/${post.value.slug}`)
   const datePublished = publishedTime.value
 
   const author = {
@@ -68,7 +68,7 @@ const jsonLd = computed(() => {
         '@type': 'BreadcrumbList',
         'itemListElement': [
           { '@type': 'ListItem', 'position': 1, 'name': 'Ana Sayfa', 'item': 'https://atlaxt.me' },
-          { '@type': 'ListItem', 'position': 2, 'name': 'Yazılar', 'item': 'https://atlaxt.me/writings' },
+          { '@type': 'ListItem', 'position': 2, 'name': 'Blog', 'item': 'https://atlaxt.me/blog' },
           { '@type': 'ListItem', 'position': 3, 'name': headline, 'item': url },
         ],
       },
@@ -88,12 +88,12 @@ useSeo({
 })
 
 if (!post.value)
-  router.replace('/writings')
+  router.replace('/blog')
 </script>
 
 <template>
   <div v-if="post" class="px-8 py-16 w-full">
-    <PageHeader :crumbs="[{ label: 'Yazılar', to: '/writings' }, { label: post.frontmatter.title }]" />
+    <PageHeader :crumbs="[{ label: 'Blog', to: '/blog' }, { label: post.frontmatter.title }]" />
 
     <!-- Kapak görseli -->
     <img

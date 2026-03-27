@@ -5,5 +5,6 @@ export default antfu({
   vue: true,
   rules: {
     'e18e/prefer-static-regex': 'off',
+    'regexp/no-unused-capturing-group': 'off',
   },
 })

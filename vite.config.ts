@@ -175,7 +175,7 @@ function mdPlugin(): Plugin {
       if (!id.endsWith('.md'))
         return
 
-      const text = readFileSync(id, 'utf-8')
+      const text = readFileSync(id, 'utf-8').replace(/\r\n/g, '\n')
       const slug = id.split('/').pop()!.replace('.md', '')
 
       // Frontmatter parse

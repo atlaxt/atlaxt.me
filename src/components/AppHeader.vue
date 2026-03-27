@@ -45,12 +45,12 @@ onUnmounted(() => {
       <!-- Nav -->
       <nav class="flex items-center gap-8">
         <RouterLink
-          to="/writings"
+          to="/blog"
           class="text-sm transition-opacity hover:opacity-100"
           style="color: var(--text-muted);"
           active-class="!opacity-100 !text-[color:var(--text)]"
         >
-          Yazılar
+          Blog
         </RouterLink>
         <!-- <RouterLink
           to="/about"

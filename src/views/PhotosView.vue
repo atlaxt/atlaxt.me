@@ -45,6 +45,8 @@ function onImgError(e: Event, file: string) {
   // Döngüye girmesin
   if (el.src.endsWith(fallback))
     return
+
+  el.srcset = ''
   el.src = fallback
 }
 

@@ -17,8 +17,8 @@ const DAMPING = 0.94 // biraz daha fazla sürtünme → yavaş hareket
 const ALPHA_FADE_OUT_DIST = 700
 
 // İlk yükleme animasyonu: en geç 2sn içinde son parçacık da yerine gelsin
-const INTRO_TOTAL_MS = 2000
-const INTRO_DELAY_MAX_MS = 600
+const INTRO_TOTAL_MS = 0
+const INTRO_DELAY_MAX_MS = 0
 const INTRO_MOVE_MS = INTRO_TOTAL_MS - INTRO_DELAY_MAX_MS
 const INTRO_SPRING = 0.04
 const INTRO_DAMPING = 0.9
@@ -119,7 +119,7 @@ class Particle {
     // Ekranın dışından, çok daha uzaktan gelsin
     const angle = Math.random() * Math.PI * 2
     // Başlangıç mesafesi (kısaltıldı)
-    const dist = Math.max(canvasW, canvasH) * 0.4
+    const dist = 100
     this.x = homeX + Math.cos(angle) * dist
     this.y = homeY + Math.sin(angle) * dist
 
