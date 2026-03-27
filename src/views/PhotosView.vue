@@ -7,34 +7,32 @@ import photosRaw from '../../content/photos.yaml'
 
 const photos = photosRaw as unknown as Photo[]
 
-function vercelImage(file: string, w: number, q: number) {
-  return `/_vercel/image?url=${encodeURIComponent(`/photos/${file}`)}&w=${w}&q=${q}`
+const GITHUB_RAW = 'https://raw.githubusercontent.com/atlaxt/atlaxt.me/main/public/photos'
+
+function githubUrl(file: string) {
+  return `${GITHUB_RAW}/${file}`
 }
 
 function thumb(file: string) {
   if (import.meta.env.DEV)
     return `/photos/${file}`
-  return vercelImage(file, 640, 60)
+  return githubUrl(file)
 }
 
 function full(file: string) {
   if (import.meta.env.DEV)
     return `/photos/${file}`
-  return vercelImage(file, 1920, 85)
+  return githubUrl(file)
 }
 
-function thumbSrcSet(file: string): string | undefined {
-  if (import.meta.env.DEV)
-    return undefined
-  return [
-    `${vercelImage(file, 384, 55)} 384w`,
-    `${vercelImage(file, 640, 60)} 640w`,
-    `${vercelImage(file, 828, 70)} 828w`,
-  ].join(', ')
+function thumbSrcSet(_file: string): string | undefined {
+  return undefined
 }
 
 function direct(file: string) {
-  return `/photos/${file}`
+  if (import.meta.env.DEV)
+    return `/photos/${file}`
+  return githubUrl(file)
 }
 
 function onImgError(e: Event, file: string) {
