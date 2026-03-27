@@ -17,7 +17,7 @@ const modules = import.meta.glob('../../content/blogs/*.md', { eager: true })
 const recentPosts = (Object.values(modules) as { default: Post }[])
   .map(m => m.default)
   .filter(p => p?.frontmatter)
-  .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date))
+  .sort((a, b) => b.frontmatter.date?.localeCompare(a.frontmatter.date))
   .slice(0, 3)
 
 // ─── Son fotoğraflar ────────────────────────────────────────────
