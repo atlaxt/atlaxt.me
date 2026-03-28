@@ -4,6 +4,7 @@ import { SpeedInsights as VercelSpeedInsights } from '@vercel/speed-insights/vue
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
+import NewsTicker from '@/components/NewsTicker.vue'
 
 const transitionName = ref('fade')
 
@@ -28,6 +29,7 @@ router.beforeEach((to, from) => {
         </RouterView>
       </main>
     </div>
+    <NewsTicker />
   </div>
 </template>
 

@@ -124,12 +124,8 @@ useSeo({
 </script>
 
 <template>
-  <div class="px-8 py-16">
+  <div class="px-2 md:px-0 py-16">
     <PageHeader :crumbs="[{ label: 'Haberler', to: '/feed' }]" />
-
-    <p v-if="isDev" class="text-xs font-mono mb-10" style="color: var(--text-muted); opacity: 0.35;">
-      -- local ortamda haberler yüklenmiyor --
-    </p>
 
     <!-- RSS Kaynakları (isteğe bağlı) -->
     <div class="mb-10 flex flex-col gap-3">
@@ -288,3 +284,20 @@ useSeo({
     </div>
   </div>
 </template>
+
+<style scoped>
+.feed-intro-title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+  line-height: 1.3;
+}
+
+.feed-intro-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  line-height: 1.6;
+}
+</style>

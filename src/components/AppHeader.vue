@@ -24,15 +24,8 @@ onUnmounted(() => {
 <template>
   <header
     class="sticky top-0 z-50 transition-all duration-300"
-    :style="{
-      background: scrolled
-        ? 'color-mix(in srgb, var(--bg) 85%, transparent)'
-        : 'transparent',
-      backdropFilter: scrolled ? 'blur(12px)' : 'none',
-      borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-    }"
   >
-    <div class="flex items-center justify-between px-8 py-5">
+    <div class="flex items-center justify-between px-2 md:px-0 py-5">
       <!-- Logo -->
       <RouterLink to="/" class="transition-opacity hover:opacity-50">
         <img

@@ -41,7 +41,7 @@ useSeo({
 </script>
 
 <template>
-  <div class="px-8 py-16">
+  <div class="px-2 md:px-0 py-16">
     <PageHeader :crumbs="[{ label: 'Kitaplık', to: '/books' }]" />
 
     <!-- Arama satırı -->

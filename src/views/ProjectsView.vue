@@ -12,12 +12,18 @@ useSeo({
 </script>
 
 <template>
-  <div class="px-8 py-16">
+  <div class="px-2 md:px-0 py-16">
     <PageHeader :crumbs="[{ label: 'Projeler', to: '/projects' }]" />
 
     <p class="note">
       Temizlik yapıyorum
     </p>
+
+    <div class="w-full py-16 text-center font-mono text-xs">
+      <a href="https://github.com/atlaxt" class="text-ink-muted" target="_blank" rel="noopener noreferrer">
+        https://github.com/atlaxt
+      </a>
+    </div>
   </div>
 </template>
 

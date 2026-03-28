@@ -28,7 +28,7 @@ useSeo({
 </script>
 
 <template>
-  <div class="px-8 py-16 max-w-xl">
+  <div class="px-2 md:px-0 py-16 max-w-xl">
     <PageHeader :crumbs="[{ label: 'Hakkımda', to: '/about' }]" />
     <p style="color: var(--text-muted);">
       Yakında...

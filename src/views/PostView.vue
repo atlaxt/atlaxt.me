@@ -92,7 +92,7 @@ if (!post.value)
 </script>
 
 <template>
-  <div v-if="post" class="px-8 py-16 w-full">
+  <div v-if="post" class="px-2 md:px-0 py-16 w-full">
     <PageHeader :crumbs="[{ label: 'Blog', to: '/blog' }, { label: post.frontmatter.title }]" />
 
     <!-- Kapak görseli -->

@@ -16,7 +16,7 @@ const route = useRoute()
 <template>
   <div class="flex min-h-[calc(100vh-57px)]">
     <!-- Sidebar -->
-    <aside class="hidden md:flex flex-col w-52 shrink-0 px-8 py-16" style="border-right: 1px solid var(--border);">
+    <aside class="hidden md:flex flex-col w-52 shrink-0 px-2 md:px-0 py-16" style="border-right: 1px solid var(--border);">
       <nav class="flex flex-col gap-1">
         <!-- Giriş -->
         <RouterLink

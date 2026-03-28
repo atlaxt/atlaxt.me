@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import type { Book, EducationEntry, ExperienceEntry, FeedItem, FeedSource, Photo, Post, Quote } from '@/types'
+import type { Book, EducationEntry, ExperienceEntry, Photo, Post, Quote } from '@/types'
 import photoMeta from 'virtual:photo-meta'
-import { nextTick, onMounted, ref } from 'vue'
+import { nextTick, onMounted } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import SectionLabel from '@/components/SectionLabel.vue'
 import SignParticle from '@/components/SignParticle.vue'
-import { fetchFeed } from '@/composables/useFeeds'
 import { useSeo } from '@/seo/useSeo'
 import booksRaw from '../../content/books.yaml'
 import educationRaw from '../../content/education.yaml'
 import experienceRaw from '../../content/experience.yaml'
-import feedsRaw from '../../content/feeds.yaml'
 import photosRaw from '../../content/photos.yaml'
 import quotesRaw from '../../content/quotes.yaml'
 
@@ -44,17 +42,13 @@ const recentBooks = (booksRaw as unknown as Book[])
   .sort((a, b) => Number.parseFloat(b.rate) - Number.parseFloat(a.rate))
   .slice(0, 3)
 
-// ─── Son haberler ───────────────────────────────────────────────
-const feedItems = ref<FeedItem[]>([])
-const feedLoading = ref(true)
-
 const HOME_SCROLL_KEY = 'home-scroll-y'
 
 onBeforeRouteLeave(() => {
   sessionStorage.setItem(HOME_SCROLL_KEY, String(window.scrollY))
 })
 
-onMounted(async () => {
+onMounted(() => {
   const saved = sessionStorage.getItem(HOME_SCROLL_KEY)
   if (saved) {
     sessionStorage.removeItem(HOME_SCROLL_KEY)
@@ -63,49 +57,7 @@ onMounted(async () => {
   else {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
-
-  if (import.meta.env.DEV) {
-    feedLoading.value = false
-    return
-  }
-  const sources = feedsRaw as unknown as FeedSource[]
-  const results = await Promise.all(
-    sources.map(s => fetchFeed(s.url, s.name, s.link)),
-  )
-  feedItems.value = results
-    .flat()
-    .sort((a, b) => b.date.getTime() - a.date.getTime())
-    .slice(0, 3)
-  feedLoading.value = false
 })
-
-function favicon(url: string): string {
-  try {
-    return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=16`
-  }
-  catch {
-    return ''
-  }
-}
-
-function isFeedToday(d: Date): boolean {
-  const now = new Date()
-  return d.getFullYear() === now.getFullYear()
-    && d.getMonth() === now.getMonth()
-    && d.getDate() === now.getDate()
-}
-
-function feedDate(d: Date): string {
-  if (isFeedToday(d))
-    return 'Bugün'
-  const yest = new Date()
-  yest.setDate(yest.getDate() - 1)
-  if (d.getFullYear() === yest.getFullYear() && d.getMonth() === yest.getMonth() && d.getDate() === yest.getDate())
-    return 'Dün'
-  return d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })
-}
-
-const isDev = import.meta.env.DEV
 
 const links = [
   { label: 'GitHub', href: 'https://github.com/atlaxt', external: true },
@@ -212,7 +164,7 @@ useSeo({
     <!-- Hero: tam ekran yüksekliği -->
     <div class="flex h-[calc(100vh-57px)]">
       <!-- Sol: Bio -->
-      <div class="flex flex-col justify-center px-8 py-12 w-full md:w-2/5 shrink-0">
+      <div class="flex flex-col justify-center px-2 md:px-0 py-12 w-full md:w-2/5 shrink-0">
         <h1 class="text-2xl font-semibold mb-4" style="color: var(--text);">
           Atlas Yiğit Aydın
         </h1>
@@ -272,8 +224,8 @@ useSeo({
       </div>
     </div>
 
-    <!-- ─── Son yazılar ─────────────────────────────────────────── -->
-    <div class="px-8 py-16 w-full">
+    <!-- ─── Blog ─────────────────────────────────────────── -->
+    <div class="px-2 md:px-0 py-16 w-full">
       <div class="flex items-baseline justify-between mb-8">
         <SectionLabel>Blog</SectionLabel>
         <RouterLink to="/blog" class="section-more">
@@ -304,70 +256,11 @@ useSeo({
             </div>
           </RouterLink>
         </div>
-        <div class="blog-fade" />
-      </div>
-    </div>
-
-    <!-- ─── Son haberler ─────────────────────────────────────────── -->
-    <div v-if="!isDev" class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
-      <div class="flex items-baseline justify-between mb-8">
-        <SectionLabel>Haberler</SectionLabel>
-        <RouterLink
-          to="/feed"
-          class="section-more"
-        >
-          tümü →
-        </RouterLink>
-      </div>
-
-      <!-- Yükleniyor -->
-      <div v-if="feedLoading" class="flex flex-col">
-        <div
-          v-for="n in 3"
-          :key="n"
-          class="py-4"
-          style="border-bottom: 1px solid var(--border);"
-        >
-          <div class="h-3 w-2/3 mb-2 rounded" style="background: var(--bg-subtle);" />
-          <div class="h-2.5 w-1/3 rounded" style="background: var(--bg-subtle);" />
-        </div>
-      </div>
-
-      <!-- Haberler -->
-      <div v-else class="section-wrap">
-      <div class="feed-list">
-        <a
-          v-for="item in feedItems"
-          :key="item.link"
-          :href="item.link"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="feed-card"
-        >
-          <div class="feed-card-inner">
-            <div class="feed-meta">
-              <img :src="favicon(item.sourceLink)" class="w-3 h-3 rounded-sm shrink-0" alt="" aria-hidden="true">
-              <span class="feed-source">{{ item.source }}</span>
-              <span class="feed-dot">·</span>
-              <span
-                class="feed-date"
-                :class="isFeedToday(item.date) ? 'feed-date--today' : ''"
-              >{{ feedDate(item.date) }}</span>
-            </div>
-            <p class="feed-title">{{ item.title }}</p>
-          </div>
-          <span class="feed-arrow">↗</span>
-        </a>
-        <p v-if="!feedItems.length" class="text-sm py-6 font-mono" style="color: var(--text-muted); opacity: 0.35;">
-          {{ isDev ? '-- Lokaldesiniz --' : 'içerik yüklenemedi.' }}
-        </p>
-      </div>
-      <div class="section-fade" />
       </div>
     </div>
 
     <!-- Deneyim + Eğitim: Timeline -->
-    <div class="px-8 py-16 w-full">
+    <div class="px-2 md:px-0 py-16 w-full">
       <div class="timeline-grid">
         <!-- Deneyim -->
         <div>
@@ -441,7 +334,7 @@ useSeo({
     </div>
 
     <!-- ─── Son kitaplar ─────────────────────────────────────────── -->
-    <div class="px-8 py-16 w-full">
+    <div class="px-2 md:px-0 py-16 w-full">
       <div class="flex items-baseline justify-between mb-8">
         <SectionLabel>Kitaplık</SectionLabel>
         <RouterLink
@@ -451,32 +344,29 @@ useSeo({
           tümü →
         </RouterLink>
       </div>
-      <div class="section-wrap">
-        <div class="book-list">
-          <RouterLink
-            v-for="book in recentBooks"
-            :key="book.number"
-            to="/books"
-            class="book-card"
-          >
-            <div class="book-card-inner">
-              <div class="book-info">
-                <span class="book-name">{{ book.name }}</span>
-                <span class="book-author">{{ book.author }}</span>
-              </div>
-              <span v-if="book.rate" class="book-rate">
-                <span class="book-rate-num">{{ book.rate }}</span>
-                <span class="book-rate-denom">/10</span>
-              </span>
+      <div class="book-list">
+        <RouterLink
+          v-for="book in recentBooks"
+          :key="book.number"
+          to="/books"
+          class="book-card"
+        >
+          <div class="book-card-inner">
+            <div class="book-info">
+              <span class="book-name">{{ book.name }}</span>
+              <span class="book-author">{{ book.author }}</span>
             </div>
-          </RouterLink>
-        </div>
-        <div class="section-fade" />
+            <span v-if="book.rate" class="book-rate">
+              <span class="book-rate-num">{{ book.rate }}</span>
+              <span class="book-rate-denom">/10</span>
+            </span>
+          </div>
+        </RouterLink>
       </div>
     </div>
 
     <!-- ─── Fotoğraflar (Pinterest grid) ────────────────────────── -->
-    <div class="px-8 py-16 w-full">
+    <div class="px-2 md:px-0 py-16 w-full">
       <div class="flex items-baseline justify-between mb-8">
         <SectionLabel>Fotoğraflar</SectionLabel>
         <RouterLink
@@ -487,12 +377,11 @@ useSeo({
           tümü →
         </RouterLink>
       </div>
-      <div class="photo-peek-wrap">
+      <RouterLink to="/photos" class="photo-peek-wrap">
         <div class="photo-masonry">
-          <RouterLink
+          <div
             v-for="photo in recentPhotos"
             :key="photo.file"
-            to="/photos"
             class="photo-item"
           >
             <img
@@ -502,14 +391,14 @@ useSeo({
               decoding="async"
               draggable="false"
             >
-          </RouterLink>
+          </div>
         </div>
         <div class="photo-fade" />
-      </div>
+      </RouterLink>
     </div>
 
-    <!-- ─── Günün sözü ───────────────────────────────────────────── -->
-    <div class="px-8 py-20 w-full">
+    <!-- ─── Söz ───────────────────────────────────────────── -->
+    <div class="px-2 md:px-0 py-20 w-full">
       <blockquote class="quote-block max-w-lg mx-auto text-center">
         <p class="quote-text">
           <span class="quote-mark">"</span>{{ currentQuote.text }}<span class="quote-mark">"</span>
@@ -524,22 +413,6 @@ useSeo({
 
 <style scoped>
 /* ── Shared ───────────────────────────────────────────── */
-.section-wrap {
-  position: relative;
-  max-height: 155px;
-  overflow: hidden;
-}
-
-.section-fade {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
-  pointer-events: none;
-  background: linear-gradient(to bottom, transparent, var(--bg) 90%);
-}
-
 .section-more {
   font-size: 0.7rem;
   color: var(--text);
@@ -572,9 +445,6 @@ useSeo({
 .blog-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
   overflow: hidden;
 }
 
@@ -656,94 +526,6 @@ useSeo({
 }
 
 /* ── Feed ─────────────────────────────────────────────── */
-.feed-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.feed-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.95rem 1.1rem;
-  text-decoration: none;
-  color: var(--text);
-  background: transparent;
-  transition: background 0.16s ease;
-  border-bottom: 1px solid var(--border);
-}
-
-.feed-card:last-child {
-  border-bottom: none;
-}
-
-.feed-card:hover {
-  background: var(--bg-subtle, rgba(255,255,255,0.03));
-}
-
-.feed-card-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  min-width: 0;
-  flex: 1;
-}
-
-.feed-meta {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.feed-source {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  opacity: 0.55;
-}
-
-.feed-dot {
-  font-size: 0.6rem;
-  color: var(--border);
-}
-
-.feed-date {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  opacity: 0.45;
-}
-
-.feed-date--today {
-  color: var(--text);
-  opacity: 0.75;
-}
-
-.feed-title {
-  font-size: 0.82rem;
-  font-weight: 450;
-  line-height: 1.4;
-  color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.feed-arrow {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  opacity: 0;
-  flex-shrink: 0;
-  transition: opacity 0.16s ease, transform 0.16s ease;
-}
-
-.feed-card:hover .feed-arrow {
-  opacity: 0.45;
-  transform: translate(2px, -2px);
-}
-
 /* ── Books ────────────────────────────────────────────── */
 .book-list {
   display: flex;
@@ -981,6 +763,8 @@ useSeo({
   position: relative;
   max-height: 340px;
   overflow: hidden;
+  display: block;
+  cursor: pointer;
 }
 
 .photo-masonry {
@@ -1001,6 +785,7 @@ useSeo({
   height: auto;
   display: block;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .photo-item:hover img {
