@@ -45,6 +45,10 @@ useSeo({
   <div class="px-2 md:px-0 py-16">
     <PageHeader :crumbs="[{ label: 'Blog', to: '/blog' }]" />
 
+    <div class="page-intro">
+      <p class="page-intro-title">Bir konuyu konuşmak veya bir bilgiyi aktarmak istediğimde burdayım.</p>
+    </div>
+
     <div class="flex flex-col">
       <RouterLink
         v-for="post in posts"
@@ -68,3 +72,15 @@ useSeo({
     </div>
   </div>
 </template>
+
+<style scoped>
+.page-intro {
+  margin-bottom: 2rem;
+}
+
+.page-intro-title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+}
+</style>

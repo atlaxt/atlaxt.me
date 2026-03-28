@@ -44,6 +44,11 @@ useSeo({
   <div class="px-2 md:px-0 py-16">
     <PageHeader :crumbs="[{ label: 'Kitaplık', to: '/books' }]" />
 
+    <div class="page-intro">
+      <p class="page-intro-title">Bütün modern klasikleri okumayı hedefliyorum.</p>
+      <p class="page-intro-sub">Okuduklarımı burada puanlıyorum.</p>
+    </div>
+
     <!-- Arama satırı -->
     <div class="flex items-baseline justify-between mb-10">
       <span class="text-xs" style="color: var(--text-muted); opacity: 0.4;">
@@ -96,3 +101,22 @@ useSeo({
     </div>
   </div>
 </template>
+
+<style scoped>
+.page-intro {
+  margin-bottom: 2rem;
+}
+
+.page-intro-title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+
+.page-intro-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+</style>

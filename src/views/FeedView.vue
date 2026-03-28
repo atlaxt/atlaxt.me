@@ -127,6 +127,11 @@ useSeo({
   <div class="px-2 md:px-0 py-16">
     <PageHeader :crumbs="[{ label: 'Haberler', to: '/feed' }]" />
 
+    <div class="page-intro">
+      <p class="page-intro-title">Takip ettiğim yazılar.</p>
+      <p class="page-intro-sub">Benimle aynı yolda ilerliyorsanız işinize yarayabilir.</p>
+    </div>
+
     <!-- RSS Kaynakları (isteğe bağlı) -->
     <div class="mb-10 flex flex-col gap-3">
       <button
@@ -286,18 +291,20 @@ useSeo({
 </template>
 
 <style scoped>
-.feed-intro-title {
+.page-intro {
+  margin-bottom: 2rem;
+}
+
+.page-intro-title {
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--text);
-  margin-bottom: 0.35rem;
-  line-height: 1.3;
+  margin-bottom: 0.3rem;
 }
 
-.feed-intro-sub {
+.page-intro-sub {
   font-size: 0.8rem;
   color: var(--text-muted);
   opacity: 0.5;
-  line-height: 1.6;
 }
 </style>

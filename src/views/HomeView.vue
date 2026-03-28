@@ -335,32 +335,31 @@ useSeo({
 
     <!-- ─── Son kitaplar ─────────────────────────────────────────── -->
     <div class="px-2 md:px-0 py-16 w-full">
-      <div class="flex items-baseline justify-between mb-8">
+      <div class="flex items-baseline justify-between mb-2">
         <SectionLabel>Kitaplık</SectionLabel>
-        <RouterLink
-          to="/books"
-          class="section-more"
-        >
+        <RouterLink to="/books" class="section-more">
           tümü →
         </RouterLink>
       </div>
+      <p class="book-subtitle">
+        en çok beğendiklerim
+      </p>
       <div class="book-list">
         <RouterLink
-          v-for="book in recentBooks"
+          v-for="(book, i) in recentBooks"
           :key="book.number"
           to="/books"
           class="book-card"
         >
-          <div class="book-card-inner">
-            <div class="book-info">
-              <span class="book-name">{{ book.name }}</span>
-              <span class="book-author">{{ book.author }}</span>
-            </div>
-            <span v-if="book.rate" class="book-rate">
-              <span class="book-rate-num">{{ book.rate }}</span>
-              <span class="book-rate-denom">/10</span>
-            </span>
+          <span class="book-rank">{{ String(i + 1).padStart(2, '0') }}</span>
+          <div class="book-info">
+            <span class="book-name">{{ book.name }}</span>
+            <span class="book-author">{{ book.author }}</span>
           </div>
+          <span v-if="book.rate" class="book-rate">
+            {{ book.rate }}
+            <span class="book-rate-denom">/10</span>
+          </span>
         </RouterLink>
       </div>
     </div>
@@ -525,50 +524,60 @@ useSeo({
   }
 }
 
-/* ── Feed ─────────────────────────────────────────────── */
 /* ── Books ────────────────────────────────────────────── */
+.book-subtitle {
+  font-size: 0.7rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--text-muted);
+  opacity: 0.9;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
 .book-list {
   display: flex;
   flex-direction: column;
-  gap: 1px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
 }
 
 .book-card {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.9rem 0;
   text-decoration: none;
-  background: transparent;
-  transition: background 0.16s ease;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  transition: opacity 0.15s ease;
+}
+
+.book-card:last-child {
+  border-bottom: none;
 }
 
 .book-card:hover {
-  background: var(--bg-subtle, rgba(255,255,255,0.03));
+  opacity: 0.6;
 }
 
-.book-card-inner {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.9rem 1.1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.book-card:last-child .book-card-inner {
-  border-bottom: none;
+.book-rank {
+  font-size: 0.6rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--text-muted);
+  opacity: 0.3;
+  flex-shrink: 0;
+  min-width: 1.4rem;
 }
 
 .book-info {
   display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 0.2rem;
   min-width: 0;
+  flex: 1;
 }
 
 .book-name {
-  font-size: 0.83rem;
-  font-weight: 450;
+  font-size: 0.84rem;
+  font-weight: 480;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
@@ -576,37 +585,26 @@ useSeo({
 }
 
 .book-author {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--text-muted);
   opacity: 0.5;
-  flex-shrink: 0;
-  display: none;
-}
-
-@media (min-width: 480px) {
-  .book-author {
-    display: inline;
-  }
 }
 
 .book-rate {
   flex-shrink: 0;
-  display: flex;
-  align-items: baseline;
-  gap: 0.15rem;
-}
-
-.book-rate-num {
-  font-size: 0.78rem;
-  font-weight: 500;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--text);
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 .book-rate-denom {
-  font-size: 0.62rem;
+  font-size: 0.6rem;
+  font-weight: 400;
   color: var(--text-muted);
-  opacity: 0.45;
+  opacity: 0.4;
+  margin-left: 0.05rem;
 }
 
 /* ── Timeline ─────────────────────────────────────────── */
@@ -776,7 +774,6 @@ useSeo({
   display: block;
   break-inside: avoid;
   margin-bottom: 8px;
-  border-radius: 6px;
   overflow: hidden;
 }
 
