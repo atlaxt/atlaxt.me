@@ -120,8 +120,8 @@ body {
 
 /* ─── Shine border ───────────────────────────────────────────── */
 @keyframes shine-sweep {
-  0%   { background-position: 0% center; }
-  100% { background-position: 100% center; }
+  0%   { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
 
 .shine-border {

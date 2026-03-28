@@ -218,11 +218,16 @@ class Particle {
   }
 }
 
+// Cleanup refs — setup-level'da tanımlanmalı ki onUnmounted erişebilsin
+let _animId = -1
+let _cleanup: (() => void) | null = null
+
 onMounted(() => {
   const wrap = wrapRef.value!
   const canvas = canvasRef.value!
   const ctx = canvas.getContext('2d')!
 
+  // Parçacık koordinatlarını hemen hesapla (offscreen canvas, layout gerekmez)
   const rawPts = buildParticlePoints()
   const xs = rawPts.map(p => p[0])
   const ys = rawPts.map(p => p[1])
@@ -237,6 +242,7 @@ onMounted(() => {
   let offsetY = 0
 
   function resize() {
+    // wrap.offsetWidth'i RAF içinde okuyoruz → layout hazır, doğru boyut
     const w = wrap.offsetWidth + CANVAS_BLEED_PX * 2
     const h = wrap.offsetHeight + CANVAS_BLEED_PX * 2
 
@@ -250,78 +256,83 @@ onMounted(() => {
     offsetX = canvas.width / 2 - minX - shapeW / 2
     offsetY = canvas.height / 2 - minY - shapeH / 2
   }
-  resize()
 
-  const particles = rawPts.map(([x, y]) => new Particle(x, y))
+  // İlk boyama tamamlandıktan sonra başlat → offsetWidth her zaman doğru olsun
+  requestAnimationFrame(() => {
+    resize()
 
-  const shouldRunIntro = oncePerLoad('signParticle:intro:v1')
+    const particles = rawPts.map(([x, y]) => new Particle(x, y))
 
-  if (shouldRunIntro) {
-    const introBase = performance.now()
-    const lastIndex = Math.max(1, particles.length - 1)
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i]!
-      // Deterministik gecikme → son parçacık da 600ms içinde başlar, 2sn içinde yerine oturur
-      const baseDelay = (i / lastIndex) * INTRO_DELAY_MAX_MS
-      const jitter = (Math.random() - 0.5) * 120
-      const delay = clamp(baseDelay + jitter, 0, INTRO_DELAY_MAX_MS)
-      const startAt = introBase + delay
-      const endAt = startAt + INTRO_MOVE_MS
-      p.spawn(offsetX, offsetY, canvas.width, canvas.height, startAt, endAt)
+    const shouldRunIntro = oncePerLoad('signParticle:intro:v1')
+
+    if (shouldRunIntro) {
+      const introBase = performance.now()
+      const lastIndex = Math.max(1, particles.length - 1)
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i]!
+        const baseDelay = (i / lastIndex) * INTRO_DELAY_MAX_MS
+        const jitter = (Math.random() - 0.5) * 120
+        const delay = clamp(baseDelay + jitter, 0, INTRO_DELAY_MAX_MS)
+        const startAt = introBase + delay
+        const endAt = startAt + INTRO_MOVE_MS
+        p.spawn(offsetX, offsetY, canvas.width, canvas.height, startAt, endAt)
+      }
     }
-  }
-  else {
-    for (const p of particles)
-      p.setToHome(offsetX, offsetY)
-  }
-  const mouse = { x: -9999, y: -9999 }
+    else {
+      for (const p of particles)
+        p.setToHome(offsetX, offsetY)
+    }
 
-  function onMove(e: MouseEvent) {
-    // Sadece imzanın kendi alanındayken etkileşime girsin
-    const wr = wrap.getBoundingClientRect()
-    const inside = e.clientX >= wr.left && e.clientX <= wr.right && e.clientY >= wr.top && e.clientY <= wr.bottom
-    if (!inside) {
+    const mouse = { x: -9999, y: -9999 }
+
+    function onMove(e: MouseEvent) {
+      const wr = wrap.getBoundingClientRect()
+      const inside = e.clientX >= wr.left && e.clientX <= wr.right && e.clientY >= wr.top && e.clientY <= wr.bottom
+      if (!inside) {
+        mouse.x = -9999
+        mouse.y = -9999
+        return
+      }
+      const cr = canvas.getBoundingClientRect()
+      mouse.x = e.clientX - cr.left
+      mouse.y = e.clientY - cr.top
+    }
+    function onLeave() {
       mouse.x = -9999
       mouse.y = -9999
-      return
     }
 
-    const cr = canvas.getBoundingClientRect()
-    mouse.x = e.clientX - cr.left
-    mouse.y = e.clientY - cr.top
-  }
-  function onLeave() {
-    mouse.x = -9999
-    mouse.y = -9999
-  }
-
-  // Canvas pointer-events:none olacağı için mouse'u globalden takip ediyoruz
-  window.addEventListener('mousemove', onMove, { passive: true })
-  window.addEventListener('blur', onLeave)
-  window.addEventListener('resize', resize)
-
-  let animId: number
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    const dark = isDark.value
-
-    const now = performance.now()
-
-    for (const p of particles) {
-      p.update(mouse.x, mouse.y, offsetX, offsetY, now)
-      p.draw(ctx, offsetX, offsetY, dark)
+    function onResize() {
+      resize()
     }
 
-    animId = requestAnimationFrame(animate)
-  }
-  animate()
+    window.addEventListener('mousemove', onMove, { passive: true })
+    window.addEventListener('blur', onLeave)
+    window.addEventListener('resize', onResize)
 
-  onUnmounted(() => {
-    cancelAnimationFrame(animId)
-    window.removeEventListener('mousemove', onMove)
-    window.removeEventListener('blur', onLeave)
-    window.removeEventListener('resize', resize)
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      const dark = isDark.value
+      const now = performance.now()
+      for (const p of particles) {
+        p.update(mouse.x, mouse.y, offsetX, offsetY, now)
+        p.draw(ctx, offsetX, offsetY, dark)
+      }
+      _animId = requestAnimationFrame(animate)
+    }
+    animate()
+
+    _cleanup = () => {
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('blur', onLeave)
+      window.removeEventListener('resize', onResize)
+    }
   })
+})
+
+onUnmounted(() => {
+  cancelAnimationFrame(_animId)
+  _cleanup?.()
 })
 </script>
 
