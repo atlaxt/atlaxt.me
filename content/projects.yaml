@@ -17,3 +17,23 @@
 - name: useTool
   description: Hız odaklı bir araç seti.
   link: 'https://usetool.space'
+
+- name: useColor
+  description: ---
+  link: 'https://usecolor.space'
+
+- name: useFont
+  description: ---
+  link: 'https://usefont.space'
+
+- name: useMarkdown
+  description: ---
+  link: 'https://usemarkdown.space'
+
+- name: usePrompt
+  description: ---
+  link: 'https://useprompt.space'
+
+- name: useSpace Studio
+  description: ---
+  link: 'https://usespace.studio'

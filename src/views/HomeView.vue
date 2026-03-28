@@ -273,46 +273,48 @@ useSeo({
     </div>
 
     <!-- ─── Son yazılar ─────────────────────────────────────────── -->
-    <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
+    <div class="px-8 py-16 w-full">
       <div class="flex items-baseline justify-between mb-8">
         <SectionLabel>Blog</SectionLabel>
-        <RouterLink
-          to="/blog"
-          class="text-xs transition-opacity hover:opacity-100 opacity-40"
-          style="color: var(--text);"
-        >
+        <RouterLink to="/blog" class="section-more">
           tümü →
         </RouterLink>
       </div>
-      <div class="flex flex-col">
-        <RouterLink
-          v-for="post in recentPosts"
-          :key="post.slug"
-          :to="`/blog/${post.slug}`"
-          class="flex flex-col py-5 transition-opacity hover:opacity-70"
-          style="border-bottom: 1px solid var(--border);"
-        >
-          <div class="flex items-baseline justify-between gap-8 mb-1">
-            <span class="text-sm font-medium" style="color: var(--text);">{{ post.frontmatter.title }}</span>
-            <span class="text-xs shrink-0 tabular-nums" style="color: var(--text-muted);">
-              {{ new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }) }}
-            </span>
-          </div>
-          <p class="text-xs leading-relaxed" style="color: var(--text-muted);">
-            {{ post.frontmatter.description }}
-          </p>
-        </RouterLink>
+      <div class="blog-wrap">
+        <div class="blog-list">
+          <RouterLink
+            v-for="post in recentPosts"
+            :key="post.slug"
+            :to="`/blog/${post.slug}`"
+            class="blog-card"
+          >
+            <div class="blog-card-inner">
+              <div class="blog-card-top">
+                <span class="blog-date">
+                  {{ new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' }) }}
+                </span>
+                <span class="blog-arrow">↗</span>
+              </div>
+              <p class="blog-title">
+                {{ post.frontmatter.title }}
+              </p>
+              <p class="blog-desc">
+                {{ post.frontmatter.description }}
+              </p>
+            </div>
+          </RouterLink>
+        </div>
+        <div class="blog-fade" />
       </div>
     </div>
 
     <!-- ─── Son haberler ─────────────────────────────────────────── -->
-    <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
+    <div v-if="!isDev" class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
       <div class="flex items-baseline justify-between mb-8">
         <SectionLabel>Haberler</SectionLabel>
         <RouterLink
           to="/feed"
-          class="text-xs transition-opacity hover:opacity-100 opacity-40"
-          style="color: var(--text);"
+          class="section-more"
         >
           tümü →
         </RouterLink>
@@ -332,112 +334,106 @@ useSeo({
       </div>
 
       <!-- Haberler -->
-      <div v-else class="flex flex-col">
+      <div v-else class="section-wrap">
+      <div class="feed-list">
         <a
           v-for="item in feedItems"
           :key="item.link"
           :href="item.link"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-start justify-between gap-6 py-4 transition-opacity hover:opacity-60"
-          style="border-bottom: 1px solid var(--border); color: var(--text);"
+          class="feed-card"
         >
-          <div class="min-w-0">
-            <p class="text-sm font-medium leading-snug mb-1.5 truncate">{{ item.title }}</p>
-            <div class="flex items-center gap-2">
-              <img :src="favicon(item.sourceLink)" class="w-3 h-3 rounded-sm" alt="" aria-hidden="true">
-              <span class="text-xs" style="color: var(--text-muted); opacity: 0.6;">{{ item.source }}</span>
-              <span style="color: var(--border);">·</span>
+          <div class="feed-card-inner">
+            <div class="feed-meta">
+              <img :src="favicon(item.sourceLink)" class="w-3 h-3 rounded-sm shrink-0" alt="" aria-hidden="true">
+              <span class="feed-source">{{ item.source }}</span>
+              <span class="feed-dot">·</span>
               <span
-                class="text-xs font-medium"
-                :style="isFeedToday(item.date)
-                  ? 'color: var(--text);'
-                  : 'color: var(--text-muted); opacity: 0.5;'"
+                class="feed-date"
+                :class="isFeedToday(item.date) ? 'feed-date--today' : ''"
               >{{ feedDate(item.date) }}</span>
             </div>
+            <p class="feed-title">{{ item.title }}</p>
           </div>
-          <span class="text-sm shrink-0 mt-0.5" style="color: var(--text-muted);">↗</span>
+          <span class="feed-arrow">↗</span>
         </a>
         <p v-if="!feedItems.length" class="text-sm py-6 font-mono" style="color: var(--text-muted); opacity: 0.35;">
           {{ isDev ? '-- Lokaldesiniz --' : 'içerik yüklenemedi.' }}
         </p>
       </div>
-    </div>
-
-    <!-- Deneyim: scroll ile görünen bölüm -->
-    <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
-      <SectionLabel class="mb-8">
-        Deneyim
-      </SectionLabel>
-      <div class="flex flex-col">
-        <div
-          v-for="(exp, i) in experience"
-          :key="exp.title! + exp.start!"
-          class="flex items-start gap-4 py-6"
-          :style="i > 0 ? 'border-top: 1px solid var(--border);' : ''"
-        >
-          <div class="flex-1 flex items-start justify-between gap-4">
-            <div>
-              <p class="text-sm font-medium" style="color: var(--text);">
-                {{ exp.title }}
-              </p>
-              <p class="text-xs mt-1" style="color: var(--text-muted);">
-                {{ exp.company }} · {{ exp.type }}
-              </p>
-              <p class="text-xs mt-0.5" style="color: var(--text-muted); opacity: 0.6;">
-                {{ exp.location }} · {{ exp.mode }}
-              </p>
-            </div>
-            <div class="text-right shrink-0">
-              <p class="text-xs" style="color: var(--text-muted); opacity: 0.8;">
-                {{ exp.start }} – {{ exp.end }}
-              </p>
-              <p class="text-xs mt-0.5" style="color: var(--text-muted); opacity: 0.5;">
-                {{ calcDuration(exp.start!, exp.end!) }}
-              </p>
-            </div>
-          </div>
-        </div>
+      <div class="section-fade" />
       </div>
     </div>
 
-    <!-- Eğitim: scroll ile görünen bölüm -->
-    <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
-      <SectionLabel class="mb-8">
-        Eğitim
-      </SectionLabel>
-      <div class="flex flex-col">
-        <div
-          v-for="(edu, i) in education"
-          :key="edu.degree! + edu.level!"
-          class="flex items-start gap-4 py-6"
-          :style="i > 0 ? 'border-top: 1px solid var(--border);' : ''"
-        >
-          <div class="flex-1 flex items-start justify-between gap-4">
-            <div>
-              <p
-                class="text-sm font-medium"
-                :class="{
-                  'text-muted': edu.planned,
-                }"
-              >
-                {{ edu.degree }}
-              </p>
-              <p class="text-xs mt-1" style="color: var(--text-muted);">
-                {{ edu.level }}<template v-if="edu.school">
-                  · {{ edu.school }}
-                </template>
-              </p>
+    <!-- Deneyim + Eğitim: Timeline -->
+    <div class="px-8 py-16 w-full">
+      <div class="timeline-grid">
+        <!-- Deneyim -->
+        <div>
+          <SectionLabel class="mb-8">
+            Deneyim
+          </SectionLabel>
+          <div class="timeline">
+            <div
+              v-for="exp in experience"
+              :key="exp.title! + exp.start!"
+              class="timeline-item"
+            >
+              <div class="timeline-dot-wrap">
+                <div class="timeline-dot" :class="exp.end === 'Halen' ? 'timeline-dot--active' : ''" />
+                <span v-if="exp.end === 'Halen'" class="timeline-pulse" />
+              </div>
+              <div class="timeline-body">
+                <div class="timeline-meta">
+                  <span class="timeline-period">{{ exp.start }} – {{ exp.end }}</span>
+                  <span class="timeline-duration">{{ calcDuration(exp.start!, exp.end!) }}</span>
+                </div>
+                <p class="timeline-title">
+                  {{ exp.title }}
+                </p>
+                <p class="timeline-sub">
+                  {{ exp.company }} · {{ exp.type }}
+                </p>
+                <p class="timeline-sub timeline-sub--faint">
+                  {{ exp.location }} · {{ exp.mode }}
+                </p>
+              </div>
             </div>
-            <div class="text-right shrink-0">
-              <p
-                class="text-xs"
-                :style="edu.planned
-                  ? 'color: var(--text-muted); opacity: 0.4; font-style: italic;'
-                  : 'color: var(--text-muted); opacity: 0.8;'"
-              >
-                {{ edu.period }}
-              </p>
+          </div>
+        </div>
+
+        <!-- Eğitim -->
+        <div>
+          <SectionLabel class="mb-8">
+            Eğitim
+          </SectionLabel>
+          <div class="timeline">
+            <div
+              v-for="edu in education"
+              :key="edu.degree! + edu.level!"
+              class="timeline-item"
+            >
+              <div class="timeline-dot-wrap">
+                <div class="timeline-dot" :class="!edu.planned ? 'timeline-dot--faint' : edu.active ? 'timeline-dot--active' : ''" />
+                <span v-if="edu.active" class="timeline-pulse" />
+              </div>
+              <div class="timeline-body">
+                <div class="timeline-meta">
+                  <span
+                    class="timeline-period"
+                    :style="edu.planned ? 'font-style:italic; opacity:0.4;' : ''"
+                  >{{ edu.period }}</span>
+                </div>
+                <p class="timeline-title" :style="edu.planned ? 'opacity:0.4;' : ''">
+                  {{ edu.degree }}
+                </p>
+                <p class="timeline-sub">
+                  {{ edu.level }}<template v-if="edu.school">
+                    · {{ edu.school }}
+                  </template>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -445,37 +441,42 @@ useSeo({
     </div>
 
     <!-- ─── Son kitaplar ─────────────────────────────────────────── -->
-    <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
+    <div class="px-8 py-16 w-full">
       <div class="flex items-baseline justify-between mb-8">
         <SectionLabel>Kitaplık</SectionLabel>
         <RouterLink
           to="/books"
-          class="text-xs transition-opacity hover:opacity-100 opacity-40"
-          style="color: var(--text);"
+          class="section-more"
         >
           tümü →
         </RouterLink>
       </div>
-      <div class="flex flex-col">
-        <div
-          v-for="book in recentBooks"
-          :key="book.number"
-          class="flex items-baseline justify-between py-4"
-          style="border-bottom: 1px solid var(--border);"
-        >
-          <div class="flex items-baseline gap-3 min-w-0">
-            <span class="text-sm truncate" style="color: var(--text);">{{ book.name }}</span>
-            <span class="text-xs shrink-0 hidden sm:inline" style="color: var(--text-muted);">{{ book.author }}</span>
-          </div>
-          <span v-if="book.rate" class="text-xs shrink-0 ml-6 tabular-nums" style="color: var(--text-muted);">
-            {{ book.rate }} / 10
-          </span>
+      <div class="section-wrap">
+        <div class="book-list">
+          <RouterLink
+            v-for="book in recentBooks"
+            :key="book.number"
+            to="/books"
+            class="book-card"
+          >
+            <div class="book-card-inner">
+              <div class="book-info">
+                <span class="book-name">{{ book.name }}</span>
+                <span class="book-author">{{ book.author }}</span>
+              </div>
+              <span v-if="book.rate" class="book-rate">
+                <span class="book-rate-num">{{ book.rate }}</span>
+                <span class="book-rate-denom">/10</span>
+              </span>
+            </div>
+          </RouterLink>
         </div>
+        <div class="section-fade" />
       </div>
     </div>
 
     <!-- ─── Fotoğraflar (Pinterest grid) ────────────────────────── -->
-    <div class="px-8 py-16 w-full" style="border-top: 1px solid var(--border);">
+    <div class="px-8 py-16 w-full">
       <div class="flex items-baseline justify-between mb-8">
         <SectionLabel>Fotoğraflar</SectionLabel>
         <RouterLink
@@ -522,6 +523,425 @@ useSeo({
 </template>
 
 <style scoped>
+/* ── Shared ───────────────────────────────────────────── */
+.section-wrap {
+  position: relative;
+  max-height: 155px;
+  overflow: hidden;
+}
+
+.section-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--bg) 90%);
+}
+
+.section-more {
+  font-size: 0.7rem;
+  color: var(--text);
+  text-decoration: none;
+  opacity: 0.35;
+  transition: opacity 0.18s ease;
+}
+
+.section-more:hover {
+  opacity: 0.8;
+}
+
+/* ── Blog ─────────────────────────────────────────────── */
+.blog-wrap {
+  position: relative;
+  max-height: 175px;
+  overflow: hidden;
+}
+
+.blog-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--bg) 90%);
+}
+
+.blog-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.blog-card {
+  text-decoration: none;
+  transition: background 0.18s ease;
+  background: transparent;
+}
+
+.blog-card:hover {
+  background: var(--bg-subtle, rgba(255,255,255,0.03));
+}
+
+.blog-card:not(:last-child) {
+  border-right: 1px solid var(--border);
+}
+
+.blog-card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.25rem 1.5rem;
+  height: 100%;
+}
+
+.blog-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.blog-date {
+  font-size: 0.62rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--text-muted);
+  opacity: 0.4;
+  white-space: nowrap;
+}
+
+.blog-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+  margin-top: 0.1rem;
+}
+
+.blog-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.55;
+  line-height: 1.6;
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+.blog-arrow {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  flex-shrink: 0;
+}
+
+.blog-card:hover .blog-arrow {
+  opacity: 0.5;
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 600px) {
+  .blog-list {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-card:not(:last-child) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+/* ── Feed ─────────────────────────────────────────────── */
+.feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.feed-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.95rem 1.1rem;
+  text-decoration: none;
+  color: var(--text);
+  background: transparent;
+  transition: background 0.16s ease;
+  border-bottom: 1px solid var(--border);
+}
+
+.feed-card:last-child {
+  border-bottom: none;
+}
+
+.feed-card:hover {
+  background: var(--bg-subtle, rgba(255,255,255,0.03));
+}
+
+.feed-card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.feed-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.feed-source {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  opacity: 0.55;
+}
+
+.feed-dot {
+  font-size: 0.6rem;
+  color: var(--border);
+}
+
+.feed-date {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  opacity: 0.45;
+}
+
+.feed-date--today {
+  color: var(--text);
+  opacity: 0.75;
+}
+
+.feed-title {
+  font-size: 0.82rem;
+  font-weight: 450;
+  line-height: 1.4;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feed-arrow {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0;
+  flex-shrink: 0;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.feed-card:hover .feed-arrow {
+  opacity: 0.45;
+  transform: translate(2px, -2px);
+}
+
+/* ── Books ────────────────────────────────────────────── */
+.book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.book-card {
+  text-decoration: none;
+  background: transparent;
+  transition: background 0.16s ease;
+}
+
+.book-card:hover {
+  background: var(--bg-subtle, rgba(255,255,255,0.03));
+}
+
+.book-card-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.book-card:last-child .book-card-inner {
+  border-bottom: none;
+}
+
+.book-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.book-name {
+  font-size: 0.83rem;
+  font-weight: 450;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book-author {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  flex-shrink: 0;
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .book-author {
+    display: inline;
+  }
+}
+
+.book-rate {
+  flex-shrink: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.15rem;
+}
+
+.book-rate-num {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.book-rate-denom {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  opacity: 0.45;
+}
+
+/* ── Timeline ─────────────────────────────────────────── */
+.timeline-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 8px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.timeline-dot-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  margin-top: 4px;
+  z-index: 1;
+}
+
+.timeline-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.timeline-dot--active {
+  background: #4ade80;
+  border-color: #4ade80;
+}
+
+.timeline-dot--faint {
+  opacity: 0.3;
+}
+
+.timeline-pulse {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px solid #4ade80;
+  animation: timeline-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes timeline-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%       { opacity: 0; transform: scale(2.2); }
+}
+
+.timeline-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.timeline-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.timeline-period {
+  font-size: 0.65rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--text-muted);
+  opacity: 0.55;
+  letter-spacing: 0.03em;
+}
+
+.timeline-duration {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  opacity: 0.35;
+}
+
+.timeline-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.timeline-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.timeline-sub--faint {
+  opacity: 0.4;
+}
+
+/* ── Quote ────────────────────────────────────────────── */
 .quote-block {
   opacity: 0.28;
   transition: opacity 0.4s ease;

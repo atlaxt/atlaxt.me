@@ -45,6 +45,15 @@ onUnmounted(() => {
       <!-- Nav -->
       <nav class="flex items-center gap-8">
         <RouterLink
+          to="/projects"
+          class="text-sm transition-opacity hover:opacity-100"
+          style="color: var(--text-muted);"
+          active-class="!opacity-100 !text-[color:var(--text)]"
+        >
+          Projeler
+        </RouterLink>
+
+        <RouterLink
           to="/blog"
           class="text-sm transition-opacity hover:opacity-100"
           style="color: var(--text-muted);"
@@ -52,6 +61,7 @@ onUnmounted(() => {
         >
           Blog
         </RouterLink>
+
         <!-- <RouterLink
           to="/about"
           class="text-sm transition-opacity hover:opacity-100"
@@ -72,11 +82,15 @@ onUnmounted(() => {
 
         <RouterLink
           to="/cli"
-          class="text-sm transition-opacity hover:opacity-100"
+          class="flex transition-opacity hover:opacity-100"
           style="color: var(--text-muted);"
           active-class="!opacity-100 !text-[color:var(--text)]"
+          aria-label="CLI"
         >
-          CLI
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 17 10 11 4 5" />
+            <line x1="12" x2="20" y1="19" y2="19" />
+          </svg>
         </RouterLink>
 
         <!-- Controls -->

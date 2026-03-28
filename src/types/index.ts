@@ -36,6 +36,7 @@ export interface ExperienceEntry {
   end: string
   location: string
   mode: string
+  active?: boolean
 }
 
 export interface EducationEntry {
@@ -45,6 +46,7 @@ export interface EducationEntry {
   initials: string | null
   period: string
   planned: boolean
+  active?: boolean
 }
 
 // ─── CLI ──────────────────────────────────────────────────────

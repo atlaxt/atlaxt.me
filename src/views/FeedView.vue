@@ -88,7 +88,13 @@ function favicon(url: string): string {
   }
 }
 
+const isDev = import.meta.env.DEV
+
 onMounted(async () => {
+  if (isDev) {
+    loading.value = false
+    return
+  }
   const results = await Promise.all(
     sources.map(s => fetchFeed(s.url, s.name, s.link)),
   )
@@ -120,6 +126,10 @@ useSeo({
 <template>
   <div class="px-8 py-16">
     <PageHeader :crumbs="[{ label: 'Haberler', to: '/feed' }]" />
+
+    <p v-if="isDev" class="text-xs font-mono mb-10" style="color: var(--text-muted); opacity: 0.35;">
+      -- local ortamda haberler yüklenmiyor --
+    </p>
 
     <!-- RSS Kaynakları (isteğe bağlı) -->
     <div class="mb-10 flex flex-col gap-3">
