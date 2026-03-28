@@ -1,7 +1,7 @@
 ---
 title: 'Öğrenmeyi Nasıl Yapılandırıyorum'
 description: 'RSS okumak, iş yerinde karşılaştığım problemler ve kendi projelerim.'
-date: '2026-03-01'
+date: '2025-12-25'
 ---
 
 Bir noktada fark ettim ki "öğrenmek istiyorum" demek ile gerçekten öğrenmek arasında büyük bir fark var. Bu farkı kapatmak için belirli bir sistem kurmak gerekiyor. Benim sistemim üç ayak üzerine oturuyor: RSS, deneyim ve proje.

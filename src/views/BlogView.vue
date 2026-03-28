@@ -11,6 +11,17 @@ const posts = (Object.values(modules) as { default: Post }[])
   .filter(p => p?.frontmatter)
   .sort((a, b) => b.frontmatter.date?.localeCompare(a.frontmatter.date))
 
+const grouped = (() => {
+  const map = new Map<number, Post[]>()
+  for (const post of posts) {
+    const year = new Date(post.frontmatter.date).getFullYear()
+    if (!map.has(year))
+      map.set(year, [])
+    map.get(year)!.push(post)
+  }
+  return [...map.entries()].sort((a, b) => b[0] - a[0])
+})()
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Blog',
@@ -46,29 +57,39 @@ useSeo({
     <PageHeader :crumbs="[{ label: 'Blog', to: '/blog' }]" />
 
     <div class="page-intro">
-      <p class="page-intro-title">Bir konuyu konuşmak veya bir bilgiyi aktarmak istediğimde burdayım.</p>
+      <p class="page-intro-title">
+        Bir konuyu konuşmak veya bir bilgiyi aktarmak istediğimde burdayım.
+      </p>
     </div>
 
-    <div class="flex flex-col">
-      <RouterLink
-        v-for="post in posts"
-        :key="post.slug"
-        :to="`/blog/${post.slug}`"
-        class="flex flex-col py-6 border-b transition-opacity hover:opacity-70"
-        style="border-color: var(--border);"
+    <div class="year-list">
+      <div
+        v-for="[year, yearPosts] in grouped"
+        :key="year"
+        class="year-group"
       >
-        <div class="flex items-baseline justify-between gap-8 mb-1">
-          <span class="text-sm font-medium" style="color: var(--text);">
-            {{ post.frontmatter.title }}
-          </span>
-          <span class="text-xs shrink-0 tabular-nums" style="color: var(--text-muted);">
-            {{ new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }) }}
-          </span>
+        <span class="year-label" aria-hidden="true">{{ year }}</span>
+        <div class="year-posts">
+          <RouterLink
+            v-for="post in yearPosts"
+            :key="post.slug"
+            :to="`/blog/${post.slug}`"
+            class="post-row"
+          >
+            <div class="flex items-baseline justify-between gap-8 mb-1">
+              <span class="text-sm font-medium" style="color: var(--text);">
+                {{ post.frontmatter.title }}
+              </span>
+              <span class="text-xs shrink-0 tabular-nums" style="color: var(--text-muted);">
+                {{ new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+              </span>
+            </div>
+            <p class="text-xs leading-relaxed" style="color: var(--text-muted);">
+              {{ post.frontmatter.description }}
+            </p>
+          </RouterLink>
         </div>
-        <p class="text-xs leading-relaxed" style="color: var(--text-muted);">
-          {{ post.frontmatter.description }}
-        </p>
-      </RouterLink>
+      </div>
     </div>
   </div>
 </template>
@@ -82,5 +103,52 @@ useSeo({
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--text);
+}
+
+.year-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.year-group {
+  position: relative;
+}
+
+.year-label {
+  position: absolute;
+  top: -0.15em;
+  left: -0.04em;
+  font-size: 7rem;
+  font-family: 'Alumni Sans Pinstripe', sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  opacity: 0.12;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.year-posts {
+  position: relative;
+  z-index: 1;
+  padding-top: 3.5rem;
+}
+
+.post-row {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  text-decoration: none;
+}
+
+.post-row:hover span,
+.post-row:hover p {
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
 }
 </style>

@@ -131,10 +131,8 @@ onMounted(async () => {
   flex-shrink: 0;
   padding: 0 0.9rem;
   font-size: 0.55rem;
-  font-family: 'Courier New', Courier, monospace;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  opacity: 0.45;
   border-right: 1px solid;
   height: 100%;
   display: flex;
@@ -186,13 +184,12 @@ onMounted(async () => {
 
 .ticker-source {
   font-size: 0.58rem;
-  font-family: 'Courier New', Courier, monospace;
   letter-spacing: 0.05em;
   flex-shrink: 0;
 }
 
 .ticker-sep {
-  opacity: 0.2;
+  opacity: 0.8;
   font-size: 0.6rem;
   flex-shrink: 0;
 }

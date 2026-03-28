@@ -477,9 +477,8 @@ useSeo({
 
 .blog-date {
   font-size: 0.62rem;
-  font-family: 'Courier New', Courier, monospace;
   color: var(--text-muted);
-  opacity: 0.4;
+  opacity: 0.65;
   white-space: nowrap;
 }
 
@@ -494,7 +493,7 @@ useSeo({
 .blog-desc {
   font-size: 0.72rem;
   color: var(--text-muted);
-  opacity: 0.55;
+  opacity: 0.75;
   line-height: 1.6;
   margin-top: auto;
   padding-top: 0.35rem;
@@ -527,7 +526,6 @@ useSeo({
 /* ── Books ────────────────────────────────────────────── */
 .book-subtitle {
   font-size: 0.7rem;
-  font-family: 'Courier New', Courier, monospace;
   color: var(--text-muted);
   opacity: 0.9;
   letter-spacing: 0.05em;
@@ -560,9 +558,8 @@ useSeo({
 
 .book-rank {
   font-size: 0.6rem;
-  font-family: 'Courier New', Courier, monospace;
   color: var(--text-muted);
-  opacity: 0.3;
+  opacity: 0.55;
   flex-shrink: 0;
   min-width: 1.4rem;
 }
@@ -587,7 +584,7 @@ useSeo({
 .book-author {
   font-size: 0.68rem;
   color: var(--text-muted);
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 .book-rate {
@@ -603,7 +600,7 @@ useSeo({
   font-size: 0.6rem;
   font-weight: 400;
   color: var(--text-muted);
-  opacity: 0.4;
+  opacity: 0.65;
   margin-left: 0.05rem;
 }
 
@@ -692,16 +689,15 @@ useSeo({
 
 .timeline-period {
   font-size: 0.65rem;
-  font-family: 'Courier New', Courier, monospace;
   color: var(--text-muted);
-  opacity: 0.55;
+  opacity: 0.7;
   letter-spacing: 0.03em;
 }
 
 .timeline-duration {
   font-size: 0.62rem;
   color: var(--text-muted);
-  opacity: 0.35;
+  opacity: 0.6;
 }
 
 .timeline-title {
@@ -718,17 +714,17 @@ useSeo({
 }
 
 .timeline-sub--faint {
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 /* ── Quote ────────────────────────────────────────────── */
 .quote-block {
-  opacity: 0.28;
+  opacity: 0.5;
   transition: opacity 0.4s ease;
 }
 
 .quote-block:hover {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .quote-text {

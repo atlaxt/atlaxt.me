@@ -7,14 +7,36 @@ import booksRaw from '../../content/books.yaml'
 
 const books = (booksRaw as unknown as Book[]).filter(b => b.name)
 const search = ref('')
+const sortDir = ref<'desc' | 'asc' | null>(null)
+
+function toggleSort() {
+  if (sortDir.value === null) sortDir.value = 'desc'
+  else if (sortDir.value === 'desc') sortDir.value = 'asc'
+  else sortDir.value = null
+}
 
 const filtered = computed(() => {
   const q = search.value.toLowerCase().trim()
-  if (!q)
-    return books
-  return books.filter(b =>
-    b.name?.toLowerCase().includes(q) || b.author?.toLowerCase().includes(q),
-  )
+  let result = q
+    ? books.filter(b => b.name?.toLowerCase().includes(q) || b.author?.toLowerCase().includes(q))
+    : [...books]
+
+  if (sortDir.value === 'desc')
+    result.sort((a, b) => {
+      if (!a.rate && !b.rate) return 0
+      if (!a.rate) return 1
+      if (!b.rate) return -1
+      return Number.parseFloat(b.rate) - Number.parseFloat(a.rate)
+    })
+  else if (sortDir.value === 'asc')
+    result.sort((a, b) => {
+      if (!a.rate && !b.rate) return 0
+      if (!a.rate) return 1
+      if (!b.rate) return -1
+      return Number.parseFloat(a.rate) - Number.parseFloat(b.rate)
+    })
+
+  return result
 })
 
 const jsonLd = {
@@ -71,6 +93,19 @@ useSeo({
       </div>
     </div>
 
+    <!-- Kolon başlıkları -->
+    <div class="flex items-baseline justify-between pb-2 mb-1" style="border-bottom: 1px solid var(--border);">
+      <span class="text-xs" style="color: var(--text-muted); opacity: 0.4;">kitap</span>
+      <button
+        class="sort-btn text-xs"
+        :class="{ 'sort-btn--active': sortDir !== null }"
+        @click="toggleSort"
+      >
+        puan
+        <span class="sort-icon">{{ sortDir === 'desc' ? '↓' : sortDir === 'asc' ? '↑' : '↕' }}</span>
+      </button>
+    </div>
+
     <!-- Liste -->
     <div class="flex flex-col">
       <div
@@ -118,5 +153,30 @@ useSeo({
   font-size: 0.8rem;
   color: var(--text-muted);
   opacity: 0.5;
+}
+
+.sort-btn {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  opacity: 0.4;
+  transition: opacity 0.15s ease;
+  padding: 0;
+}
+
+.sort-btn:hover {
+  opacity: 0.75;
+}
+
+.sort-btn--active {
+  opacity: 0.85;
+}
+
+.sort-icon {
+  font-size: 0.6rem;
 }
 </style>
