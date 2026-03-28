@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { Photo } from '@/types'
-import { computed, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { onBeforeRouteLeave } from 'vue-router'
 import PageHeader from '@/components/PageHeader.vue'
 import { useSeo } from '@/seo/useSeo'
 import photosRaw from '../../content/photos.yaml'
 
-const photos = photosRaw as unknown as Photo[]
+const photos = [...(photosRaw as unknown as Photo[])].reverse()
 
 const GITHUB_RAW = 'https://raw.githubusercontent.com/atlaxt/atlaxt.me/main/public/photos'
 
@@ -73,13 +74,19 @@ function open(i: number) {
   document.body.style.overflow = 'hidden'
 }
 
-function close() {
-  lightboxIndex.value = null
-  document.body.style.overflow = ''
-}
-
 const suppressNextClick = ref(false)
 const touch = ref<{ x: number, y: number, t: number } | null>(null)
+
+function cleanupOverlayState() {
+  document.body.style.overflow = ''
+  suppressNextClick.value = false
+  touch.value = null
+}
+
+function close() {
+  lightboxIndex.value = null
+  cleanupOverlayState()
+}
 
 function onOverlayClick() {
   if (suppressNextClick.value) {
@@ -146,10 +153,18 @@ function onKey(e: KeyboardEvent) {
     close()
 }
 
-window.addEventListener('keydown', onKey)
+onMounted(() => {
+  window.addEventListener('keydown', onKey)
+})
+
+onBeforeRouteLeave(() => {
+  lightboxIndex.value = null
+  cleanupOverlayState()
+})
+
 onUnmounted(() => {
   window.removeEventListener('keydown', onKey)
-  document.body.style.overflow = ''
+  cleanupOverlayState()
 })
 
 const jsonLd = {
@@ -180,7 +195,7 @@ useSeo({
     <!-- Masonry grid -->
     <div v-if="photos.length" class="masonry-grid">
       <button
-        v-for="(photo, i) in photos.reverse()"
+        v-for="(photo, i) in photos"
         :key="photo.file"
         class="masonry-item group"
         @click="open(i)"
