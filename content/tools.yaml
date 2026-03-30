@@ -1,3 +1,7 @@
 - id: to-favicon
   package: '@atlaxt/to-favicon'
   desc: PNG dosyasını tek komutla .ico dosyasına dönüştürür ve public klasörüne kaydeder.
+
+- id: to-public
+  package: '@atlaxt/to-public'
+  desc: Sitenizin package.json bilgilerini her zaman güncel bir JSON dosyasıyla yayınlar.
