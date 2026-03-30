@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import type { ToolEntry } from '@/types'
+import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useReadmeCache } from '@/composables/useReadmeCache'
 import toolsRaw from '../../content/tools.yaml'
 
 const tools = toolsRaw as unknown as ToolEntry[]
 
 const route = useRoute()
+const { preloadAll } = useReadmeCache()
+
+onMounted(() => {
+  preloadAll(tools.map(t => t.package))
+})
 // const router = useRouter()
 
 // function goToTool(id: string) {

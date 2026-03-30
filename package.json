@@ -15,7 +15,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "prebuild": "to-public"
   },
   "dependencies": {
     "@unhead/vue": "^2.1.12",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^7.7.3",
+    "@atlaxt/to-public": "^1.2.2",
     "@tailwindcss/vite": "^4.1.0",
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^24.11.0",

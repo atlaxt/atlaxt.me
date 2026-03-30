@@ -23,6 +23,7 @@ defineProps<{
       <p v-if="desc" class="text-xs leading-relaxed" style="color: var(--text-muted);">
         {{ desc }}
       </p>
+      <slot />
     </div>
     <span class="text-sm shrink-0 mt-0.5" style="color: var(--text-muted);">{{ arrow ?? '→' }}</span>
   </component>

@@ -1,39 +1,29 @@
 - name: Git101
-  description: Git sürüm kontrolü için yeni başlayanlara uygun bir rehber.
   link: 'https://git101.atlaxt.me'
 
 - name: nuxt-tawk-to
-  description: Tawk.to canlı sohbet bileşenini entegre etmek için Nuxt 3 modülü.
   link: 'https://nuxt-tawk-to.atlaxt.me/'
 
 - name: imoji
-  description: Anında arama ve tek tıkla kopyalama sunan minimal bir emoji gezgini.
   link: 'https://imoji.atlaxt.me'
 
 - name: Mega Yapı
-  description: 'Profesyonel cam balkon, PVC doğrama ve ayna çözümleri.'
   link: 'https://www.yapimega.com'
 
 - name: useTool
-  description: Hız odaklı bir araç seti.
   link: 'https://usetool.space'
 
 - name: useColor
-  description: ---
   link: 'https://usecolor.space'
 
 - name: useFont
-  description: ---
   link: 'https://usefont.space'
 
 - name: useMarkdown
-  description: ---
   link: 'https://usemarkdown.space'
 
 - name: usePrompt
-  description: ---
   link: 'https://useprompt.space'
 
 - name: useSpace Studio
-  description: ---
   link: 'https://usespace.studio'

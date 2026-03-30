@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { ToolEntry } from '@/types'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { fetchNpmReadme } from '@/composables/useNpm'
+import { useReadmeCache } from '@/composables/useReadmeCache'
 import CliLayout from '@/layouts/CliLayout.vue'
 import { useSeo } from '@/seo/useSeo'
 import toolsRaw from '../../../content/tools.yaml'
@@ -15,14 +15,25 @@ const tool = computed(() => tools.find(t => t.id === route.params.id))
 const html = ref<string | null>(null)
 const error = ref(false)
 
-onMounted(async () => {
-  if (!tool.value)
-    return
-  const result = await fetchNpmReadme(tool.value.package)
+const { getReadme, cache } = useReadmeCache()
+
+async function load(pkg: string) {
+  error.value = false
+  html.value = cache.value[pkg] ?? null
+  const result = await getReadme(pkg)
   if (result)
     html.value = result
   else error.value = true
-})
+}
+
+watch(
+  () => tool.value?.package,
+  (pkg) => {
+    if (pkg)
+      load(pkg)
+  },
+  { immediate: true },
+)
 
 useSeo({
   title: `${route.params.id} — atlaxt CLI`,

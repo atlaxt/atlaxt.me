@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import type { ToolEntry } from '@/types'
+import { onMounted } from 'vue'
 import CliCommand from '@/components/CliCommand.vue'
 import ContentRow from '@/components/ContentRow.vue'
+import { useReadmeCache } from '@/composables/useReadmeCache'
 import CliLayout from '@/layouts/CliLayout.vue'
 import { useSeo } from '@/seo/useSeo'
 import toolsRaw from '../../../content/tools.yaml'
 
 const tools = toolsRaw as unknown as ToolEntry[]
+const { cache, preloadAll } = useReadmeCache()
+
+onMounted(() => {
+  preloadAll(tools.map(t => t.package))
+})
 
 useSeo({
   title: 'Tools — atlaxt CLI',
@@ -37,7 +44,15 @@ useSeo({
         :title="tool.package"
         :desc="tool.desc"
         :mono="true"
-      />
+      >
+        <div
+          v-if="cache[tool.package]"
+          class="relative mt-6 overflow-hidden"
+          style="max-height: 6em; mask-image: linear-gradient(to bottom, black 30%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);"
+        >
+          <div class="cli-readme text-xs leading-relaxed" style="color: var(--text-muted); opacity: 0.4;" v-html="cache[tool.package]" />
+        </div>
+      </ContentRow>
     </div>
   </CliLayout>
 </template>
