@@ -13,6 +13,15 @@ const { isDark } = useColorMode()
 const items = ref<FeedItem[]>([])
 const dismissed = ref(false)
 
+const showLabelText = computed(() => {
+  if (items.value.length === 0)
+    return 'bugün'
+  const firstDate = items.value[0]?.date
+  if (firstDate && isYesterday(firstDate))
+    return 'dün'
+  return 'bugün'
+})
+
 const show = computed(() =>
   !dismissed.value
   && items.value.length > 0
@@ -32,6 +41,11 @@ function isToday(d: Date): boolean {
     && d.getDate() === now.getDate()
 }
 
+function handleItemClick(link: string) {
+  (window as any).feedHighlightedItem = link
+  router.push('/feed')
+}
+
 onMounted(async () => {
   if (import.meta.env.DEV) {
     items.value = [
@@ -45,11 +59,25 @@ onMounted(async () => {
   const results = await Promise.all(
     sources.map(s => fetchFeed(s.url, s.name, s.link)),
   )
-  items.value = results
-    .flat()
-    .filter(i => isToday(i.date))
-    .sort((a, b) => b.date.getTime() - a.date.getTime())
+
+  const allItems = results.flat()
+  let todayItems = allItems.filter(i => isToday(i.date))
+
+  // Bugün haber yoksa dünün haberini göster
+  if (todayItems.length === 0) {
+    todayItems = allItems.filter(i => isYesterday(i.date))
+  }
+
+  items.value = todayItems.sort((a, b) => b.date.getTime() - a.date.getTime())
 })
+
+function isYesterday(d: Date): boolean {
+  const yest = new Date()
+  yest.setDate(yest.getDate() - 1)
+  return d.getFullYear() === yest.getFullYear()
+    && d.getMonth() === yest.getMonth()
+    && d.getDate() === yest.getDate()
+}
 </script>
 
 <template>
@@ -61,11 +89,11 @@ onMounted(async () => {
     >
       <!-- Sol etiket -->
       <div class="ticker-label">
-        bugün
+        {{ showLabelText }}
       </div>
 
-      <!-- Kayan içerik: tıklama /feed'e, başlık tıklaması habere -->
-      <div class="ticker-viewport" @click="router.push('/feed')">
+      <!-- Kayan içerik: tıklama habere, başlık tıklaması da habere -->
+      <div class="ticker-viewport">
         <div
           class="ticker-track"
           :style="`animation-duration: ${duration}s`"
@@ -74,16 +102,11 @@ onMounted(async () => {
             v-for="(item, i) in tickerItems"
             :key="`${item.link}-${i}`"
             class="ticker-item"
+            @click="handleItemClick(item.link)"
           >
             <span class="ticker-source">{{ item.source }}</span>
             <span class="ticker-sep">—</span>
-            <a
-              :href="item.link"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="ticker-title"
-              @click.stop
-            >{{ item.title }}</a>
+            <span class="ticker-title">{{ item.title }}</span>
           </div>
         </div>
       </div>
@@ -176,6 +199,7 @@ onMounted(async () => {
   text-decoration: none;
   color: inherit;
   transition: opacity 0.15s ease;
+  cursor: pointer;
 }
 
 .ticker-item:hover {

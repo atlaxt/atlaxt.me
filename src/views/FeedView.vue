@@ -12,6 +12,7 @@ const items = ref<FeedItem[]>([])
 const loading = ref(true)
 const selected = ref<Set<string>>(new Set())
 const showRssSources = ref(false)
+const highlightedLink = ref<string | null>(null)
 
 function toggle(name: string) {
   const next = new Set(selected.value)
@@ -88,18 +89,24 @@ function favicon(url: string): string {
   }
 }
 
-const isDev = import.meta.env.DEV
-
 onMounted(async () => {
-  if (isDev) {
-    loading.value = false
-    return
-  }
+  // Haberler yükleniyor (dev/prod ikisinde de)
+  const feedSources = feedsRaw as unknown as FeedSource[]
   const results = await Promise.all(
-    sources.map(s => fetchFeed(s.url, s.name, s.link)),
+    feedSources.map(s => fetchFeed(s.url, s.name, s.link)),
   )
   items.value = results.flat()
   loading.value = false
+
+  // Global highlight state'i kontrol et
+  if ((window as any).feedHighlightedItem) {
+    highlightedLink.value = (window as any).feedHighlightedItem as string;
+    (window as any).feedHighlightedItem = null
+    // 3 saniye sonra highlight'ı kaldır
+    setTimeout(() => {
+      highlightedLink.value = null
+    }, 3000)
+  }
 })
 
 useSeo({
@@ -128,8 +135,12 @@ useSeo({
     <PageHeader :crumbs="[{ label: 'Haberler', to: '/feed' }]" />
 
     <div class="page-intro">
-      <p class="page-intro-title">Takip ettiğim yazılar.</p>
-      <p class="page-intro-sub">Benimle aynı yolda ilerliyorsanız işinize yarayabilir.</p>
+      <p class="page-intro-title">
+        Takip ettiğim yazılar.
+      </p>
+      <p class="page-intro-sub">
+        Benimle aynı yolda ilerliyorsanız işinize yarayabilir.
+      </p>
     </div>
 
     <!-- RSS Kaynakları (isteğe bağlı) -->
@@ -254,7 +265,9 @@ useSeo({
         :href="item.link"
         target="_blank"
         rel="noopener noreferrer"
-        class="flex items-start justify-between gap-6 py-5 transition-opacity hover:opacity-60"
+        class="flex items-start justify-between gap-6 py-5 transition-opacity hover:opacity-60" :class="[
+          highlightedLink === item.link && 'feed-item-highlight',
+        ]"
         style="border-bottom: 1px solid var(--border); color: var(--text);"
       >
         <div class="min-w-0">
@@ -306,5 +319,21 @@ useSeo({
   font-size: 0.8rem;
   color: var(--text-muted);
   opacity: 0.5;
+}
+
+@keyframes highlight-pulse {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: var(--bg-subtle);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.feed-item-highlight {
+  animation: highlight-pulse 0.8s ease-in-out 3 !important;
 }
 </style>
