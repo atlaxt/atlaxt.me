@@ -90,7 +90,59 @@ function favicon(url: string): string {
 }
 
 onMounted(async () => {
-  // Haberler yükleniyor (dev/prod ikisinde de)
+  // Dev modda mock data
+  if (import.meta.env.DEV) {
+    const today = new Date()
+    const yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() - 1)
+    const twoDaysAgo = new Date()
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2)
+    const threeDaysAgo = new Date()
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3)
+
+    items.value = [
+      // Bugün (3)
+      { title: 'Vue 3.5 Composition API ile Dynamic Forms', link: 'https://example.com/1', date: today, source: 'Vue Blog', sourceLink: 'https://blog.vuejs.org' },
+      { title: 'Nuxt 4 Yeni Server Route Configuration', link: 'https://example.com/2', date: today, source: 'Nuxt', sourceLink: 'https://nuxt.com' },
+      { title: 'TypeScript 5.4 Type Inference Improvements', link: 'https://example.com/3', date: today, source: 'TypeScript', sourceLink: 'https://typescriptlang.org' },
+      // Dün (5)
+      { title: 'Vite 6.0 Plugin System Enhancements', link: 'https://example.com/4', date: yesterday, source: 'Vite', sourceLink: 'https://vitejs.dev' },
+      { title: 'Web Components Best Practices 2026', link: 'https://example.com/5', date: yesterday, source: 'MDN', sourceLink: 'https://mdn.org' },
+      { title: 'React 19 Async Component Features', link: 'https://example.com/6', date: yesterday, source: 'React', sourceLink: 'https://react.dev' },
+      { title: 'Next.js 15 Performance Metrics', link: 'https://example.com/7', date: yesterday, source: 'Vercel', sourceLink: 'https://vercel.com' },
+      { title: 'Tailwind CSS v4 New Features', link: 'https://example.com/8', date: yesterday, source: 'Tailwind', sourceLink: 'https://tailwindcss.com' },
+      // 2 gün önce (7)
+      { title: 'Node.js 22 LTS Release Notes', link: 'https://example.com/9', date: twoDaysAgo, source: 'Node.js', sourceLink: 'https://nodejs.org' },
+      { title: 'Webpack 6 Migration Guide', link: 'https://example.com/10', date: twoDaysAgo, source: 'Webpack', sourceLink: 'https://webpack.js.org' },
+      { title: 'GraphQL Best Practices 2026', link: 'https://example.com/11', date: twoDaysAgo, source: 'Apollo', sourceLink: 'https://apollographql.com' },
+      { title: 'Svelte 5 Framework Update', link: 'https://example.com/12', date: twoDaysAgo, source: 'Svelte', sourceLink: 'https://svelte.dev' },
+      { title: 'Web Assembly Performance Tips', link: 'https://example.com/13', date: twoDaysAgo, source: 'MDN', sourceLink: 'https://mdn.org' },
+      { title: 'Docker Container Optimization', link: 'https://example.com/14', date: twoDaysAgo, source: 'Docker', sourceLink: 'https://docker.com' },
+      { title: 'Kubernetes Cost Reduction', link: 'https://example.com/15', date: twoDaysAgo, source: 'CNCF', sourceLink: 'https://cncf.io' },
+      // 3 gün önce (7)
+      { title: 'Rust Async/Await Patterns', link: 'https://example.com/16', date: threeDaysAgo, source: 'Rust', sourceLink: 'https://rust-lang.org' },
+      { title: 'Python 3.13 What\'s New', link: 'https://example.com/17', date: threeDaysAgo, source: 'Python', sourceLink: 'https://python.org' },
+      { title: 'Go 1.23 Release Review', link: 'https://example.com/18', date: threeDaysAgo, source: 'Go', sourceLink: 'https://golang.org' },
+      { title: 'Java 23 Virtual Threads', link: 'https://example.com/19', date: threeDaysAgo, source: 'Java', sourceLink: 'https://java.com' },
+      { title: 'Kubernetes 1.31 Features', link: 'https://example.com/20', date: threeDaysAgo, source: 'CNCF', sourceLink: 'https://cncf.io' },
+      { title: 'AWS Lambda Performance', link: 'https://example.com/21', date: threeDaysAgo, source: 'AWS', sourceLink: 'https://aws.amazon.com' },
+      { title: 'Web Security Headers Guide', link: 'https://example.com/22', date: threeDaysAgo, source: 'OWASP', sourceLink: 'https://owasp.org' },
+    ]
+    loading.value = false
+
+    // Global highlight state'i kontrol et (DEV modda da)
+    if ((window as any).feedHighlightedItem) {
+      highlightedLink.value = (window as any).feedHighlightedItem as string;
+      (window as any).feedHighlightedItem = null
+      // 3 saniye sonra highlight'ı kaldır
+      setTimeout(() => {
+        highlightedLink.value = null
+      }, 3000)
+    }
+    return
+  }
+
+  // Haberler yükleniyor (prod)
   const feedSources = feedsRaw as unknown as FeedSource[]
   const results = await Promise.all(
     feedSources.map(s => fetchFeed(s.url, s.name, s.link)),
@@ -265,7 +317,7 @@ useSeo({
         :href="item.link"
         target="_blank"
         rel="noopener noreferrer"
-        class="flex items-start justify-between gap-6 py-5 transition-opacity hover:opacity-60" :class="[
+        class="flex p-1 items-start justify-between gap-6 py-5 transition-opacity hover:opacity-60" :class="[
           highlightedLink === item.link && 'feed-item-highlight',
         ]"
         style="border-bottom: 1px solid var(--border); color: var(--text);"

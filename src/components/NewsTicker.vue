@@ -48,10 +48,11 @@ function handleItemClick(link: string) {
 
 onMounted(async () => {
   if (import.meta.env.DEV) {
+    // DEV modda bugünün haberini göster (FeedView mock data ile aynı)
     items.value = [
-      { title: 'Vue 3.5 yeni özellikleri ve performans iyileştirmeleri', source: 'Vue Blog', link: '#', sourceLink: '#', date: new Date() },
-      { title: 'Nuxt 4 yol haritası açıklandı', source: 'Nuxt', link: '#', sourceLink: '#', date: new Date() },
-      { title: 'Vite 6.0 stabil sürümü yayında', source: 'Vite', link: '#', sourceLink: '#', date: new Date() },
+      { title: 'Vue 3.5 Composition API ile Dynamic Forms', link: 'https://example.com/1', source: 'Vue Blog', sourceLink: 'https://blog.vuejs.org', date: new Date() },
+      { title: 'Nuxt 4 Yeni Server Route Configuration', link: 'https://example.com/2', source: 'Nuxt', sourceLink: 'https://nuxt.com', date: new Date() },
+      { title: 'TypeScript 5.4 Type Inference Improvements', link: 'https://example.com/3', source: 'TypeScript', sourceLink: 'https://typescriptlang.org', date: new Date() },
     ]
     return
   }
