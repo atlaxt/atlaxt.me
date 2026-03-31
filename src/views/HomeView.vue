@@ -478,7 +478,7 @@ useSeo({
 .blog-date {
   font-size: 0.62rem;
   color: var(--text-muted);
-  opacity: 0.65;
+  opacity: 0.5;
   white-space: nowrap;
 }
 

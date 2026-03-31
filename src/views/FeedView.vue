@@ -30,6 +30,17 @@ const filtered = computed(() => {
   return base.filter(i => selected.value.has(i.source))
 })
 
+const groupedFiltered = computed(() => {
+  const map = new Map<string, FeedItem[]>()
+  for (const item of filtered.value) {
+    const label = groupLabel(item.date)
+    if (!map.has(label))
+      map.set(label, [])
+    map.get(label)!.push(item)
+  }
+  return [...map.entries()]
+})
+
 const sourceNames = computed(() => [...new Set(items.value.map(i => i.source))])
 
 const categories = computed(() => {
@@ -72,11 +83,15 @@ function isYesterday(d: Date): boolean {
 }
 
 function formatDate(d: Date): string {
+  return d.toLocaleDateString('tr-TR', { month: 'long', day: 'numeric' })
+}
+
+function groupLabel(d: Date): string {
   if (isToday(d))
-    return 'Bugün'
+    return `${formatDate(d)} · Bugün`
   if (isYesterday(d))
-    return 'Dün'
-  return d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' })
+    return `${formatDate(d)} · Dün`
+  return formatDate(d)
 }
 
 function favicon(url: string): string {
@@ -310,45 +325,50 @@ useSeo({
     </div>
 
     <!-- Liste -->
-    <div v-else class="flex flex-col">
-      <a
-        v-for="item in filtered"
-        :key="item.link"
-        :href="item.link"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="flex p-1 items-start justify-between gap-6 py-5 transition-opacity hover:opacity-60" :class="[
-          highlightedLink === item.link && 'feed-item-highlight',
-        ]"
-        style="border-bottom: 1px solid var(--border); color: var(--text);"
+    <div v-else class="feed-group-list">
+      <div
+        v-for="[label, groupItems] in groupedFiltered"
+        :key="label"
+        class="feed-group"
       >
-        <div class="min-w-0">
-          <p class="text-sm font-medium leading-snug mb-1.5 truncate">{{ item.title }}</p>
-          <div class="flex items-center gap-2">
-            <a
-              :href="item.sourceLink"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1.5 text-xs hover:opacity-100 transition-opacity"
-              style="color: var(--text-muted); opacity: 0.6;"
-              @click.stop
-            >
-              <img :src="favicon(item.sourceLink)" class="w-3 h-3 rounded-sm" alt="" aria-hidden="true">
-              {{ item.source }}
-            </a>
-            <span style="color: var(--border);">·</span>
-            <span
-              class="text-xs font-medium"
-              :style="isToday(item.date)
-                ? 'color: var(--text);'
-                : 'color: var(--text-muted); opacity: 0.5;'"
-            >{{ formatDate(item.date) }}</span>
-          </div>
-        </div>
-        <span class="text-sm shrink-0 mt-0.5" style="color: var(--text-muted);">↗</span>
-      </a>
+        <p class="feed-group-label">
+          {{ label }}
+        </p>
 
-      <p v-if="!filtered.length" class="text-sm py-8" style="color: var(--text-muted); opacity: 0.4;">
+        <div class="feed-group-posts">
+          <a
+            v-for="item in groupItems"
+            :key="item.link"
+            :href="item.link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex p-1 items-start justify-between gap-6 py-5" :class="[
+              highlightedLink === item.link && 'feed-item-highlight',
+            ]"
+            style="border-bottom: 1px solid var(--border); color: var(--text); background: var(--bg);"
+          >
+            <div class="min-w-0">
+              <p class="feed-item-title">{{ item.title }}</p>
+              <div class="flex items-center gap-2">
+                <a
+                  :href="item.sourceLink"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="feed-item-source inline-flex items-center gap-1.5 hover:opacity-100 transition-opacity"
+                  style="color: var(--text-muted); opacity: 0.78;"
+                  @click.stop
+                >
+                  <img :src="favicon(item.sourceLink)" class="w-3 h-3 rounded-sm" alt="" aria-hidden="true">
+                  {{ item.source }}
+                </a>
+              </div>
+            </div>
+            <span class="text-sm shrink-0 mt-0.5" style="color: var(--text-muted); opacity: 0.85;">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <p v-if="!groupedFiltered.length" class="text-sm py-8" style="color: var(--text-muted); opacity: 0.55;">
         İçerik bulunamadı.
       </p>
     </div>
@@ -370,7 +390,53 @@ useSeo({
 .page-intro-sub {
   font-size: 0.8rem;
   color: var(--text-muted);
-  opacity: 0.5;
+  opacity: 0.65;
+}
+
+.feed-group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.feed-group {
+  position: relative;
+}
+
+.feed-group-label {
+  position: absolute;
+  top: -0.15em;
+  left: -0.04em;
+  font-size: 7rem;
+  font-family: 'Alumni Sans Pinstripe', sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  opacity: 0.18;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.feed-group-posts {
+  position: relative;
+  z-index: 1;
+  padding-top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.feed-item-title {
+  margin-bottom: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.feed-item-source {
+  font-size: 0.75rem;
 }
 
 @keyframes highlight-pulse {

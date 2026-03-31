@@ -80,8 +80,8 @@ useSeo({
               <span class="text-sm font-medium" style="color: var(--text);">
                 {{ post.frontmatter.title }}
               </span>
-              <span class="text-xs shrink-0 tabular-nums" style="color: var(--text-muted);">
-                {{ new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+              <span class="post-date text-xs shrink-0 tabular-nums" style="color: var(--text-muted);">
+                {{ new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { month: 'long', day: 'numeric' }) }}
               </span>
             </div>
             <p class="text-xs leading-relaxed" style="color: var(--text-muted);">
@@ -144,6 +144,10 @@ useSeo({
   border-bottom: 1px solid var(--border);
   background: var(--bg);
   text-decoration: none;
+}
+
+.post-date {
+  opacity: 0.55;
 }
 
 .post-row:hover span,
