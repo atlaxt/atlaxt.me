@@ -441,13 +441,13 @@ useSeo({
 
 @keyframes highlight-pulse {
   0% {
-    background-color: transparent;
+    background-color: var(--bg);
   }
   50% {
     background-color: var(--bg-subtle);
   }
   100% {
-    background-color: transparent;
+    background-color: var(--bg);
   }
 }
 
