@@ -28,10 +28,14 @@
 }
 
 /* ─── View Transition ────────────────────────────────── */
+::view-transition,
+::view-transition-group(root),
+::view-transition-image-pair(root),
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
+  pointer-events: none !important;
 }
 
 /* ─── Base ───────────────────────────────────────────── */

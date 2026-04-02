@@ -226,7 +226,7 @@ useSeo({
 
         <RouterLink
           to="/cli"
-          class="shine-border inline-flex items-center gap-3 mt-6 px-4 py-2 text-sm font-mono"
+          class="shine-border inline-flex backdrop-blur-xs items-center gap-3 mt-6 px-4 py-2 text-sm font-mono"
           style="color: var(--text-muted);"
           @mouseenter="setShineDuration(1.2)"
           @mouseleave="setShineDuration(3)"

@@ -29,7 +29,7 @@ onBeforeUnmount(() => {
   <Transition name="scroll-cue-fade">
     <button
       v-show="isVisible"
-      class="scroll-cue"
+      class="scroll-cue "
       type="button"
       aria-label="Aşağı kaydır"
       @click="onClick"
@@ -57,7 +57,7 @@ onBeforeUnmount(() => {
   cursor: pointer;
   color: var(--text);
   opacity: 0.68;
-  z-index: 55;
+  z-index: 30;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
@@ -120,7 +120,7 @@ onBeforeUnmount(() => {
 
 @media (max-width: 640px) {
   .scroll-cue {
-    bottom: 2.85rem;
+    bottom: 5rem;
   }
 }
 </style>
