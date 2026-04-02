@@ -13,6 +13,103 @@ const loading = ref(true)
 const selected = ref<Set<string>>(new Set())
 const showRssSources = ref(false)
 const highlightedLink = ref<string | null>(null)
+const readLinks = ref<Map<string, number>>(new Map())
+
+const READ_LINKS_KEY = 'feed-read-links'
+const FEED_WINDOW_DAYS = 30
+const FEED_WINDOW_MS = FEED_WINDOW_DAYS * 24 * 60 * 60 * 1000
+
+interface ReadLinkEntry {
+  link: string
+  readAt: number
+}
+
+function cutoffTimestamp(now = Date.now()): number {
+  return now - FEED_WINDOW_MS
+}
+
+function pruneReadLinks(map: Map<string, number>, now = Date.now()): Map<string, number> {
+  const cutoff = cutoffTimestamp(now)
+  const next = new Map<string, number>()
+
+  for (const [link, readAt] of map) {
+    if (readAt >= cutoff)
+      next.set(link, readAt)
+  }
+
+  return next
+}
+
+function loadReadLinks() {
+  if (typeof window === 'undefined')
+    return
+
+  try {
+    const raw = window.localStorage.getItem(READ_LINKS_KEY)
+    if (!raw)
+      return
+
+    const parsed: unknown = JSON.parse(raw)
+    if (!Array.isArray(parsed))
+      return
+
+    const now = Date.now()
+    const parsedMap = new Map<string, number>()
+
+    // Backward compatibility: old format was string[]
+    for (const entry of parsed) {
+      if (typeof entry === 'string') {
+        parsedMap.set(entry, now)
+        continue
+      }
+
+      if (!entry || typeof entry !== 'object')
+        continue
+
+      const maybeEntry = entry as Partial<ReadLinkEntry>
+      if (typeof maybeEntry.link !== 'string' || typeof maybeEntry.readAt !== 'number')
+        continue
+      if (!Number.isFinite(maybeEntry.readAt))
+        continue
+      parsedMap.set(maybeEntry.link, maybeEntry.readAt)
+    }
+
+    const pruned = pruneReadLinks(parsedMap, now)
+    readLinks.value = pruned
+    persistReadLinks(pruned)
+  }
+  catch {
+    readLinks.value = new Map()
+  }
+}
+
+function persistReadLinks(next: Map<string, number>) {
+  if (typeof window === 'undefined')
+    return
+
+  const entries: ReadLinkEntry[] = [...next.entries()].map(([link, readAt]) => ({ link, readAt }))
+  window.localStorage.setItem(READ_LINKS_KEY, JSON.stringify(entries))
+}
+
+function markAsRead(link: string) {
+  const now = Date.now()
+  const next = pruneReadLinks(new Map(readLinks.value), now)
+  next.set(link, now)
+  readLinks.value = next
+  persistReadLinks(next)
+}
+
+function handleAuxClick(event: MouseEvent, link: string) {
+  if (event.button === 1)
+    markAsRead(link)
+}
+
+function isRead(link: string): boolean {
+  const readAt = readLinks.value.get(link)
+  if (!readAt)
+    return false
+  return readAt >= cutoffTimestamp()
+}
 
 function toggle(name: string) {
   const next = new Set(selected.value)
@@ -24,7 +121,12 @@ function toggle(name: string) {
 }
 
 const filtered = computed(() => {
-  const base = items.value.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
+  const cutoff = cutoffTimestamp()
+  const base = items.value
+    .filter(item => item.date.getTime() >= cutoff)
+    .slice()
+    .sort((a, b) => b.date.getTime() - a.date.getTime())
+
   if (!selected.value.size)
     return base
   return base.filter(i => selected.value.has(i.source))
@@ -105,6 +207,8 @@ function favicon(url: string): string {
 }
 
 onMounted(async () => {
+  loadReadLinks()
+
   // Dev modda mock data
   if (import.meta.env.DEV) {
     const today = new Date()
@@ -342,10 +446,13 @@ useSeo({
             :href="item.link"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex p-1 items-start justify-between gap-6 py-5" :class="[
+            class="feed-item-link flex p-1 items-start justify-between gap-6 py-5" :class="[
+              isRead(item.link) && 'feed-item-read',
               highlightedLink === item.link && 'feed-item-highlight',
             ]"
             style="border-bottom: 1px solid var(--border); color: var(--text); background: var(--bg);"
+            @click="markAsRead(item.link)"
+            @auxclick="handleAuxClick($event, item.link)"
           >
             <div class="min-w-0">
               <p class="feed-item-title">{{ item.title }}</p>
@@ -437,6 +544,23 @@ useSeo({
 
 .feed-item-source {
   font-size: 0.75rem;
+}
+
+.feed-item-link:hover:not(.feed-item-read) span,
+.feed-item-link:hover:not(.feed-item-read) p,
+.feed-item-link:hover:not(.feed-item-read) .feed-item-source {
+  opacity: 0.5;
+  transition: opacity 0.15s ease;
+}
+
+.feed-item-read > * {
+  opacity: 0.2;
+  transition: opacity 0.18s ease;
+}
+
+.feed-item-read:hover > *,
+.feed-item-read:focus-visible > * {
+  opacity: 1;
 }
 
 @keyframes highlight-pulse {

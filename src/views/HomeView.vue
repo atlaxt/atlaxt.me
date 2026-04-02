@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { Book, EducationEntry, ExperienceEntry, Photo, Post, Quote } from '@/types'
 import photoMeta from 'virtual:photo-meta'
-import { nextTick, onMounted } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
+import ScrollCue from '@/components/ScrollCue.vue'
 import SectionLabel from '@/components/SectionLabel.vue'
 import SignParticle from '@/components/SignParticle.vue'
 import { useSeo } from '@/seo/useSeo'
@@ -14,10 +15,50 @@ import quotesRaw from '../../content/quotes.yaml'
 
 // ─── Günün sözü ─────────────────────────────────────────────────
 const quotes = quotesRaw as unknown as Quote[]
-const QUOTE_KEY = 'quote-index'
-const quoteIndex = Number(localStorage.getItem(QUOTE_KEY) ?? 0) % quotes.length
-localStorage.setItem(QUOTE_KEY, String((quoteIndex + 1) % quotes.length))
-const currentQuote = quotes[quoteIndex]!
+const QUOTE_POOL_KEY = 'quote-pool'
+
+function shuffleIndices(total: number): number[] {
+  const indices = Array.from({ length: total }, (_, i) => i)
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const current = indices[i]!
+    indices[i] = indices[j]!
+    indices[j] = current
+  }
+  return indices
+}
+
+function getNextQuoteIndex(total: number): number {
+  if (total <= 1)
+    return 0
+
+  let pool: number[] = []
+  const stored = localStorage.getItem(QUOTE_POOL_KEY)
+
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored)
+      if (Array.isArray(parsed)) {
+        pool = parsed.filter(
+          (value): value is number => Number.isInteger(value) && value >= 0 && value < total,
+        )
+      }
+    }
+    catch {
+      pool = []
+    }
+  }
+
+  if (!pool.length)
+    pool = shuffleIndices(total)
+
+  const next = pool.pop() ?? 0
+  localStorage.setItem(QUOTE_POOL_KEY, JSON.stringify(pool))
+  return next
+}
+
+const quoteIndex = getNextQuoteIndex(quotes.length)
+const currentQuote = quotes[quoteIndex] ?? quotes[0]!
 
 // ─── Son yazılar ────────────────────────────────────────────────
 const modules = import.meta.glob('../../content/blogs/*.md', { eager: true })
@@ -43,6 +84,12 @@ const recentBooks = (booksRaw as unknown as Book[])
   .slice(0, 3)
 
 const HOME_SCROLL_KEY = 'home-scroll-y'
+const heroRef = ref<HTMLElement | null>(null)
+
+function scrollToNextSection() {
+  const heroHeight = heroRef.value?.offsetHeight ?? window.innerHeight
+  window.scrollTo({ top: heroHeight, behavior: 'smooth' })
+}
 
 onBeforeRouteLeave(() => {
   sessionStorage.setItem(HOME_SCROLL_KEY, String(window.scrollY))
@@ -162,7 +209,7 @@ useSeo({
 <template>
   <div>
     <!-- Hero: tam ekran yüksekliği -->
-    <div class="flex h-[calc(100vh-57px)]">
+    <div ref="heroRef" class="hero-panel flex h-[calc(100vh-57px)]">
       <!-- Sol: Bio -->
       <div class="flex flex-col justify-center px-2 md:px-0 py-12 w-full md:w-2/5 shrink-0">
         <h1 class="text-2xl font-semibold mb-4" style="color: var(--text);">
@@ -222,6 +269,8 @@ useSeo({
       <div class="hidden md:block flex-1 relative">
         <SignParticle class="absolute inset-0" />
       </div>
+
+      <ScrollCue @activate="scrollToNextSection" />
     </div>
 
     <!-- ─── Blog ─────────────────────────────────────────── -->
@@ -411,6 +460,11 @@ useSeo({
 </template>
 
 <style scoped>
+/* ── Hero scroll cue ─────────────────────────────────── */
+.hero-panel {
+  position: relative;
+}
+
 /* ── Shared ───────────────────────────────────────────── */
 .section-more {
   font-size: 0.7rem;

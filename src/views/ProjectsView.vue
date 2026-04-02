@@ -12,7 +12,7 @@ useSeo({
 </script>
 
 <template>
-  <div class="px-2 md:px-0 py-16">
+  <div class="px-2 md:px-0 py-16 w-full">
     <PageHeader :crumbs="[{ label: 'Projeler', to: '/projects' }]" />
 
     <p class="note">

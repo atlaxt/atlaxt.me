@@ -37,6 +37,8 @@
 /* ─── Base ───────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
   background-color: var(--bg);
   color: var(--text);
   font-size: 17px;
@@ -127,7 +129,6 @@ body {
 .shine-border {
   position: relative;
   background: var(--bg-subtle);
-  border-radius: 6px;
   isolation: isolate;
   transition: background 0.2s ease, opacity 0.2s ease;
 }

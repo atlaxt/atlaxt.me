@@ -5,6 +5,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import NewsTicker from '@/components/NewsTicker.vue'
+import ScrollToTopButton from '@/components/ScrollToTopButton.vue'
 
 const transitionName = ref('fade')
 
@@ -29,6 +30,7 @@ router.beforeEach((to, from) => {
         </RouterView>
       </main>
     </div>
+    <ScrollToTopButton />
     <NewsTicker />
   </div>
 </template>
