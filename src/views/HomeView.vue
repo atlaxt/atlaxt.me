@@ -567,8 +567,14 @@ useSeo({
 }
 
 @media (max-width: 600px) {
+  .blog-wrap {
+    max-height: none;
+    overflow: visible;
+  }
+
   .blog-list {
     grid-template-columns: 1fr;
+    overflow: visible;
   }
 
   .blog-card:not(:last-child) {

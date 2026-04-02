@@ -41,7 +41,7 @@ html {
   overflow-y: scroll;
   background-color: var(--bg);
   color: var(--text);
-  font-size: 17px;
+  font-size: 16px;
 }
 
 body {
@@ -128,7 +128,6 @@ body {
 
 .shine-border {
   position: relative;
-  background: var(--bg-subtle);
   isolation: isolate;
   transition: background 0.2s ease, opacity 0.2s ease;
 }

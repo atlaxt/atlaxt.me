@@ -12,6 +12,8 @@ const REPEL_RADIUS = 55
 const REPEL_FORCE = 1.6
 const SPRING = 0.007 // çok düşük → yavaş, organik dönüş
 const DAMPING = 0.94 // biraz daha fazla sürtünme → yavaş hareket
+const BASE_DIM_ALPHA = 0.58
+const CURSOR_HIGHLIGHT_RADIUS = 78
 
 // Hedef noktasından uzaklaştıkça saydamlaşsın; biraz ötesinde tamamen kaybolsun
 const ALPHA_FADE_OUT_DIST = 700
@@ -187,7 +189,7 @@ class Particle {
     this.y += this.vy
   }
 
-  draw(ctx: CanvasRenderingContext2D, ox: number, oy: number, dark: boolean) {
+  draw(ctx: CanvasRenderingContext2D, ox: number, oy: number, dark: boolean, mx: number, my: number) {
     const dx = this.x - (this.hx + ox)
     const dy = this.y - (this.hy + oy)
     const homeDist = Math.hypot(dx, dy)
@@ -210,7 +212,10 @@ class Particle {
 
     ctx.beginPath()
     ctx.arc(this.x, this.y, this.size + glow * 0.3, 0, Math.PI * 2)
-    const alpha = Math.min(this.baseAlpha + glow * 0.3, 1) * fade
+    const cursorDist = Math.hypot(this.x - mx, this.y - my)
+    const cursorBoost = clamp(1 - cursorDist / CURSOR_HIGHLIGHT_RADIUS, 0, 1)
+    const localAlpha = BASE_DIM_ALPHA + (1 - BASE_DIM_ALPHA) * cursorBoost
+    const alpha = Math.min(this.baseAlpha + glow * 0.3, 1) * fade * localAlpha
     if (alpha <= 0.001)
       return
     ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`
@@ -316,7 +321,7 @@ onMounted(() => {
       const now = performance.now()
       for (const p of particles) {
         p.update(mouse.x, mouse.y, offsetX, offsetY, now)
-        p.draw(ctx, offsetX, offsetY, dark)
+        p.draw(ctx, offsetX, offsetY, dark, mouse.x, mouse.y)
       }
       _animId = requestAnimationFrame(animate)
     }
