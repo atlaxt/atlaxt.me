@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ToolEntry } from '@/types'
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useReadmeCache } from '@/composables/useReadmeCache'
 import toolsRaw from '../../content/tools.yaml'
@@ -10,8 +10,26 @@ const tools = toolsRaw as unknown as ToolEntry[]
 const route = useRoute()
 const { preloadAll } = useReadmeCache()
 
+let desktopQuery: MediaQueryList | null = null
+
+function syncGlobalScrollLock() {
+  const lockScroll = desktopQuery?.matches ?? false
+  document.documentElement.classList.toggle('cli-scroll-lock', lockScroll)
+  document.body.classList.toggle('cli-scroll-lock', lockScroll)
+}
+
 onMounted(() => {
   preloadAll(tools.map(t => t.package))
+
+  desktopQuery = window.matchMedia('(min-width: 768px)')
+  syncGlobalScrollLock()
+  desktopQuery.addEventListener('change', syncGlobalScrollLock)
+})
+
+onUnmounted(() => {
+  desktopQuery?.removeEventListener('change', syncGlobalScrollLock)
+  document.documentElement.classList.remove('cli-scroll-lock')
+  document.body.classList.remove('cli-scroll-lock')
 })
 // const router = useRouter()
 
@@ -21,10 +39,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex min-h-[calc(100vh-57px)]">
+  <div class="flex min-h-[calc(100vh-57px)] md:h-[calc(100vh-57px)] md:overflow-hidden">
     <!-- Sidebar -->
-    <aside class="hidden md:flex flex-col w-52 shrink-0 px-2 md:px-0 py-16" style="border-right: 1px solid var(--border);">
-      <nav class="flex flex-col gap-1">
+    <aside class="hidden md:flex md:h-full flex-col w-52 shrink-0 px-2 md:px-0" style="border-right: 1px solid var(--border);">
+      <nav class="flex h-full flex-col gap-1 overflow-y-auto py-16 pr-2">
         <!-- Giriş -->
         <RouterLink
           to="/cli"
@@ -69,7 +87,7 @@ onMounted(() => {
     </aside>
 
     <!-- İçerik -->
-    <main class="flex-1 px-10 py-16 w-full">
+    <main class="flex-1 px-10 py-16 w-full md:h-full md:overflow-y-auto">
       <slot />
     </main>
   </div>

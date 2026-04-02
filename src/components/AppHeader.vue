@@ -23,11 +23,14 @@ onUnmounted(() => {
 
 <template>
   <header
-    class="sticky top-0 z-50 transition-all duration-300"
+    class="z-50 w-screen border-b border-transparent transition-all duration-300"
+    :class="scrolled
+      ? 'backdrop-blur-xs lg:backdrop-blur-none'
+      : 'bg-transparent border-transparent'"
   >
-    <div class="flex items-center justify-between px-2 md:px-0 py-5">
+    <div class="mx-auto flex items-center justify-between md:justify-end px-4 md:px-8 py-5 mt-2">
       <!-- Logo -->
-      <RouterLink to="/" class="transition-opacity hover:opacity-50">
+      <RouterLink to="/" class="md:fixed md:left-8 left-4 transition-opacity hover:opacity-50">
         <img
           :src="isDark ? signWhite : signBlack"
           alt="Atlas"

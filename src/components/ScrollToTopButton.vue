@@ -117,7 +117,7 @@ onBeforeUnmount(() => {
 
 .scroll-top-fade-enter-active,
 .scroll-top-fade-leave-active {
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .scroll-top-fade-enter-from,

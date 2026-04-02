@@ -22,8 +22,8 @@ router.beforeEach((to, from) => {
   <VercelSpeedInsights />
   <div class="min-h-screen overflow-x-hidden" style="background: var(--bg); color: var(--text);">
     <ArtPlum />
+    <AppHeader />
     <div class="max-w-4xl mx-auto">
-      <AppHeader />
       <main>
         <RouterView v-slot="{ Component }">
           <Transition :name="transitionName" mode="out-in">

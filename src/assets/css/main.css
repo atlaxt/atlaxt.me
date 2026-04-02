@@ -49,6 +49,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+@media (min-width: 768px) {
+  html.cli-scroll-lock,
+  body.cli-scroll-lock {
+    overflow: hidden !important;
+  }
+}
+
 /* ─── Scrollbar ───────────────────────────────────────── */
 /* Firefox */
 * {
