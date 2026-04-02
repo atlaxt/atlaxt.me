@@ -44,32 +44,13 @@ useSeo({
         </div>
 
         <!-- Global kurulum -->
-        <div class="mt-1">
+        <div class="mt-8">
           <p class="text-xs mb-2" style="color: var(--text-muted); opacity: 0.4;">
             global kurulum
           </p>
           <CliCommand npm="npm i -g atlaxt" pnpm="pnpm add -g atlaxt" />
         </div>
       </div>
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <RouterLink
-        to="/cli/tools"
-        class="group flex items-center justify-between px-4 py-3 text-sm transition-opacity hover:opacity-70"
-        style="border: 1px solid var(--border); color: var(--text);"
-      >
-        <span>Tools</span>
-        <span style="color: var(--text-muted);">→</span>
-      </RouterLink>
-      <RouterLink
-        to="/cli/templates"
-        class="group flex items-center justify-between px-4 py-3 text-sm transition-opacity hover:opacity-70"
-        style="border: 1px solid var(--border); color: var(--text);"
-      >
-        <span>Templates</span>
-        <span style="color: var(--text-muted);">→</span>
-      </RouterLink>
     </div>
   </CliLayout>
 </template>

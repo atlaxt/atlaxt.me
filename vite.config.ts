@@ -241,7 +241,7 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     vue(),
-    vueDevTools(),
+    // vueDevTools(),
     yamlPlugin(),
     mdPlugin(),
     photoMetaPlugin(),
