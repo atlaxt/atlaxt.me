@@ -1,7 +1,7 @@
 {
   "name": "atlaxt.me",
   "type": "module",
-  "version": "0.9.0",
+  "version": "5.2.0",
   "private": true,
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^7.7.3",
-    "@atlaxt/to-public": "^2.0.0",
+    "@atlaxt/to-public": "^3.0.0",
     "@tailwindcss/vite": "^4.1.0",
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^24.11.0",
