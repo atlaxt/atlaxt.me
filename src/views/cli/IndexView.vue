@@ -13,9 +13,19 @@ useSeo({
 
 <template>
   <CliLayout>
-    <h1 class="text-lg font-semibold font-mono mb-4" style="color: var(--text);">
-      atlaxt
-    </h1>
+    <div class="flex items-center justify-between mb-8" style="border-bottom: 1px solid var(--border); padding-bottom: 0.75rem;">
+      <h1 class="text-lg font-semibold font-mono" style="color: var(--text);">
+        atlaxt
+      </h1>
+
+      <a
+        href="https://www.npmjs.com/package/atlaxt"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-xs transition-opacity hover:opacity-60"
+        style="color: var(--text-muted);"
+      >npm ↗</a>
+    </div>
 
     <p class="text-sm leading-relaxed mb-10" style="color: var(--text-muted);">
       Kendi geliştirdiğim CLI. Proje şablonlarını tek komutla GitHub'dan klonlar,
