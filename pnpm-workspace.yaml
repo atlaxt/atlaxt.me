@@ -1,6 +1,5 @@
-shellEmulator: true
-
-trustPolicy: no-downgrade
-
 onlyBuiltDependencies:
   - esbuild
+  - vue-demi
+shellEmulator: true
+trustPolicy: no-downgrade

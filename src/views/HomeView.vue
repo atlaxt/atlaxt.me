@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Book, EducationEntry, ExperienceEntry, Photo, Post, Quote } from '@/types'
-import photoMeta from 'virtual:photo-meta'
 import { nextTick, onMounted, ref } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import ScrollCue from '@/components/ScrollCue.vue'
@@ -70,8 +69,9 @@ const recentPosts = (Object.values(modules) as { default: Post }[])
 
 // ─── Son fotoğraflar ────────────────────────────────────────────
 const recentPhotos = (photosRaw as unknown as Photo[])
-  .filter(p => (photoMeta as Record<string, boolean>)[p.file])
-  .slice(-6)
+  .slice()
+  .reverse()
+  .slice(0, 6)
 
 function thumb(file: string) {
   return `/photos/thumbs/${file}`

@@ -75,6 +75,8 @@ const router = createRouter({
       return savedPosition
     if (to.path === '/')
       return false
+    if (to.path === '/photos')
+      return { top: 0 }
     return new Promise(resolve => setTimeout(resolve, 180, { top: 0 }))
   },
 })

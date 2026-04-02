@@ -206,7 +206,7 @@ useSeo({
           :srcset="thumbSrcSet(photo.file)"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 220px"
           class="no-drag w-full block transition-opacity duration-300 group-hover:opacity-80"
-          loading="lazy"
+          loading="eager"
           decoding="async"
           draggable="false"
           @dragstart.prevent
