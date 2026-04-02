@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { useColorMode } from '@/composables/useColorMode'
 
 const showScrollTop = ref(false)
 const hasNewsTicker = ref(false)
 let tickerObserver: MutationObserver | null = null
-const { isDark } = useColorMode()
 
 function updateScrollTopVisibility() {
   showScrollTop.value = window.scrollY > 260
@@ -41,17 +39,14 @@ onBeforeUnmount(() => {
     <button
       v-if="showScrollTop"
       class="scroll-top-btn"
-      :class="{
-        'scroll-top-btn--banner-off': !hasNewsTicker,
-        'scroll-top-btn--inverse-dark': !isDark,
-        'scroll-top-btn--inverse-light': isDark,
-      }"
+      :class="{ 'scroll-top-btn--banner-off': !hasNewsTicker }"
       type="button"
       aria-label="Yukari cik"
       @click="scrollToTop"
     >
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 5l-5 5h3v9h4v-9h3z" fill="currentColor" />
+        <path d="M12 5v14" />
+        <path d="M7.5 9.5L12 5l4.5 4.5" />
       </svg>
     </button>
   </Transition>
@@ -68,23 +63,13 @@ onBeforeUnmount(() => {
   height: 2rem;
   width: 2rem;
   padding: 0;
-  border: 1px solid;
+  border: 1px solid var(--border);
   border-radius: 0;
+  background: transparent;
+  color: var(--text);
   cursor: pointer;
   z-index: 48;
-  transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease, bottom 0.2s ease;
-}
-
-.scroll-top-btn--inverse-dark {
-  background: #0a0a0a;
-  color: #e5e5e5;
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-.scroll-top-btn--inverse-light {
-  background: #f5f5f5;
-  color: #1a1a1a;
-  border-color: rgba(0, 0, 0, 0.12);
+  transition: color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, bottom 0.2s ease;
 }
 
 .scroll-top-btn--banner-off {
@@ -93,16 +78,7 @@ onBeforeUnmount(() => {
 
 .scroll-top-btn:hover {
   transform: translateY(-1px);
-}
-
-.scroll-top-btn--inverse-dark:hover {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.scroll-top-btn--inverse-light:hover {
-  color: #111111;
-  border-color: rgba(0, 0, 0, 0.28);
+  border-color: color-mix(in srgb, var(--border) 70%, var(--text) 30%);
 }
 
 .scroll-top-btn:active {
@@ -112,7 +88,12 @@ onBeforeUnmount(() => {
 .scroll-top-btn svg {
   width: 0.75rem;
   height: 0.75rem;
-  opacity: 0.9;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.92;
 }
 
 .scroll-top-fade-enter-active,
