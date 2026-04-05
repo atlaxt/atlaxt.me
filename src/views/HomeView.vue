@@ -274,7 +274,7 @@ useSeo({
     </div>
 
     <!-- ─── Blog ─────────────────────────────────────────── -->
-    <div class="px-2 md:px-0 py-16 w-full">
+    <div class="px-2 md:px-0 md:py-36 py-12 w-full">
       <div class="flex items-baseline justify-between mb-8">
         <SectionLabel>Blog</SectionLabel>
         <RouterLink to="/blog" class="section-more">
@@ -309,7 +309,7 @@ useSeo({
     </div>
 
     <!-- Deneyim + Eğitim: Timeline -->
-    <div class="px-2 md:px-0 py-16 w-full">
+    <div class="px-2 md:px-0 md:py-36 py-12 w-full">
       <div class="timeline-grid">
         <!-- Deneyim -->
         <div>
@@ -383,7 +383,7 @@ useSeo({
     </div>
 
     <!-- ─── Son kitaplar ─────────────────────────────────────────── -->
-    <div class="px-2 md:px-0 py-16 w-full">
+    <div class="px-2 md:px-0 md:py-36 py-12 w-full">
       <div class="flex items-baseline justify-between mb-2">
         <SectionLabel>Kitaplık</SectionLabel>
         <RouterLink to="/books" class="section-more">
@@ -414,7 +414,7 @@ useSeo({
     </div>
 
     <!-- ─── Fotoğraflar (Pinterest grid) ────────────────────────── -->
-    <div class="px-2 md:px-0 py-16 w-full">
+    <div class="px-2 md:px-0 md:py-36 py-12 w-full">
       <div class="flex items-baseline justify-between mb-8">
         <SectionLabel>Fotoğraflar</SectionLabel>
         <RouterLink
@@ -446,7 +446,7 @@ useSeo({
     </div>
 
     <!-- ─── Söz ───────────────────────────────────────────── -->
-    <div class="px-2 md:px-0 py-20 w-full">
+    <div class="px-2 md:px-0 py-24 w-full">
       <blockquote class="quote-block max-w-lg mx-auto text-center">
         <p class="quote-text">
           <span class="quote-mark">"</span>{{ currentQuote.text }}<span class="quote-mark">"</span>

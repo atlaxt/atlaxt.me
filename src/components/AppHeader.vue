@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import signBlack from '@/assets/sign_black.png'
-import signWhite from '@/assets/sign_white.png'
 import { useColorMode } from '@/composables/useColorMode'
+import signBlack from '/sign_black.png'
+import signWhite from '/sign_white.png'
 
 const { isDark, toggle: toggleColorMode } = useColorMode()
 const route = useRoute()
