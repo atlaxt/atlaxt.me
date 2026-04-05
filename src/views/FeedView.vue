@@ -87,7 +87,7 @@ function persistReadLinks(next: Map<string, number>) {
   if (typeof window === 'undefined')
     return
 
-  const entries: ReadLinkEntry[] = [...next.entries()].map(([link, readAt]) => ({ link, readAt }))
+  const entries: ReadLinkEntry[] = Array.from(next.entries(), ([link, readAt]) => ({ link, readAt }))
   window.localStorage.setItem(READ_LINKS_KEY, JSON.stringify(entries))
 }
 
@@ -194,6 +194,14 @@ function groupLabel(d: Date): string {
   if (isYesterday(d))
     return `${formatDate(d)} · Dün`
   return formatDate(d)
+}
+
+function groupDatePart(label: string): string {
+  return label.split(' · ')[0] ?? label
+}
+
+function groupRelativePart(label: string): string {
+  return label.split(' · ')[1] ?? ''
 }
 
 function favicon(url: string): string {
@@ -436,7 +444,8 @@ useSeo({
         class="feed-group"
       >
         <p class="feed-group-label">
-          {{ label }}
+          <span>{{ groupDatePart(label) }}</span>
+          <span v-if="groupRelativePart(label)" class="feed-group-label-relative"> · {{ groupRelativePart(label) }}</span>
         </p>
 
         <div class="feed-group-posts">
@@ -450,7 +459,7 @@ useSeo({
               isRead(item.link) && 'feed-item-read',
               highlightedLink === item.link && 'feed-item-highlight',
             ]"
-            style="border-bottom: 1px solid var(--border); color: var(--text); background: var(--bg);"
+            style="border-bottom: 1px solid var(--border); color: var(--text); background: transparent;"
             @click="markAsRead(item.link)"
             @auxclick="handleAuxClick($event, item.link)"
           >
@@ -512,7 +521,7 @@ useSeo({
 
 .feed-group-label {
   position: absolute;
-  top: -0.15em;
+  top: -0.122em;
   left: -0.04em;
   font-size: 7rem;
   font-family: 'Alumni Sans Pinstripe', sans-serif;
@@ -524,12 +533,18 @@ useSeo({
   pointer-events: none;
   user-select: none;
   z-index: 0;
+  max-height: 4.5rem;
+  overflow: hidden;
+}
+
+.feed-group-label-relative {
+  display: inline;
 }
 
 .feed-group-posts {
   position: relative;
   z-index: 1;
-  padding-top: 3.5rem;
+  padding-top: 3.9rem;
   display: flex;
   flex-direction: column;
 }
@@ -577,5 +592,11 @@ useSeo({
 
 .feed-item-highlight {
   animation: highlight-pulse 0.8s ease-in-out 3 !important;
+}
+
+@media (max-width: 768px) {
+  .feed-group-label-relative {
+    display: none;
+  }
 }
 </style>

@@ -117,7 +117,7 @@ useSeo({
 
 .year-label {
   position: absolute;
-  top: -0.15em;
+  top: -0.122em;
   left: -0.04em;
   font-size: 7rem;
   font-family: 'Alumni Sans Pinstripe', sans-serif;
@@ -129,12 +129,14 @@ useSeo({
   pointer-events: none;
   user-select: none;
   z-index: 0;
+  max-height: 4.5rem;
+  overflow: hidden;
 }
 
 .year-posts {
   position: relative;
   z-index: 1;
-  padding-top: 3.5rem;
+  padding-top: 3.9rem;
 }
 
 .post-row {
@@ -142,7 +144,7 @@ useSeo({
   flex-direction: column;
   padding: 1.5rem 0;
   border-bottom: 1px solid var(--border);
-  background: var(--bg);
+  background: transparent;
   text-decoration: none;
 }
 

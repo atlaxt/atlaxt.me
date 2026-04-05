@@ -10,31 +10,41 @@ const search = ref('')
 const sortDir = ref<'desc' | 'asc' | null>(null)
 
 function toggleSort() {
-  if (sortDir.value === null) sortDir.value = 'desc'
-  else if (sortDir.value === 'desc') sortDir.value = 'asc'
+  if (sortDir.value === null)
+    sortDir.value = 'desc'
+  else if (sortDir.value === 'desc')
+    sortDir.value = 'asc'
   else sortDir.value = null
 }
 
 const filtered = computed(() => {
   const q = search.value.toLowerCase().trim()
-  let result = q
+  const result = q
     ? books.filter(b => b.name?.toLowerCase().includes(q) || b.author?.toLowerCase().includes(q))
     : [...books]
 
-  if (sortDir.value === 'desc')
+  if (sortDir.value === 'desc') {
     result.sort((a, b) => {
-      if (!a.rate && !b.rate) return 0
-      if (!a.rate) return 1
-      if (!b.rate) return -1
+      if (!a.rate && !b.rate)
+        return 0
+      if (!a.rate)
+        return 1
+      if (!b.rate)
+        return -1
       return Number.parseFloat(b.rate) - Number.parseFloat(a.rate)
     })
-  else if (sortDir.value === 'asc')
+  }
+  else if (sortDir.value === 'asc') {
     result.sort((a, b) => {
-      if (!a.rate && !b.rate) return 0
-      if (!a.rate) return 1
-      if (!b.rate) return -1
+      if (!a.rate && !b.rate)
+        return 0
+      if (!a.rate)
+        return 1
+      if (!b.rate)
+        return -1
       return Number.parseFloat(a.rate) - Number.parseFloat(b.rate)
     })
+  }
 
   return result
 })
@@ -67,8 +77,12 @@ useSeo({
     <PageHeader :crumbs="[{ label: 'Kitaplık', to: '/books' }]" />
 
     <div class="page-intro">
-      <p class="page-intro-title">Bütün modern klasikleri okumayı hedefliyorum.</p>
-      <p class="page-intro-sub">Okuduklarımı burada puanlıyorum.</p>
+      <p class="page-intro-title">
+        Bütün modern klasikleri okumayı hedefliyorum.
+      </p>
+      <p class="page-intro-sub">
+        Okuduklarımı burada puanlıyorum.
+      </p>
     </div>
 
     <!-- Arama satırı -->
