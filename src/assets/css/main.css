@@ -193,8 +193,15 @@ body {
 .cli-readme a:hover { opacity: 1; }
 .cli-readme pre { background: var(--bg-subtle); padding: 0.75rem 1rem; margin: 1rem 0; overflow-x: auto; }
 .cli-readme pre code { font-size: 0.75rem; color: var(--text); background: none; padding: 0; }
-.cli-readme code { font-size: 0.75rem; background: var(--bg-subtle); padding: 0.1em 0.35em; color: var(--text); }
+.cli-readme code { font-size: 0.75rem; background: var(--bg-subtle); padding: 0.1em 0.35em; color: var(--text-muted); }
 .cli-readme ul, .cli-readme ol { padding-left: 1.25rem; margin-bottom: 0.75rem; color: var(--text-muted); }
 .cli-readme li { margin-bottom: 0.3rem; }
+.cli-readme strong { color: var(--text); font-weight: 500; }
+.cli-readme blockquote { border-left: 1px solid var(--border); margin: 0.75rem 0; padding-left: 0.75rem; color: var(--text-muted); opacity: 0.7; }
+.cli-readme blockquote p { margin-bottom: 0; }
+.cli-readme table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 1rem 0; display: block; overflow-x: auto; }
+.cli-readme th { text-align: left; font-weight: 500; color: var(--text); padding: 0.45rem 1rem 0.45rem 0; border-bottom: 1px solid var(--border); }
+.cli-readme td { padding: 0.4rem 1rem 0.4rem 0; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.cli-readme tr:last-child td { border-bottom: none; }
 .cli-readme hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
-.cli-readme-img { max-width: 100%; margin: 1rem 0; }
+.cli-readme img { max-width: 100%; height: auto; margin: 1rem 0; display: block; }

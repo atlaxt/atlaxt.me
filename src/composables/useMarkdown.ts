@@ -103,6 +103,39 @@ export function mdToHtml(md: string, base?: string): string {
       continue
     }
 
+    // Table — header row must contain at least one pipe
+    if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      const nextTrimmed = lines[i + 1]?.trim() ?? ''
+      const isSeparator = (s: string) => /^\|[\s|:-]+\|$/.test(s)
+
+      if (isSeparator(nextTrimmed)) {
+        closeList()
+
+        const parseRow = (row: string) =>
+          row.split('|').slice(1, -1).map(cell => cell.trim())
+
+        const headers = parseRow(trimmed)
+        i += 2 // skip header + separator
+
+        const rows: string[][] = []
+        while (i < lines.length) {
+          const r = lines[i]!.trim()
+          if (!r.startsWith('|') || !r.endsWith('|'))
+            break
+          rows.push(parseRow(r))
+          i++
+        }
+
+        const thCells = headers.map(h => `<th>${inline(h, base)}</th>`).join('')
+        const tdRows = rows
+          .map(row => `<tr>${row.map(c => `<td>${inline(c, base)}</td>`).join('')}</tr>`)
+          .join('\n')
+
+        out.push(`<table><thead><tr>${thCells}</tr></thead><tbody>${tdRows}</tbody></table>`)
+        continue
+      }
+    }
+
     // Blank line
     if (!trimmed) {
       closeList()
