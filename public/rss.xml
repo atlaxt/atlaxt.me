@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Atlas Yiğit Aydın</title>
+    <link>https://atlaxt.me</link>
+    <description>Web geliştirici — Vue ekosistemine odaklanan, UX'e önem veren.</description>
+    <language>tr-TR</language>
+    <atom:link href="https://atlaxt.me/rss.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title><![CDATA[Portfolio Sitesi Neden Herkese Lazım]]></title>
+      <link>https://atlaxt.me/blog/portfolio-sitesi-neden-herkese-lazim</link>
+      <guid isPermaLink="true">https://atlaxt.me/blog/portfolio-sitesi-neden-herkese-lazim</guid>
+      <pubDate>Sun, 22 Mar 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[CV göndermek için değil. Nasıl düşündüğünü göstermek için.]]></description>
+    </item>
+    <item>
+      <title><![CDATA[Sadelik Bir Tasarım Kararı Değil, Disiplin Meselesi]]></title>
+      <link>https://atlaxt.me/blog/sadelik-bir-tasarim-karari-degil-disiplin-meselesi</link>
+      <guid isPermaLink="true">https://atlaxt.me/blog/sadelik-bir-tasarim-karari-degil-disiplin-meselesi</guid>
+      <pubDate>Sun, 15 Mar 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[Apple'ın estetiğine hayran oluruz. Ama o estetiğin arkasındaki "hayır" kültürünü nadiren konuşuruz.]]></description>
+    </item>
+    <item>
+      <title><![CDATA[Bir Şeyi Bitirmek Neden Bu Kadar Zor]]></title>
+      <link>https://atlaxt.me/blog/bir-seyi-bitirmek-neden-bu-kadar-zor</link>
+      <guid isPermaLink="true">https://atlaxt.me/blog/bir-seyi-bitirmek-neden-bu-kadar-zor</guid>
+      <pubDate>Sun, 08 Mar 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[Side project mezarlığı gerçek. Ama bitirememek bir karakter sorunu değil, sistem sorunu.]]></description>
+    </item>
+    <item>
+      <title><![CDATA[Öğrenmeyi Nasıl Yapılandırıyorum]]></title>
+      <link>https://atlaxt.me/blog/ogrenmeyi-nasil-yapilandiriyorum</link>
+      <guid isPermaLink="true">https://atlaxt.me/blog/ogrenmeyi-nasil-yapilandiriyorum</guid>
+      <pubDate>Thu, 25 Dec 2025 00:00:00 GMT</pubDate>
+      <description><![CDATA[RSS okumak, iş yerinde karşılaştığım problemler ve kendi projelerim.]]></description>
+    </item>
+    <item>
+      <title><![CDATA[Modern Web Render Stratejileri: CSR, SSR, SSG ve ISR]]></title>
+      <link>https://atlaxt.me/blog/modern_web_render_stratejileri</link>
+      <guid isPermaLink="true">https://atlaxt.me/blog/modern_web_render_stratejileri</guid>
+      <pubDate>Wed, 12 Nov 2025 00:00:00 GMT</pubDate>
+      <description><![CDATA[CSR/SSR/SSG/ISR kafamda nasıl ayrılıyor? Hız, SEO ve maliyet tarafında pratik bir özet.]]></description>
+    </item>
+  </channel>
+</rss>

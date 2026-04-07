@@ -1,5 +1,5 @@
 import type { Plugin } from 'vite'
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
@@ -236,6 +236,60 @@ function mdPlugin(): Plugin {
   }
 }
 
+function rssPlugin(): Plugin {
+  function generateRss(): string {
+    const blogsDir = resolve(__dirname, 'content/blogs')
+    const files = readdirSync(blogsDir).filter(f => f.endsWith('.md'))
+
+    const posts = files
+      .map((file) => {
+        const text = readFileSync(resolve(blogsDir, file), 'utf-8').replace(/\r\n/g, '\n')
+        const slug = file.replace('.md', '')
+        const frontmatter: Record<string, string> = {}
+        const fmMatch = text.match(/^---\n([\s\S]*?)\n---/)
+        if (fmMatch) {
+          for (const line of fmMatch[1].split('\n')) {
+            const ci = line.indexOf(':')
+            if (ci > 0)
+              frontmatter[line.slice(0, ci).trim()] = line.slice(ci + 1).trim().replace(/^['"]|['"]$/g, '')
+          }
+        }
+        return { slug, frontmatter }
+      })
+      .filter(p => p.frontmatter.date)
+      .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date))
+
+    const siteUrl = 'https://atlaxt.me'
+    const items = posts.map(p => `
+    <item>
+      <title><![CDATA[${p.frontmatter.title ?? p.slug}]]></title>
+      <link>${siteUrl}/blog/${p.slug}</link>
+      <guid isPermaLink="true">${siteUrl}/blog/${p.slug}</guid>
+      <pubDate>${new Date(p.frontmatter.date).toUTCString()}</pubDate>
+      <description><![CDATA[${p.frontmatter.description ?? ''}]]></description>
+    </item>`).join('')
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Atlas Yiğit Aydın</title>
+    <link>${siteUrl}</link>
+    <description>Web geliştirici — Vue ekosistemine odaklanan, UX'e önem veren.</description>
+    <language>tr-TR</language>
+    <atom:link href="${siteUrl}/rss.xml" rel="self" type="application/rss+xml"/>
+${items}
+  </channel>
+</rss>`
+  }
+
+  return {
+    name: 'vite-rss',
+    buildStart() {
+      writeFileSync(resolve(__dirname, 'public/rss.xml'), generateRss(), 'utf-8')
+    },
+  }
+}
+
 export default defineConfig({
   plugins: [
     tailwindcss(),
@@ -244,6 +298,7 @@ export default defineConfig({
     yamlPlugin(),
     mdPlugin(),
     photoMetaPlugin(),
+    rssPlugin(),
   ],
   resolve: {
     alias: {
