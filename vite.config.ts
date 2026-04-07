@@ -236,28 +236,133 @@ function mdPlugin(): Plugin {
   }
 }
 
+// ─── Ortak yardımcılar ────────────────────────────────────────────────────────
+
+function parseFrontmatter(text: string): Record<string, string> {
+  const fm: Record<string, string> = {}
+  const fmMatch = text.replace(/\r\n/g, '\n').match(/^---\n([\s\S]*?)\n---/)
+  if (fmMatch) {
+    for (const line of fmMatch[1].split('\n')) {
+      const ci = line.indexOf(':')
+      if (ci > 0)
+        fm[line.slice(0, ci).trim()] = line.slice(ci + 1).trim().replace(/^['"]|['"]$/g, '')
+    }
+  }
+  return fm
+}
+
+function parseYamlList(text: string): Record<string, string>[] {
+  const result: Record<string, string>[] = []
+  let current: Record<string, string> | null = null
+  for (const raw of text.split('\n')) {
+    const line = raw.trimEnd()
+    if (!line.trim() || line.trim().startsWith('#'))
+      continue
+    if (/^\s*-\s+/.test(line)) {
+      current = {}
+      result.push(current)
+      const rest = line.replace(/^\s*-\s+/, '')
+      if (rest.includes(':')) {
+        const ci = rest.indexOf(':')
+        current[rest.slice(0, ci).trim()] = rest.slice(ci + 1).trim().replace(/^["']|["']$/g, '')
+      }
+    }
+    else if (current && line.includes(':')) {
+      const ci = line.indexOf(':')
+      current[line.slice(0, ci).trim()] = line.slice(ci + 1).trim().replace(/^["']|["']$/g, '')
+    }
+  }
+  return result
+}
+
+function getBlogPosts() {
+  const blogsDir = resolve(__dirname, 'content/blogs')
+  return readdirSync(blogsDir)
+    .filter(f => f.endsWith('.md'))
+    .map((file) => {
+      const text = readFileSync(resolve(blogsDir, file), 'utf-8')
+      const slug = file.replace('.md', '')
+      return { slug, frontmatter: parseFrontmatter(text) }
+    })
+    .filter(p => p.frontmatter.date)
+    .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date))
+}
+
+function getToolIds(): string[] {
+  const text = readFileSync(resolve(__dirname, 'content/tools.yaml'), 'utf-8')
+  return parseYamlList(text).map(t => t.id).filter(Boolean)
+}
+
+// ─── Sitemap + robots ─────────────────────────────────────────────────────────
+
+function sitemapPlugin(): Plugin {
+  const SITE = 'https://atlaxt.me'
+
+  function toDate(iso?: string): string {
+    if (!iso)
+      return new Date().toISOString().slice(0, 10)
+    const d = new Date(iso)
+    return Number.isNaN(d.getTime()) ? new Date().toISOString().slice(0, 10) : d.toISOString().slice(0, 10)
+  }
+
+  return {
+    name: 'vite-sitemap',
+    buildStart() {
+      const posts = getBlogPosts()
+      const toolIds = getToolIds()
+      const today = new Date().toISOString().slice(0, 10)
+
+      interface UrlEntry { loc: string, lastmod: string, changefreq: string, priority: number }
+      const urls: UrlEntry[] = [
+        { loc: `${SITE}/`, lastmod: today, changefreq: 'weekly', priority: 1.0 },
+        { loc: `${SITE}/blog`, lastmod: toDate(posts[0]?.frontmatter.date), changefreq: 'weekly', priority: 0.8 },
+        { loc: `${SITE}/photos`, lastmod: today, changefreq: 'monthly', priority: 0.6 },
+        { loc: `${SITE}/books`, lastmod: today, changefreq: 'monthly', priority: 0.6 },
+        { loc: `${SITE}/feed`, lastmod: today, changefreq: 'daily', priority: 0.4 },
+        { loc: `${SITE}/cli`, lastmod: today, changefreq: 'monthly', priority: 0.6 },
+        { loc: `${SITE}/cli/tools`, lastmod: today, changefreq: 'monthly', priority: 0.5 },
+        { loc: `${SITE}/cli/templates`, lastmod: today, changefreq: 'monthly', priority: 0.4 },
+        ...posts.map(p => ({
+          loc: `${SITE}/blog/${p.slug}`,
+          lastmod: toDate(p.frontmatter.date),
+          changefreq: 'yearly',
+          priority: 0.7,
+        })),
+        ...toolIds.map(id => ({
+          loc: `${SITE}/cli/tools/${id}`,
+          lastmod: today,
+          changefreq: 'monthly',
+          priority: 0.5,
+        })),
+      ]
+
+      const xml = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        ...urls.map(u => [
+          '  <url>',
+          `    <loc>${u.loc}</loc>`,
+          `    <lastmod>${u.lastmod}</lastmod>`,
+          `    <changefreq>${u.changefreq}</changefreq>`,
+          `    <priority>${u.priority}</priority>`,
+          '  </url>',
+        ].join('\n')),
+        '</urlset>',
+      ].join('\n')
+
+      const robots = `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`
+
+      writeFileSync(resolve(__dirname, 'public/sitemap.xml'), xml, 'utf-8')
+      writeFileSync(resolve(__dirname, 'public/robots.txt'), robots, 'utf-8')
+    },
+  }
+}
+
+// ─── RSS ──────────────────────────────────────────────────────────────────────
+
 function rssPlugin(): Plugin {
   function generateRss(): string {
-    const blogsDir = resolve(__dirname, 'content/blogs')
-    const files = readdirSync(blogsDir).filter(f => f.endsWith('.md'))
-
-    const posts = files
-      .map((file) => {
-        const text = readFileSync(resolve(blogsDir, file), 'utf-8').replace(/\r\n/g, '\n')
-        const slug = file.replace('.md', '')
-        const frontmatter: Record<string, string> = {}
-        const fmMatch = text.match(/^---\n([\s\S]*?)\n---/)
-        if (fmMatch) {
-          for (const line of fmMatch[1].split('\n')) {
-            const ci = line.indexOf(':')
-            if (ci > 0)
-              frontmatter[line.slice(0, ci).trim()] = line.slice(ci + 1).trim().replace(/^['"]|['"]$/g, '')
-          }
-        }
-        return { slug, frontmatter }
-      })
-      .filter(p => p.frontmatter.date)
-      .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date))
+    const posts = getBlogPosts()
 
     const siteUrl = 'https://atlaxt.me'
     const items = posts.map(p => `
@@ -298,6 +403,7 @@ export default defineConfig({
     yamlPlugin(),
     mdPlugin(),
     photoMetaPlugin(),
+    sitemapPlugin(),
     rssPlugin(),
   ],
   resolve: {

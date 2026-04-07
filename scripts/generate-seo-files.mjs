@@ -67,48 +67,80 @@ function xmlEscape(s) {
     .replace(/'/g, '&apos;')
 }
 
-function buildSitemap({ siteUrl, posts }) {
-  const now = new Date().toISOString()
+async function listTools() {
+  try {
+    const text = await fs.readFile(path.join(root, 'content', 'tools.yaml'), 'utf8')
+    const ids = []
+    for (const line of text.split('\n')) {
+      const m = line.match(/^\s*id:\s*(.+)/)
+      if (m)
+        ids.push(m[1].trim().replace(/^['"]|['"]$/g, ''))
+    }
+    return ids
+  }
+  catch {
+    return []
+  }
+}
+
+function toDate(iso) {
+  if (!iso)
+    return new Date().toISOString().slice(0, 10)
+  const d = new Date(iso)
+  return Number.isNaN(d.getTime()) ? new Date().toISOString().slice(0, 10) : d.toISOString().slice(0, 10)
+}
+
+function buildSitemap({ siteUrl, posts, toolIds }) {
+  const today = new Date().toISOString().slice(0, 10)
 
   const staticRoutes = [
-    { path: '/', changefreq: 'weekly', priority: 1.0 },
-    { path: '/blog', changefreq: 'weekly', priority: 0.8 },
-    { path: '/books', changefreq: 'monthly', priority: 0.6 },
-    { path: '/about', changefreq: 'monthly', priority: 0.3 },
+    { path: '/',              changefreq: 'weekly',  priority: 1.0 },
+    { path: '/blog',         changefreq: 'weekly',  priority: 0.8 },
+    { path: '/photos',       changefreq: 'monthly', priority: 0.6 },
+    { path: '/books',        changefreq: 'monthly', priority: 0.6 },
+    { path: '/feed',         changefreq: 'daily',   priority: 0.4 },
+    { path: '/cli',          changefreq: 'monthly', priority: 0.6 },
+    { path: '/cli/tools',    changefreq: 'monthly', priority: 0.5 },
+    { path: '/cli/templates',changefreq: 'monthly', priority: 0.4 },
   ]
 
-  const urls = []
-
-  for (const r of staticRoutes) {
-    urls.push({
+  const urls = [
+    ...staticRoutes.map(r => ({
       loc: `${siteUrl}${r.path}`,
-      lastmod: now,
+      lastmod: r.path === '/blog' && posts[0]?.frontmatter.date
+        ? toDate(posts[0].frontmatter.date)
+        : today,
       changefreq: r.changefreq,
       priority: r.priority,
-    })
-  }
-
-  for (const p of posts) {
-    const lastmod = p.frontmatter.date ? new Date(p.frontmatter.date).toISOString() : now
-    urls.push({
+    })),
+    ...posts.map(p => ({
       loc: `${siteUrl}/blog/${p.slug}`,
-      lastmod,
+      lastmod: toDate(p.frontmatter.date),
       changefreq: 'yearly',
       priority: 0.7,
-    })
-  }
+    })),
+    ...toolIds.map(id => ({
+      loc: `${siteUrl}/cli/tools/${id}`,
+      lastmod: today,
+      changefreq: 'monthly',
+      priority: 0.5,
+    })),
+  ]
 
-  return `<?xml version="1.0" encoding="UTF-8"?>\n`
-    + `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${
-      urls.map(u =>
-        `  <url>`
-        + `<loc>${xmlEscape(u.loc)}</loc>`
-        + `<lastmod>${xmlEscape(u.lastmod)}</lastmod>`
-        + `<changefreq>${xmlEscape(u.changefreq)}</changefreq>`
-        + `<priority>${xmlEscape(u.priority)}</priority>`
-        + `</url>`,
-      ).join('\n')
-    }\n</urlset>\n`
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...urls.map(u => [
+      '  <url>',
+      `    <loc>${xmlEscape(u.loc)}</loc>`,
+      `    <lastmod>${xmlEscape(u.lastmod)}</lastmod>`,
+      `    <changefreq>${xmlEscape(u.changefreq)}</changefreq>`,
+      `    <priority>${xmlEscape(String(u.priority))}</priority>`,
+      '  </url>',
+    ].join('\n')),
+    '</urlset>',
+    '',
+  ].join('\n')
 }
 
 function buildRobots({ siteUrl }) {
@@ -123,17 +155,17 @@ function buildRobots({ siteUrl }) {
 
 async function main() {
   const siteUrl = getSiteUrl()
-  const posts = await listPosts()
+  const [posts, toolIds] = await Promise.all([listPosts(), listTools()])
 
   await fs.mkdir(PUBLIC_DIR, { recursive: true })
 
-  const sitemapXml = buildSitemap({ siteUrl, posts })
+  const sitemapXml = buildSitemap({ siteUrl, posts, toolIds })
   await fs.writeFile(path.join(PUBLIC_DIR, 'sitemap.xml'), sitemapXml, 'utf8')
 
   const robotsTxt = buildRobots({ siteUrl })
   await fs.writeFile(path.join(PUBLIC_DIR, 'robots.txt'), robotsTxt, 'utf8')
 
-  console.log(`[seo] Generated sitemap.xml (${posts.length} posts) and robots.txt for ${siteUrl}`)
+  console.log(`[seo] Generated sitemap.xml (${posts.length} posts, ${toolIds.length} tools) and robots.txt for ${siteUrl}`)
 }
 
 main().catch((err) => {

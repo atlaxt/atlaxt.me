@@ -141,15 +141,6 @@ onUnmounted(() => {
           Blog
         </RouterLink>
 
-        <!-- <RouterLink
-          to="/about"
-          class="text-sm transition-opacity hover:opacity-100"
-          style="color: var(--text-muted);"
-          active-class="!opacity-100 !text-[color:var(--text)]"
-        >
-          Hakkımda
-        </RouterLink> -->
-
         <RouterLink
           to="/feed"
           class="text-sm opacity-70 transition-opacity hover:opacity-100"

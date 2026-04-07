@@ -10,7 +10,7 @@
     "dev": "vite",
     "generate:seo": "node ./scripts/generate-seo-files.mjs",
     "generate:thumbs": "node ./scripts/generate-thumbs.mjs",
-    "build": "run-s generate:seo && run-p type-check \"build-only {@}\" --",
+    "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",

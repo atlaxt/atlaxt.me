@@ -1,17 +1,3 @@
 {
-  "nav": {
-    "writings": "Writings",
-    "about": "About"
-  },
-  "home": {
-    "tagline": "I'm a Web Developer primarily focused on the Nuxt ecosystem. My ultimate goal is to go beyond writing functional code and deliver top-tier User Experience (UX) in every product."
-  },
-  "about": {
-    "title": "About"
-  },
-  "writings": {
-    "title": "Writings",
-    "blogs": "Blog",
-    "notes": "Notes"
-  }
+
 }
