@@ -122,10 +122,10 @@ onUnmounted(() => {
       </div>
 
       <!-- Desktop nav -->
-      <nav class="hidden md:flex items-center gap-6">
+      <nav class="label-micro hidden md:flex items-center gap-6">
         <RouterLink
           to="/projects"
-          class="text-sm opacity-70 transition-opacity hover:opacity-100"
+          class="opacity-70 transition-opacity hover:opacity-100"
           style="color: var(--text-muted);"
           active-class="!opacity-100 !text-[color:var(--text)]"
         >
@@ -134,7 +134,7 @@ onUnmounted(() => {
 
         <RouterLink
           to="/blog"
-          class="text-sm opacity-70 transition-opacity hover:opacity-100"
+          class="opacity-70 transition-opacity hover:opacity-100"
           style="color: var(--text-muted);"
           active-class="!opacity-100 !text-[color:var(--text)]"
         >
@@ -143,7 +143,7 @@ onUnmounted(() => {
 
         <RouterLink
           to="/feed"
-          class="text-sm opacity-70 transition-opacity hover:opacity-100"
+          class="opacity-70 transition-opacity hover:opacity-100"
           style="color: var(--text-muted);"
           active-class="!opacity-100 !text-[color:var(--text)]"
         >

@@ -23,7 +23,7 @@ function copy() {
 <template>
   <div>
     <div class="flex items-center justify-between mb-2">
-      <p v-if="label" class="text-xs uppercase tracking-widest" style="color: var(--text-muted); opacity: 0.5;">
+      <p v-if="label" class="label-micro" style="color: var(--text-muted); opacity: 0.5;">
         {{ label }}
       </p>
       <span v-else />

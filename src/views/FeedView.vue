@@ -335,7 +335,7 @@ useSeo({
 
       <div v-if="showRssSources" style="border: 1px solid var(--border);">
         <div class="px-4 py-3" style="border-bottom: 1px solid var(--border);">
-          <p class="text-xs uppercase tracking-widest" style="color: var(--text-muted); opacity: 0.6;">
+          <p class="label-micro" style="color: var(--text-muted); opacity: 0.6;">
             RSS Kaynakları
           </p>
         </div>

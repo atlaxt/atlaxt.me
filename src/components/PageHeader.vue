@@ -10,7 +10,7 @@ defineProps<{
 </script>
 
 <template>
-  <nav class="flex items-center gap-2 mb-12 text-xs" aria-label="breadcrumb">
+  <nav class="label-micro flex items-center gap-2 mb-12" aria-label="breadcrumb">
     <RouterLink
       to="/"
       class="transition-opacity hover:opacity-80"
@@ -26,7 +26,7 @@ defineProps<{
       <RouterLink
         v-if="crumb.to && i < crumbs.length - 1"
         :to="crumb.to"
-        class="tracking-widest uppercase transition-opacity hover:opacity-80"
+        class="transition-opacity hover:opacity-80"
         style="color: var(--text-muted); opacity: 0.5;"
       >
         {{ crumb.label }}
@@ -34,7 +34,7 @@ defineProps<{
 
       <span
         v-else
-        class="tracking-widest uppercase truncate"
+        class="truncate"
         style="color: var(--text-muted); opacity: 0.5; max-width: 40ch;"
       >
         {{ crumb.label }}

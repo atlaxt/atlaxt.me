@@ -17,6 +17,14 @@
   --text-muted:  #a1a1aa;
 }
 
+/* ─── Micro label stili ──────────────────────────────── */
+@utility label-micro {
+  font-size: 0.625rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
 /* ─── Tailwind v4 custom utilities ───────────────────── */
 @theme inline {
   --color-page:        var(--bg);
