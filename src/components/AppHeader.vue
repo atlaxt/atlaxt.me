@@ -252,7 +252,7 @@ onUnmounted(() => {
           style="background-color: var(--bg-subtle); border: 1px solid var(--border);"
           @click.stop
         >
-          <div class="flex flex-col gap-3 text-[13px] tracking-[0.04em] uppercase" style="color: var(--text-muted);">
+          <div class="label-micro flex flex-col gap-3" style="color: var(--text-muted);">
             <RouterLink to="/projects" class="py-1.5 opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
               Projeler
             </RouterLink>
@@ -265,7 +265,7 @@ onUnmounted(() => {
 
             <RouterLink
               to="/cli"
-              class="group mt-1 inline-flex w-fit items-center gap-1.5 rounded-none px-1.5 py-0.5 text-[11px] tracking-[0.08em] uppercase opacity-80 transition-opacity duration-200 hover:opacity-100"
+              class="group mt-1 inline-flex w-fit items-center gap-1.5 rounded-none px-1.5 py-0.5 label-micro opacity-80 transition-opacity duration-200 hover:opacity-100"
               style="color: var(--text-muted); background-color: var(--bg);"
               active-class="!opacity-100 !text-[color:var(--text)]"
               aria-label="CLI"
