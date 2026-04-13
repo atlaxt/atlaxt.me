@@ -141,14 +141,16 @@ onUnmounted(() => {
           Blog
         </RouterLink>
 
-        <RouterLink
-          to="/feed"
-          class="opacity-70 transition-opacity hover:opacity-100"
-          style="color: var(--text-muted);"
-          active-class="!opacity-100 !text-[color:var(--text)]"
-        >
-          Haberler
-        </RouterLink>
+        <div class="flex items-center gap-3">
+          <RouterLink
+            to="/feed"
+            class="opacity-70 transition-opacity hover:opacity-100"
+            style="color: var(--text-muted);"
+            active-class="!opacity-100 !text-[color:var(--text)]"
+          >
+            Haberler
+          </RouterLink>
+        </div>
 
         <RouterLink
           to="/cli"
@@ -166,6 +168,26 @@ onUnmounted(() => {
             <path d="M7 17L17 7" />
             <path d="M8 7h9v9" />
           </svg>
+        </RouterLink>
+
+        <RouterLink
+          to="/photos"
+          class="flex opacity-70 transition-opacity hover:opacity-100"
+          style="color: var(--text-muted);"
+          active-class="!opacity-100 !text-[color:var(--text)]"
+          aria-label="Fotoğraflar"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m20 24l-8-8L2 26V2h28v22m-14-4l6-6l8 8v8H2v-6" /><circle cx="10" cy="9" r="3" /></g></svg>
+        </RouterLink>
+
+        <RouterLink
+          to="/books"
+          class="flex opacity-55 transition-opacity hover:opacity-100"
+          style="color: var(--text-muted);"
+          active-class="!opacity-100 !text-[color:var(--text)]"
+          aria-label="Kitaplar"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2M9 4h2v5l-1-.75L9 9zm9 16H6V4h1v9l3-2.25L13 13V4h5z" /></svg>
         </RouterLink>
 
         <a
@@ -259,9 +281,11 @@ onUnmounted(() => {
             <RouterLink to="/blog" class="py-1.5 opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
               Blog
             </RouterLink>
-            <RouterLink to="/feed" class="py-1.5 opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
-              Haberler
-            </RouterLink>
+            <div class="flex items-center justify-between py-1.5">
+              <RouterLink to="/feed" class="opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
+                Haberler
+              </RouterLink>
+            </div>
 
             <RouterLink
               to="/cli"
@@ -301,26 +325,50 @@ onUnmounted(() => {
 
             <div class="mt-2 h-px" style="background-color: var(--border);" />
 
-            <div class="flex items-center gap-4 pt-1" style="color: var(--text-muted);">
-              <a href="https://github.com/atlaxt" target="_blank" rel="noopener noreferrer" class="flex transition-opacity hover:opacity-60" aria-label="GitHub">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.8 1.1 1.8 1.1 1 1.7 2.7 1.2 3.3.9.1-.7.4-1.2.8-1.5-2.7-.3-5.5-1.3-5.5-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.4.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C17.7 5 18.7 5.3 18.7 5.3c.6 1.7.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.8 5.5-5.5 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A12 12 0 0 0 12 .3" />
-                </svg>
-              </a>
-              <a href="https://linkedin.com/in/atlaxt" target="_blank" rel="noopener noreferrer" class="flex transition-opacity hover:opacity-60" aria-label="LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" />
-                  <rect width="4" height="12" x="2" y="9" />
-                  <circle cx="4" cy="4" r="2" />
-                </svg>
-              </a>
-              <a href="https://instagram.com/atlaxt.me" target="_blank" rel="noopener noreferrer" class="flex transition-opacity hover:opacity-60" aria-label="Instagram">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                  <path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37Z" />
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-                </svg>
-              </a>
+            <div class="flex justify-between items-center gap-4 pt-1" style="color: var(--text-muted);">
+              <div class="flex items-center gap-4">
+                <RouterLink
+                  to="/photos"
+                  class="flex opacity-55 transition-opacity hover:opacity-100"
+                  style="color: var(--text-muted);"
+                  active-class="!opacity-100 !text-[color:var(--text)]"
+                  aria-label="Fotoğraflar"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m20 24l-8-8L2 26V2h28v22m-14-4l6-6l8 8v8H2v-6" /><circle cx="10" cy="9" r="3" /></g></svg>
+                </RouterLink>
+
+                <RouterLink
+                  to="/books"
+                  class="flex opacity-40 transition-opacity hover:opacity-100"
+                  style="color: var(--text-muted);"
+                  active-class="!opacity-100 !text-[color:var(--text)]"
+                  aria-label="Kitaplar"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2M9 4h2v5l-1-.75L9 9zm9 16H6V4h1v9l3-2.25L13 13V4h5z" /></svg>
+                </RouterLink>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <a href="https://github.com/atlaxt" target="_blank" rel="noopener noreferrer" class="flex transition-opacity hover:opacity-60" aria-label="GitHub">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.8 1.1 1.8 1.1 1 1.7 2.7 1.2 3.3.9.1-.7.4-1.2.8-1.5-2.7-.3-5.5-1.3-5.5-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.4.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C17.7 5 18.7 5.3 18.7 5.3c.6 1.7.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.8 5.5-5.5 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A12 12 0 0 0 12 .3" />
+                  </svg>
+                </a>
+                <a href="https://linkedin.com/in/atlaxt" target="_blank" rel="noopener noreferrer" class="flex transition-opacity hover:opacity-60" aria-label="LinkedIn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" />
+                    <rect width="4" height="12" x="2" y="9" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                </a>
+                <a href="https://instagram.com/atlaxt.me" target="_blank" rel="noopener noreferrer" class="flex transition-opacity hover:opacity-60" aria-label="Instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                    <path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37Z" />
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </nav>
