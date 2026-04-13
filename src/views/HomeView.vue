@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Book, EducationEntry, ExperienceEntry, Photo, Post, Quote } from '@/types'
+import photosRaw from 'virtual:photos'
 import { nextTick, onMounted, ref } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import ScrollCue from '@/components/ScrollCue.vue'
@@ -9,7 +10,6 @@ import { useSeo } from '@/seo/useSeo'
 import booksRaw from '../../content/books.yaml'
 import educationRaw from '../../content/education.yaml'
 import experienceRaw from '../../content/experience.yaml'
-import photosRaw from '../../content/photos.yaml'
 import quotesRaw from '../../content/quotes.yaml'
 
 // ─── Günün sözü ─────────────────────────────────────────────────

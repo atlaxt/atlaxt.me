@@ -1,10 +1,17 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(node -e \":*)",
+      "Bash(pnpm dev:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5174/projects)",
+      "Bash(npx vue-tsc:*)",
+      "Bash(npm run:*)",
+      "Bash(cat vite.config.ts)",
+      "Bash(cat vite.config.js)",
+      "Bash(node -e \"const p = require\\('./content/projects.yaml'\\); console.log\\(JSON.stringify\\(p.slice\\(0,2\\), null, 2\\)\\)\")"
+    ],
     "additionalDirectories": [
       "C:\\Users\\yigitaydin\\GitHub\\atlaxt.me\\public\\photos"
-    ],
-    "allow": [
-      "Bash(node -e \":*)"
     ]
   }
 }

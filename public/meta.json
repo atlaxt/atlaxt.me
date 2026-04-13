@@ -1,6 +1,6 @@
 {
   "version": "5.2.0",
-  "buildDate": "2026-04-07T18:07:55.879Z",
+  "buildDate": "2026-04-13T14:11:06.675Z",
   "dependencies": [
     "@unhead/vue",
     "@vercel/analytics",

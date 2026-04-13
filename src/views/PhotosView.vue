@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { Photo } from '@/types'
+import photosRaw from 'virtual:photos'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import PageHeader from '@/components/PageHeader.vue'
 import { useSeo } from '@/seo/useSeo'
-import photosRaw from '../../content/photos.yaml'
 
 const photos = [...(photosRaw as unknown as Photo[])].reverse()
 

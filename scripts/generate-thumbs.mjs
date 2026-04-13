@@ -28,12 +28,12 @@ const srcFlag = readFlagValue('--src')
 const destFlag = readFlagValue('--dest')
 
 const defaultSrcCandidates = [
-  path.join('public', 'photos', 'temp'),
   path.join('temp', 'photos'),
+  path.join('public', 'photos', 'temp'),
   'temp',
 ]
 
-const srcDir = path.resolve(projectRoot, srcFlag ?? defaultSrcCandidates[0] ?? path.join('public', 'photos', 'temp'))
+const srcDir = path.resolve(projectRoot, srcFlag ?? defaultSrcCandidates[0] ?? path.join('temp', 'photos'))
 const destDir = path.resolve(projectRoot, destFlag ?? path.join('public', 'photos'))
 
 const convertibleExts = new Set(['.png', '.jpg', '.jpeg'])
@@ -161,7 +161,7 @@ async function main() {
       const primary = path.resolve(projectRoot, defaultSrcCandidates[0] ?? path.join('public', 'photos', 'temp'))
       await fs.mkdir(primary, { recursive: true })
       console.log(`[convert:photos] Created: ${path.relative(projectRoot, primary)}`)
-      console.log('[convert:photos] Put images in public/photos/temp and re-run. Nothing to do yet.')
+      console.log('[convert:photos] Put images in temp/photos and re-run. Nothing to do yet.')
       return
     }
   }

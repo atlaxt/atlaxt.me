@@ -170,35 +170,56 @@ function mdToHtml(md: string): string {
   return out.join('\n')
 }
 
-// Photo meta plugin — thumbnail boyutlarından landscape hesaplar
-function photoMetaPlugin(): Plugin {
-  const VIRTUAL = 'virtual:photo-meta'
+// Photos plugin — public/photos/ klasörünü otomatik tarar, virtual:photos modülü üretir
+function photosPlugin(): Plugin {
+  const VIRTUAL = 'virtual:photos'
   const RESOLVED = `\0${VIRTUAL}`
 
+  function parsePhotoDate(filename: string): number {
+    const m = filename.match(/^(\d{2})-(\d{2})-(\d{4})/)
+    if (!m)
+      return 0
+    return new Date(+m[3]!, +m[1]! - 1, +m[2]!).getTime()
+  }
+
+  function load() {
+    const photosDir = resolve(__dirname, 'public/photos')
+    if (!existsSync(photosDir))
+      return `export default []`
+
+    const photos = readdirSync(photosDir)
+      .filter(f => /\.webp$/i.test(f))
+      .sort((a, b) => parsePhotoDate(a) - parsePhotoDate(b))
+      .map(file => ({ file }))
+
+    return `export default ${JSON.stringify(photos)}`
+  }
+
   return {
-    name: 'vite-photo-meta',
+    name: 'vite-photos',
     resolveId(id) {
       if (id === VIRTUAL)
         return RESOLVED
     },
-    async load(id) {
+    load(id) {
       if (id !== RESOLVED)
         return
+      return load()
+    },
+    configureServer(server) {
+      const photosDir = resolve(__dirname, 'public/photos')
+      server.watcher.add(photosDir)
+      server.watcher.on('add', invalidate)
+      server.watcher.on('unlink', invalidate)
 
-      const thumbDir = resolve(__dirname, 'public/photos/thumbs')
-      if (!existsSync(thumbDir))
-        return `export default {}`
-
-      const files = readdirSync(thumbDir).filter(f => /\.(jpg|jpeg|png)$/i.test(f))
-      const meta: Record<string, boolean> = {}
-
-      const sharp = (await import('sharp')).default
-      for (const file of files) {
-        const { width = 0, height = 0 } = await sharp(resolve(thumbDir, file)).metadata()
-        meta[file] = width > height
+      function invalidate(file: string) {
+        if (!file.startsWith(photosDir) || !file.endsWith('.webp'))
+          return
+        const mod = server.moduleGraph.getModuleById(RESOLVED)
+        if (mod)
+          server.moduleGraph.invalidateModule(mod)
+        server.hot.send({ type: 'full-reload' })
       }
-
-      return `export default ${JSON.stringify(meta)}`
     },
   }
 }
@@ -402,7 +423,7 @@ export default defineConfig({
     // vueDevTools(),
     yamlPlugin(),
     mdPlugin(),
-    photoMetaPlugin(),
+    photosPlugin(),
     sitemapPlugin(),
     rssPlugin(),
   ],

@@ -94,14 +94,14 @@ function buildSitemap({ siteUrl, posts, toolIds }) {
   const today = new Date().toISOString().slice(0, 10)
 
   const staticRoutes = [
-    { path: '/',              changefreq: 'weekly',  priority: 1.0 },
-    { path: '/blog',         changefreq: 'weekly',  priority: 0.8 },
-    { path: '/photos',       changefreq: 'monthly', priority: 0.6 },
-    { path: '/books',        changefreq: 'monthly', priority: 0.6 },
-    { path: '/feed',         changefreq: 'daily',   priority: 0.4 },
-    { path: '/cli',          changefreq: 'monthly', priority: 0.6 },
-    { path: '/cli/tools',    changefreq: 'monthly', priority: 0.5 },
-    { path: '/cli/templates',changefreq: 'monthly', priority: 0.4 },
+    { path: '/', changefreq: 'weekly', priority: 1.0 },
+    { path: '/blog', changefreq: 'weekly', priority: 0.8 },
+    { path: '/photos', changefreq: 'monthly', priority: 0.6 },
+    { path: '/books', changefreq: 'monthly', priority: 0.6 },
+    { path: '/feed', changefreq: 'daily', priority: 0.4 },
+    { path: '/cli', changefreq: 'monthly', priority: 0.6 },
+    { path: '/cli/tools', changefreq: 'monthly', priority: 0.5 },
+    { path: '/cli/templates', changefreq: 'monthly', priority: 0.4 },
   ]
 
   const urls = [

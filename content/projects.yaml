@@ -1,140 +1,57 @@
 - name: Git101
-  links:
-    - kind: live
-      url: git101-seven.vercel.app
-    - kind: github
-      url: https://github.com/atlaxt/git101
-  preview:
-    base: null
-    light: null
-    dark: null
+  live: git101-seven.vercel.app
+  github: https://github.com/atlaxt/git101
+  preview_light: /previews/Git101_light.webp
+  preview_dark: /previews/Git101_dark.webp
 
 - name: nuxt-tawk-to
-  links:
-    - kind: live
-      url: nuxt-tawk-to.vercel.app
-    - kind: github
-      url: https://github.com/atlaxt/nuxt-tawk-to
-    - kind: npm
-      url: https://www.npmjs.com/package/nuxt-tawk-to
-  preview:
-    base: null
-    light: null
-    dark: null
+  live: nuxt-tawk-to.vercel.app
+  github: https://github.com/atlaxt/nuxt-tawk-to
+  npm: https://www.npmjs.com/package/nuxt-tawk-to
+  preview_light: /previews/NuxtTawkTo_light.webp
+  preview_dark: /previews/NuxtTawkTo_dark.webp
 
 - name: Mega Yapı
-  links:
-    - kind: live
-      url: https://yapimega.com
-  preview:
-    base: null
-    light: null
-    dark: null
+  live: https://yapimega.com
+  preview_light: /previews/MegaYapi_light.webp
+  preview_dark: /previews/MegaYapi_dark.webp
 
 - name: useTool
-  links:
-    - kind: live
-      url: https://usetool.space
-  preview:
-    base: null
-    light: null
-    dark: null
-
-- name: useColor
-  links:
-    - kind: live
-      url: https://usecolor.space
-  preview:
-    base: null
-    light: null
-    dark: null
+  live: https://usetool.space
+  preview_light: /previews/useTool_light.webp
+  preview_dark: /previews/useTool_dark.webp
 
 - name: useMarkdown
-  links:
-    - kind: live
-      url: https://usemarkdown.space
-  preview:
-    base: null
-    light: null
-    dark: null
+  live: https://usemarkdown.space
+  preview_light: /previews/useMarkdown_light.webp
+  preview_dark: /previews/useMarkdown_dark.webp
 
-- name: useSpace Studio
-  links:
-    - kind: live
-      url: https://usespace.studio
-  preview:
-    base: null
-    light: null
-    dark: null
+# - name: useColor
+#   live: https://usecolor.space
 
-- name: Simay Durmaz
-  links:
-    - kind: live
-      url: https://simaydurmaz.com
-  preview:
-    base: null
-    light: null
-    dark: null
+# - name: useSpace Studio
+#   live: https://usespace.studio
+
+# - name: Simay Durmaz
+#   live: https://simaydurmaz.com
 
 - name: KoiJs Vue Table
-  links:
-    - kind: github
-      url: https://github.com/atlaxt/koijs-table-vue
-  preview:
-    base: null
-    light: null
-    dark: null
+  github: https://github.com/atlaxt/koijs-table-vue
 
 - name: Web Screenshot
-  links:
-    - kind: github
-      url: https://github.com/atlaxt/web-screenshot
-  preview:
-    base: null
-    light: null
-    dark: null
+  github: https://github.com/atlaxt/web-screenshot
 
 - name: InkHub
-  links:
-    - kind: github
-      url: github.com/atlaxt/InkHub
-  preview:
-    base: null
-    light: null
-    dark: null
+  github: https://github.com/atlaxt/InkHub
 
 - name: Css Training
-  links:
-    - kind: github
-      url: https://github.com/atlaxt/css-training
-  preview:
-    base: null
-    light: null
-    dark: null
+  github: https://github.com/atlaxt/css-training
 
 - name: Mockly
-  links:
-    - kind: github
-      url: https://github.com/atlaxt/mockly
-  preview:
-    base: null
-    light: null
-    dark: null
+  github: https://github.com/atlaxt/mockly
 
 - name: SnakeHub
-  links:
-    - kind: github
-      url: https://github.com/atlaxt/SnakeHub
-  preview:
-    base: null
-    light: null
-    dark: null
+  github: https://github.com/atlaxt/SnakeHub
 
 - name: Imoji
-  links:
-    - kind: github
-      url: https://github.com/atlaxt/imoji
-  preview:
-    base: null
-    light: null
-    dark: null
+  github: https://github.com/atlaxt/imoji

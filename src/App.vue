@@ -6,7 +6,6 @@ import { useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import NewsTicker from '@/components/NewsTicker.vue'
 import ScrollToTopButton from '@/components/ScrollToTopButton.vue'
-import ArtPlum from './components/ArtPlum.vue'
 
 const transitionName = ref('fade')
 
