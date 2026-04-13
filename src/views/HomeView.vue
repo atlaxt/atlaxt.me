@@ -74,7 +74,7 @@ const recentPhotos = (photosRaw as unknown as Photo[])
   .slice(0, 6)
 
 function thumb(file: string) {
-  return `/photos/thumbs/${file}`
+  return `/photos/${file}`
 }
 
 // ─── En beğenilen kitaplar ──────────────────────────────────────

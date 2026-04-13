@@ -11,7 +11,7 @@ const photos = [...(photosRaw as unknown as Photo[])].reverse()
 const GITHUB_RAW = 'https://raw.githubusercontent.com/atlaxt/atlaxt.me/main/public/photos'
 
 function thumb(file: string) {
-  return `/photos/thumbs/${file}`
+  return `/photos/${file}`
 }
 
 function full(file: string) {
@@ -23,7 +23,7 @@ function thumbSrcSet(_file: string): string | undefined {
 }
 
 function direct(file: string) {
-  return `/photos/thumbs/${file}`
+  return `/photos/${file}`
 }
 
 function onImgError(e: Event, file: string) {

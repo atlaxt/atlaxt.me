@@ -83,3 +83,6 @@ export interface FeedItem {
   source: string
   sourceLink: string
 }
+
+// ─── Projeler ────────────────────────────────────────────────
+export * from './projects'

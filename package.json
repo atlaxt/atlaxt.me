@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "vite",
     "generate:seo": "node ./scripts/generate-seo-files.mjs",
-    "generate:thumbs": "node ./scripts/generate-thumbs.mjs",
+    "convert:photos": "node ./scripts/generate-thumbs.mjs",
+    "convert:previews": "node ./scripts/convert-previews-to-webp.mjs",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",

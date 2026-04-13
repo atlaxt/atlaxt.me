@@ -1,26 +1,140 @@
 - name: Git101
-  link: 'https://git101.atlaxt.me'
+  links:
+    - kind: live
+      url: git101-seven.vercel.app
+    - kind: github
+      url: https://github.com/atlaxt/git101
+  preview:
+    base: null
+    light: null
+    dark: null
 
 - name: nuxt-tawk-to
-  link: 'https://nuxt-tawk-to.atlaxt.me/'
-
-- name: imoji
-  link: 'https://imoji.atlaxt.me'
+  links:
+    - kind: live
+      url: nuxt-tawk-to.vercel.app
+    - kind: github
+      url: https://github.com/atlaxt/nuxt-tawk-to
+    - kind: npm
+      url: https://www.npmjs.com/package/nuxt-tawk-to
+  preview:
+    base: null
+    light: null
+    dark: null
 
 - name: Mega Yapı
-  link: 'https://www.yapimega.com'
+  links:
+    - kind: live
+      url: https://yapimega.com
+  preview:
+    base: null
+    light: null
+    dark: null
 
 - name: useTool
-  link: 'https://usetool.space'
+  links:
+    - kind: live
+      url: https://usetool.space
+  preview:
+    base: null
+    light: null
+    dark: null
 
 - name: useColor
-  link: 'https://usecolor.space'
-
-- name: useFont
-  link: 'https://usefont.space'
+  links:
+    - kind: live
+      url: https://usecolor.space
+  preview:
+    base: null
+    light: null
+    dark: null
 
 - name: useMarkdown
-  link: 'https://usemarkdown.space'
+  links:
+    - kind: live
+      url: https://usemarkdown.space
+  preview:
+    base: null
+    light: null
+    dark: null
 
 - name: useSpace Studio
-  link: 'https://usespace.studio'
+  links:
+    - kind: live
+      url: https://usespace.studio
+  preview:
+    base: null
+    light: null
+    dark: null
+
+- name: Simay Durmaz
+  links:
+    - kind: live
+      url: https://simaydurmaz.com
+  preview:
+    base: null
+    light: null
+    dark: null
+
+- name: KoiJs Vue Table
+  links:
+    - kind: github
+      url: https://github.com/atlaxt/koijs-table-vue
+  preview:
+    base: null
+    light: null
+    dark: null
+
+- name: Web Screenshot
+  links:
+    - kind: github
+      url: https://github.com/atlaxt/web-screenshot
+  preview:
+    base: null
+    light: null
+    dark: null
+
+- name: InkHub
+  links:
+    - kind: github
+      url: github.com/atlaxt/InkHub
+  preview:
+    base: null
+    light: null
+    dark: null
+
+- name: Css Training
+  links:
+    - kind: github
+      url: https://github.com/atlaxt/css-training
+  preview:
+    base: null
+    light: null
+    dark: null
+
+- name: Mockly
+  links:
+    - kind: github
+      url: https://github.com/atlaxt/mockly
+  preview:
+    base: null
+    light: null
+    dark: null
+
+- name: SnakeHub
+  links:
+    - kind: github
+      url: https://github.com/atlaxt/SnakeHub
+  preview:
+    base: null
+    light: null
+    dark: null
+
+- name: Imoji
+  links:
+    - kind: github
+      url: https://github.com/atlaxt/imoji
+  preview:
+    base: null
+    light: null
+    dark: null

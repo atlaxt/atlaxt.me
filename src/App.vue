@@ -21,7 +21,7 @@ router.beforeEach((to, from) => {
   <VercelAnalytics />
   <VercelSpeedInsights />
   <div class="min-h-screen overflow-x-hidden" style="background: var(--bg); color: var(--text);">
-    <ArtPlum />
+    <!-- <ArtPlum /> -->
     <AppHeader />
     <div class="max-w-4xl mx-auto">
       <main>
