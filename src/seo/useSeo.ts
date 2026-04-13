@@ -2,7 +2,13 @@ import type { ComputedRef } from 'vue'
 import { useHead } from '@unhead/vue'
 import { computed, isRef } from 'vue'
 import { useRoute } from 'vue-router'
-import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_NAME, toAbsoluteUrl } from './site'
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OG_IMAGE,
+  DEFAULT_TITLE,
+  SITE_NAME,
+  toAbsoluteUrl,
+} from './site'
 
 export interface SeoOptions {
   title?: string | ComputedRef<string | undefined>
@@ -44,7 +50,8 @@ export function useSeo(options: SeoOptions = {}) {
 
   const image = computed(() => {
     const img = unwrap(options.image)
-    return img ? toAbsoluteUrl(img) : undefined
+    const imagePath = (img && img.trim()) || DEFAULT_OG_IMAGE
+    return toAbsoluteUrl(imagePath)
   })
 
   const type = computed(() => options.type || 'website')
