@@ -5,7 +5,7 @@
   preview_dark: /previews/Git101_dark.webp
 
 - name: nuxt-tawk-to
-  live: nuxt-tawk-to.vercel.app
+  live: nuxt-tawk-to.vercel.atlaxt.me
   github: https://github.com/atlaxt/nuxt-tawk-to
   npm: https://www.npmjs.com/package/nuxt-tawk-to
   preview_light: /previews/NuxtTawkTo_light.webp
