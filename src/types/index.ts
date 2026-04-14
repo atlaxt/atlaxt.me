@@ -40,11 +40,13 @@ export interface ExperienceEntry {
 }
 
 export interface EducationEntry {
-  degree: string
-  level: string
-  school: string | null
-  initials: string | null
-  period: string
+  title: string
+  company: string | null
+  type: string
+  start: string
+  end: string
+  location: string | null
+  mode: string | null
   planned: boolean
   active?: boolean
 }

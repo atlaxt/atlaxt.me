@@ -356,27 +356,28 @@ useSeo({
           <div class="timeline">
             <div
               v-for="edu in education"
-              :key="edu.degree! + edu.level!"
+              :key="edu.title! + edu.start!"
               class="timeline-item"
             >
               <div class="timeline-dot-wrap">
-                <div class="timeline-dot" :class="!edu.planned ? 'timeline-dot--faint' : edu.active ? 'timeline-dot--active' : ''" />
-                <span v-if="edu.active" class="timeline-pulse" />
+                <div class="timeline-dot" :class="edu.end === 'Halen' ? 'timeline-dot--active' : edu.planned ? 'timeline-dot--faint' : ''" />
+                <span v-if="edu.end === 'Halen'" class="timeline-pulse" />
               </div>
               <div class="timeline-body">
                 <div class="timeline-meta">
-                  <span
-                    class="timeline-period"
-                    :style="edu.planned ? 'font-style:italic; opacity:0.4;' : ''"
-                  >{{ edu.period }}</span>
+                  <span class="timeline-period" :style="edu.planned ? 'opacity:0.4;' : ''">{{ edu.start }} – {{ edu.end }}</span>
+                  <span v-if="!edu.planned" class="timeline-duration">{{ calcDuration(edu.start!, edu.end!) }}</span>
                 </div>
-                <p class="timeline-title" :style="edu.planned ? 'opacity:0.4;' : ''">
-                  {{ edu.degree }}
+                <p class="t-section">
+                  {{ edu.title }}
                 </p>
                 <p class="timeline-sub">
-                  {{ edu.level }}<template v-if="edu.school">
-                    · {{ edu.school }}
+                  {{ edu.type }}<template v-if="edu.company">
+                    · {{ edu.company }}
                   </template>
+                </p>
+                <p v-if="edu.location" class="timeline-sub timeline-sub--faint">
+                  {{ edu.location }}
                 </p>
               </div>
             </div>
