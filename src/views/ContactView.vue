@@ -64,6 +64,10 @@ async function send() {
       </div>
 
       <form v-else class="contact-form" @submit.prevent="send">
+        <p class="form-desc">
+          E-posta adresinizi bırakırsanız size geri dönerim. Bırakmak istemiyorsanız da sorun değil — anonim bir görüş, öneri ya da eleştiri her zaman değerlidir.
+        </p>
+
         <div class="field">
           <label class="t-micro" for="email">E-posta</label>
           <input
@@ -122,6 +126,14 @@ async function send() {
 </template>
 
 <style scoped>
+.form-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 400px;
+  margin-bottom: 0.5rem;
+}
+
 .contact-form {
   display: flex;
   flex-direction: column;

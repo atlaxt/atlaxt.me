@@ -141,16 +141,23 @@ onUnmounted(() => {
           Blog
         </RouterLink>
 
-        <div class="flex items-center gap-3">
-          <RouterLink
-            to="/feed"
-            class="opacity-70 transition-opacity hover:opacity-100"
-            style="color: var(--text-muted);"
-            active-class="!opacity-100 !text-[color:var(--text)]"
-          >
-            Haberler
-          </RouterLink>
-        </div>
+        <RouterLink
+          to="/feed"
+          class="opacity-70 transition-opacity hover:opacity-100"
+          style="color: var(--text-muted);"
+          active-class="!opacity-100 !text-[color:var(--text)]"
+        >
+          Haberler
+        </RouterLink>
+
+        <RouterLink
+          to="/contact"
+          class="opacity-70 transition-opacity hover:opacity-100"
+          style="color: var(--text-muted);"
+          active-class="!opacity-100 !text-[color:var(--text)]"
+        >
+          İletişim
+        </RouterLink>
 
         <RouterLink
           to="/cli"
@@ -261,57 +268,60 @@ onUnmounted(() => {
           @click.stop
         >
           <div class="label-micro flex flex-col gap-3" style="color: var(--text-muted);">
-            <RouterLink to="/projects" class="py-1.5 opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
-              Projeler
-            </RouterLink>
-            <RouterLink to="/blog" class="py-1.5 opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
-              Blog
-            </RouterLink>
-            <div class="flex items-center justify-between py-1.5">
+            <div class="flex flex-col gap-5">
+              <RouterLink to="/projects" class="opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
+                Projeler
+              </RouterLink>
+              <RouterLink to="/blog" class="opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
+                Blog
+              </RouterLink>
               <RouterLink to="/feed" class="opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
                 Haberler
               </RouterLink>
+              <RouterLink to="/contact" class="opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
+                İletişim
+              </RouterLink>
+
+              <RouterLink
+                to="/cli"
+                class="group mt-1 inline-flex w-fit items-center gap-1.5 rounded-none px-1.5 py-0.5 label-micro opacity-80 transition-opacity duration-200 hover:opacity-100"
+                style="color: var(--text-muted); background-color: var(--bg);"
+                active-class="!opacity-100 !text-[color:var(--text)]"
+                aria-label="CLI"
+                @click="closeMobileMenu"
+              >
+                <span class="opacity-85 group-hover:opacity-100">CLI</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-75 group-hover:opacity-100">
+                  <polyline points="4 17 10 11 4 5" />
+                  <line x1="12" x2="20" y1="19" y2="19" />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-45 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-85">
+                  <path d="M7 17L17 7" />
+                  <path d="M8 7h9v9" />
+                </svg>
+              </RouterLink>
+
+              <a
+                href="/rss.xml"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 py-1.5 opacity-85 transition-opacity hover:opacity-100"
+                style="color: var(--text-muted);"
+                aria-label="RSS Feed"
+                @click="closeMobileMenu"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 11a9 9 0 0 1 9 9" />
+                  <path d="M4 4a16 16 0 0 1 16 16" />
+                  <circle cx="5" cy="19" r="1" fill="currentColor" stroke="none" />
+                </svg>
+                RSS
+              </a>
             </div>
 
-            <RouterLink
-              to="/cli"
-              class="group mt-1 inline-flex w-fit items-center gap-1.5 rounded-none px-1.5 py-0.5 label-micro opacity-80 transition-opacity duration-200 hover:opacity-100"
-              style="color: var(--text-muted); background-color: var(--bg);"
-              active-class="!opacity-100 !text-[color:var(--text)]"
-              aria-label="CLI"
-              @click="closeMobileMenu"
-            >
-              <span class="opacity-85 group-hover:opacity-100">CLI</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-75 group-hover:opacity-100">
-                <polyline points="4 17 10 11 4 5" />
-                <line x1="12" x2="20" y1="19" y2="19" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-45 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-85">
-                <path d="M7 17L17 7" />
-                <path d="M8 7h9v9" />
-              </svg>
-            </RouterLink>
+            <div class="mt-1 h-px" style="background-color: var(--border);" />
 
-            <a
-              href="/rss.xml"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 py-1.5 opacity-85 transition-opacity hover:opacity-100"
-              style="color: var(--text-muted);"
-              aria-label="RSS Feed"
-              @click="closeMobileMenu"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 11a9 9 0 0 1 9 9" />
-                <path d="M4 4a16 16 0 0 1 16 16" />
-                <circle cx="5" cy="19" r="1" fill="currentColor" stroke="none" />
-              </svg>
-              RSS
-            </a>
-
-            <div class="mt-2 h-px" style="background-color: var(--border);" />
-
-            <div class="flex justify-between items-center gap-4 pt-1" style="color: var(--text-muted);">
+            <div class="flex justify-between items-center gap-4" style="color: var(--text-muted);">
               <div class="flex items-center gap-4">
                 <RouterLink
                   to="/photos"

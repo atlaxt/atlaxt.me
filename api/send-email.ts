@@ -16,7 +16,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   const { replyTo, subject, html } = JSON.parse(body)
 
   const { data, error } = await resend.emails.send({
-    from: 'noreply@atlaxt.me',
+    from: 'atlaxt.me <noreply@atlaxt.me>',
     to: process.env.CONTACT_EMAIL!,
     replyTo,
     subject,
