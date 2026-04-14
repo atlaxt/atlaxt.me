@@ -57,7 +57,7 @@ useSeo({
     <PageHeader :crumbs="[{ label: 'Blog', to: '/blog' }]" />
 
     <div class="page-intro">
-      <p class="page-intro-title">
+      <p class="t-page-title">
         Bir konuyu konuşmak veya bir bilgiyi aktarmak istediğimde burdayım.
       </p>
     </div>
@@ -99,11 +99,6 @@ useSeo({
   margin-bottom: 2rem;
 }
 
-.page-intro-title {
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: var(--text);
-}
 
 .year-list {
   display: flex;

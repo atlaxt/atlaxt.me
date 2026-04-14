@@ -340,6 +340,7 @@ function sitemapPlugin(): Plugin {
         { loc: `${SITE}/photos`, lastmod: today, changefreq: 'monthly', priority: 0.6 },
         { loc: `${SITE}/books`, lastmod: today, changefreq: 'monthly', priority: 0.6 },
         { loc: `${SITE}/feed`, lastmod: today, changefreq: 'daily', priority: 0.4 },
+        { loc: `${SITE}/contact`, lastmod: today, changefreq: 'monthly', priority: 0.4 },
         { loc: `${SITE}/cli`, lastmod: today, changefreq: 'monthly', priority: 0.6 },
         { loc: `${SITE}/cli/tools`, lastmod: today, changefreq: 'monthly', priority: 0.5 },
         { loc: `${SITE}/cli/templates`, lastmod: today, changefreq: 'monthly', priority: 0.4 },

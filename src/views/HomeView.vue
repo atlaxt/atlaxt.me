@@ -331,7 +331,7 @@ useSeo({
                   <span class="timeline-period">{{ exp.start }} – {{ exp.end }}</span>
                   <span class="timeline-duration">{{ calcDuration(exp.start!, exp.end!) }}</span>
                 </div>
-                <p class="timeline-title">
+                <p class="t-section">
                   {{ exp.title }}
                 </p>
                 <p class="timeline-sub">
@@ -761,9 +761,6 @@ useSeo({
 }
 
 .timeline-title {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text);
   line-height: 1.3;
 }
 

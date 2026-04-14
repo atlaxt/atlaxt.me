@@ -314,10 +314,10 @@ useSeo({
     <PageHeader :crumbs="[{ label: 'Haberler', to: '/feed' }]" />
 
     <div class="page-intro">
-      <p class="page-intro-title">
+      <p class="t-page-title mb-[0.3rem]">
         Takip ettiğim yazılar.
       </p>
-      <p class="page-intro-sub">
+      <p class="t-small">
         Benimle aynı yolda ilerliyorsanız işinize yarayabilir.
       </p>
     </div>
@@ -464,7 +464,7 @@ useSeo({
             @auxclick="handleAuxClick($event, item.link)"
           >
             <div class="min-w-0">
-              <p class="feed-item-title">{{ item.title }}</p>
+              <p class="t-section feed-item-title">{{ item.title }}</p>
               <div class="flex items-center gap-2">
                 <a
                   :href="item.sourceLink"
@@ -496,18 +496,6 @@ useSeo({
   margin-bottom: 2rem;
 }
 
-.page-intro-title {
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 0.3rem;
-}
-
-.page-intro-sub {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  opacity: 0.65;
-}
 
 .feed-group-list {
   display: flex;
@@ -551,10 +539,7 @@ useSeo({
 
 .feed-item-title {
   margin-bottom: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
   line-height: 1.35;
-  color: var(--text);
 }
 
 .feed-item-source {

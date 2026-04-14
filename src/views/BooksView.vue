@@ -77,10 +77,10 @@ useSeo({
     <PageHeader :crumbs="[{ label: 'Kitaplık', to: '/books' }]" />
 
     <div class="page-intro">
-      <p class="page-intro-title">
+      <p class="t-page-title mb-[0.3rem]">
         Bütün modern klasikleri okumayı hedefliyorum.
       </p>
-      <p class="page-intro-sub">
+      <p class="t-small">
         Okuduklarımı burada puanlıyorum.
       </p>
     </div>
@@ -156,18 +156,6 @@ useSeo({
   margin-bottom: 2rem;
 }
 
-.page-intro-title {
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 0.3rem;
-}
-
-.page-intro-sub {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  opacity: 0.5;
-}
 
 .sort-btn {
   display: flex;

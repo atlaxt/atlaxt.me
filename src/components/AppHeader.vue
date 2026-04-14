@@ -207,45 +207,31 @@ onUnmounted(() => {
 
         <!-- Controls -->
         <div class="flex items-center gap-4" style="color: var(--text-muted);">
-          <a
-            href="https://github.com/atlaxt"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex transition-opacity hover:opacity-60"
-            aria-label="GitHub"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.8 1.1 1.8 1.1 1 1.7 2.7 1.2 3.3.9.1-.7.4-1.2.8-1.5-2.7-.3-5.5-1.3-5.5-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.4.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C17.7 5 18.7 5.3 18.7 5.3c.6 1.7.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.8 5.5-5.5 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A12 12 0 0 0 12 .3" />
-            </svg>
-          </a>
-
-          <a
-            href="https://linkedin.com/in/atlaxt"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex transition-opacity hover:opacity-60"
-            aria-label="LinkedIn"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" />
-              <rect width="4" height="12" x="2" y="9" />
-              <circle cx="4" cy="4" r="2" />
-            </svg>
-          </a>
-
-          <a
-            href="https://instagram.com/atlaxt.me"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex transition-opacity hover:opacity-60"
-            aria-label="Instagram"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-              <path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37Z" />
-              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-            </svg>
-          </a>
+          <!-- Social dropdown -->
+          <div class="social-wrap">
+            <button class="social-trigger flex opacity-55 transition-opacity hover:opacity-100" aria-label="Sosyal medya">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+                <line x1="8.59" x2="15.42" y1="13.51" y2="17.49" /><line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
+              </svg>
+            </button>
+            <div class="social-dropdown">
+              <div class="social-dropdown-inner">
+                <a href="https://github.com/atlaxt" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.8 1.1 1.8 1.1 1 1.7 2.7 1.2 3.3.9.1-.7.4-1.2.8-1.5-2.7-.3-5.5-1.3-5.5-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.4.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C17.7 5 18.7 5.3 18.7 5.3c.6 1.7.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.8 5.5-5.5 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A12 12 0 0 0 12 .3" /></svg>
+                  <span>GitHub</span>
+                </a>
+                <a href="https://linkedin.com/in/atlaxt" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://instagram.com/atlaxt.me" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37Z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
+                  <span>Instagram</span>
+                </a>
+              </div>
+            </div>
+          </div>
 
           <button class="flex transition-opacity hover:opacity-60" @click="toggleColorMode($event)">
             <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -348,25 +334,15 @@ onUnmounted(() => {
                 </RouterLink>
               </div>
 
-              <div class="flex items-center gap-4">
-                <a href="https://github.com/atlaxt" target="_blank" rel="noopener noreferrer" class="flex transition-opacity hover:opacity-60" aria-label="GitHub">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.8 1.1 1.8 1.1 1 1.7 2.7 1.2 3.3.9.1-.7.4-1.2.8-1.5-2.7-.3-5.5-1.3-5.5-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.4.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C17.7 5 18.7 5.3 18.7 5.3c.6 1.7.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.8 5.5-5.5 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A12 12 0 0 0 12 .3" />
-                  </svg>
+              <div class="flex items-center gap-1">
+                <a href="https://github.com/atlaxt" target="_blank" rel="noopener noreferrer" class="mobile-social-link" aria-label="GitHub">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2c-3.3.7-4-1.4-4-1.4-.6-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.8 1.1 1.8 1.1 1 1.7 2.7 1.2 3.3.9.1-.7.4-1.2.8-1.5-2.7-.3-5.5-1.3-5.5-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.4.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C17.7 5 18.7 5.3 18.7 5.3c.6 1.7.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.8 5.5-5.5 5.8.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A12 12 0 0 0 12 .3" /></svg>
                 </a>
-                <a href="https://linkedin.com/in/atlaxt" target="_blank" rel="noopener noreferrer" class="flex transition-opacity hover:opacity-60" aria-label="LinkedIn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" />
-                    <rect width="4" height="12" x="2" y="9" />
-                    <circle cx="4" cy="4" r="2" />
-                  </svg>
+                <a href="https://linkedin.com/in/atlaxt" target="_blank" rel="noopener noreferrer" class="mobile-social-link" aria-label="LinkedIn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
                 </a>
-                <a href="https://instagram.com/atlaxt.me" target="_blank" rel="noopener noreferrer" class="flex transition-opacity hover:opacity-60" aria-label="Instagram">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                    <path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37Z" />
-                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-                  </svg>
+                <a href="https://instagram.com/atlaxt.me" target="_blank" rel="noopener noreferrer" class="mobile-social-link" aria-label="Instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37a4 4 0 1 1-3.37-3.37 4 4 0 0 1 3.37 3.37Z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
                 </a>
               </div>
             </div>
@@ -378,6 +354,73 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* ── Social dropdown ──────────────────────────────────── */
+.social-wrap {
+  position: relative;
+}
+
+.social-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition-delay: 120ms;
+}
+
+.social-dropdown-inner {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  padding: 0.3rem 0;
+  min-width: 130px;
+}
+
+.social-wrap:hover .social-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition-delay: 0ms;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.12s ease;
+}
+
+.social-link:hover {
+  opacity: 1;
+}
+
+/* ── Mobile social links ──────────────────────────────── */
+.mobile-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--text-muted);
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+
+.mobile-social-link:hover {
+  opacity: 1;
+}
+
 .mobile-menu-overlay {
   background: transparent;
   backdrop-filter: none;

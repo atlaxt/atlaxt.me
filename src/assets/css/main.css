@@ -6,7 +6,7 @@
   --bg-subtle:   #f4f4f5;
   --border:      #e4e4e7;
   --text:        #09090b;
-  --text-muted:  #71717a;
+  --text-muted:  #52525b;   /* zinc-600 — önceki: #71717a */
 }
 
 .dark {
@@ -14,10 +14,72 @@
   --bg-subtle:   #18181b;
   --border:      #27272a;
   --text:        #fafafa;
-  --text-muted:  #a1a1aa;
+  --text-muted:  #d4d4d8;   /* zinc-300 — önceki: #a1a1aa */
 }
 
-/* ─── Micro label stili ──────────────────────────────── */
+/* ─── Typography ─────────────────────────────────────── */
+/*
+  Kullanım:
+    .t-page-title  — sayfa ana başlığı     (1.05rem / 500)
+    .t-section     — bölüm başlığı         (0.875rem / 500)
+    .t-body        — normal paragraf        (0.875rem / 400)
+    .t-small       — ikincil bilgi, meta    (0.8rem / 400)
+    .t-caption     — tarih, etiket, not     (0.72rem / 400)
+    .t-micro       — uppercase label        (0.625rem / 300 / tracked)
+    .t-mono        — kod, komut             (0.8rem / monospace)
+*/
+
+@utility t-page-title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+@utility t-section {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+@utility t-body {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+@utility t-small {
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+@utility t-caption {
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+@utility t-micro {
+  font-size: 0.625rem;
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+@utility t-mono {
+  font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+/* ─── Micro label stili (geriye dönük uyumluluk) ──────── */
 @utility label-micro {
   font-size: 0.625rem;
   letter-spacing: 0.25em;
