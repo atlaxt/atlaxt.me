@@ -34,9 +34,9 @@ Use idempotency keys to prevent duplicate emails when retrying failed requests.
 The Node.js SDK has a dedicated `idempotencyKey` option:
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Single email
 const { data, error } = await resend.emails.send(
@@ -49,7 +49,7 @@ const { data, error } = await resend.emails.send(
   {
     idempotencyKey: `order-confirmation/${orderId}`,
   }
-);
+)
 
 // Batch email
 const { data, error } = await resend.batch.send(
@@ -58,7 +58,7 @@ const { data, error } = await resend.batch.send(
     { from: 'Acme <noreply@acme.com>', to: ['delivered@resend.dev'], subject: 'Hello', html: '<p>Hi</p>' },
   ],
   { idempotencyKey: `batch-welcome/${batchId}` }
-);
+)
 ```
 
 ### Python
@@ -151,44 +151,44 @@ curl -X POST 'https://api.resend.com/emails' \
 ### Node.js
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const { data, error } = await resend.emails.send({
   from: 'Acme <onboarding@resend.dev>',
   to: ['delivered@resend.dev'],
   subject: 'Hello',
   html: '<p>Hello world</p>',
-});
+})
 
 if (error) {
   switch (error.name) {
     case 'validation_error':
       // Invalid parameters - don't retry, fix the data
-      throw new Error(`Invalid email params: ${error.message}`);
+      throw new Error(`Invalid email params: ${error.message}`)
 
     case 'rate_limit_exceeded':
       // Rate limited - safe to retry with backoff
-      console.log('Rate limited, should retry with backoff');
-      break;
+      console.log('Rate limited, should retry with backoff')
+      break
 
     case 'api_error':
       // Server error - safe to retry
-      console.log('Server error, should retry');
-      break;
+      console.log('Server error, should retry')
+      break
 
     case 'invalid_idempotent_request':
       // Idempotency conflict - don't retry with same key
-      throw new Error('Duplicate request with different payload');
+      throw new Error('Duplicate request with different payload')
 
     default:
-      console.error('Unexpected error:', error);
+      console.error('Unexpected error:', error)
   }
-  return;
+  return
 }
 
-console.log('Email sent:', data.id);
+console.log('Email sent:', data.id)
 ```
 
 ### Python
@@ -267,40 +267,40 @@ Implement exponential backoff for transient failures. Don't retry validation err
 ### Node.js
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 async function sendEmailWithRetry(
   params: Parameters<typeof resend.emails.send>[0],
-  options: { maxRetries?: number; idempotencyKey?: string } = {}
+  options: { maxRetries?: number, idempotencyKey?: string } = {}
 ) {
-  const { maxRetries = 3, idempotencyKey } = options;
+  const { maxRetries = 3, idempotencyKey } = options
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     const { data, error } = await resend.emails.send(
       params,
       idempotencyKey ? { idempotencyKey } : undefined
-    );
+    )
 
     if (!error) {
-      return data;
+      return data
     }
 
     // Don't retry validation errors or idempotency conflicts
     if (error.name === 'validation_error' || error.name === 'invalid_idempotent_request') {
-      throw new Error(`${error.name}: ${error.message}`);
+      throw new Error(`${error.name}: ${error.message}`)
     }
 
     // Last attempt failed
     if (attempt === maxRetries) {
-      throw new Error(`Failed after ${maxRetries + 1} attempts: ${error.message}`);
+      throw new Error(`Failed after ${maxRetries + 1} attempts: ${error.message}`)
     }
 
     // Exponential backoff: 1s, 2s, 4s...
-    const delay = Math.pow(2, attempt) * 1000;
-    console.log(`Attempt ${attempt + 1} failed, retrying in ${delay}ms...`);
-    await new Promise(resolve => setTimeout(resolve, delay));
+    const delay = 2 ** attempt * 1000
+    console.log(`Attempt ${attempt + 1} failed, retrying in ${delay}ms...`)
+    await new Promise(resolve => setTimeout(resolve, delay))
   }
 }
 
@@ -313,7 +313,7 @@ const result = await sendEmailWithRetry(
     html: '<p>Your order is confirmed.</p>',
   },
   { idempotencyKey: `order-confirmation/${orderId}` }
-);
+)
 ```
 
 ### Python
@@ -422,24 +422,24 @@ For sends larger than 100 emails, chunk into multiple batch requests with unique
 
 ```typescript
 // Node.js example pattern
-const BATCH_SIZE = 100;
+const BATCH_SIZE = 100
 
 async function sendLargeBatch(emails: Email[], batchPrefix: string) {
-  const chunks: Email[][] = [];
+  const chunks: Email[][] = []
 
   for (let i = 0; i < emails.length; i += BATCH_SIZE) {
-    chunks.push(emails.slice(i, i + BATCH_SIZE));
+    chunks.push(emails.slice(i, i + BATCH_SIZE))
   }
 
   const results = await Promise.all(
     chunks.map(async (chunk, index) => {
       // Each chunk gets its own idempotency key
-      const idempotencyKey = `${batchPrefix}/chunk-${index}`;
-      return resend.batch.send(chunk, { idempotencyKey });
+      const idempotencyKey = `${batchPrefix}/chunk-${index}`
+      return resend.batch.send(chunk, { idempotencyKey })
     })
-  );
+  )
 
-  return results;
+  return results
 }
 ```
 

@@ -36,7 +36,7 @@ const { data, error } = await resend.events.create({
     is_first_order: 'boolean',
     completed_at: 'date',
   },
-});
+})
 ```
 
 ```python
@@ -67,7 +67,7 @@ const { data, error } = await resend.events.send({
     is_first_order: true,
     completed_at: '2026-04-10T12:00:00Z',
   },
-});
+})
 ```
 
 ```python
@@ -94,16 +94,16 @@ Only the `schema` field can be updated. Set to `null` to clear it. Get, update, 
 const { data, error } = await resend.events.update({
   identifier: 'order.completed',
   schema: { order_id: 'string', total: 'number' },
-});
+})
 
 // Clear schema
 const { data, error } = await resend.events.update({
   identifier: 'order.completed',
   schema: null,
-});
+})
 
 // Delete by name
-const { data, error } = await resend.events.remove('order.completed');
+const { data, error } = await resend.events.remove('order.completed')
 ```
 
 ## Common Mistakes

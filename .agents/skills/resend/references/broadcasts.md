@@ -22,8 +22,9 @@ Send emails to audience segments. Broadcasts follow a two-step lifecycle: **crea
 ## Lifecycle: Create then Send
 
 ```typescript
-import { Resend } from 'resend';
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Step 1: Create a draft broadcast
 const { data: broadcast, error: createError } = await resend.broadcasts.create({
@@ -32,22 +33,21 @@ const { data: broadcast, error: createError } = await resend.broadcasts.create({
   subject: 'Hi {{{FIRST_NAME|there}}}, here is your March update',
   html: '<p>Hi {{{FIRST_NAME|there}}}</p><a href="{{{RESEND_UNSUBSCRIBE_URL}}}">Unsubscribe</a>',
   segmentId: 'seg_abc123',
-  topicId: 'top_xyz789',     // optional: controls topic-level unsubscribes
-});
+  topicId: 'top_xyz789', // optional: controls topic-level unsubscribes
+})
 
 if (createError) {
-  console.error(createError);
-  return;
+  console.error(createError)
+  return
 }
 
 // Step 2: Send it (or schedule)
 const { data: sent, error: sendError } = await resend.broadcasts.send(broadcast.id, {
-  scheduledAt: 'in 1 hour',  // optional: ISO 8601 or natural language
-});
+  scheduledAt: 'in 1 hour', // optional: ISO 8601 or natural language
+})
 
 if (sendError) {
-  console.error(sendError);
-  return;
+  console.error(sendError)
 }
 ```
 
@@ -63,25 +63,25 @@ const { data, error } = await resend.broadcasts.create({
   html: '<p>Shop now!</p>',
   segmentId: 'seg_abc123',
   send: true,
-});
+})
 ```
 
 ## Get, List, Update, Delete
 
 ```typescript
 // Get
-const { data, error } = await resend.broadcasts.get('bc_abc123');
+const { data, error } = await resend.broadcasts.get('bc_abc123')
 
 // List with pagination
-const { data, error } = await resend.broadcasts.list({ limit: 10, offset: 0 });
+const { data, error } = await resend.broadcasts.list({ limit: 10, offset: 0 })
 
 // Update a draft
 const { data, error } = await resend.broadcasts.update('bc_abc123', {
   subject: 'Updated subject line',
-});
+})
 
 // Delete a draft (only works on drafts)
-const { data, error } = await resend.broadcasts.remove('bc_abc123');
+const { data, error } = await resend.broadcasts.remove('bc_abc123')
 ```
 
 ## Python Example

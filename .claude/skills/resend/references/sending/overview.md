@@ -148,12 +148,12 @@ const { data, error } = await resend.emails.send({
   to: ['delivered@resend.dev'],
   subject: 'Welcome!',
   template: {
-    id: 'tmpl_abc123',       // or alias: 'welcome-email'
+    id: 'tmpl_abc123', // or alias: 'welcome-email'
     variables: {
-      USER_NAME: 'John',     // Case-sensitive! Must match template exactly.
+      USER_NAME: 'John', // Case-sensitive! Must match template exactly.
     }
   }
-});
+})
 ```
 
 Cannot combine `template` with `html`, `text`, or `react` — mutually exclusive. See [../templates.md](../templates.md) for full template management.

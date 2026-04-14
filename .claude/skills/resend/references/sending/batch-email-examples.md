@@ -15,77 +15,79 @@ Since the entire batch fails if any email has invalid data, validate before send
 ### Node.js
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface BatchEmail {
-  from: string;
-  to: string[];
-  subject: string;
-  html?: string;
-  text?: string;
+  from: string
+  to: string[]
+  subject: string
+  html?: string
+  text?: string
 }
 
 interface ValidationResult {
-  valid: boolean;
-  errors: { index: number; field: string; message: string }[];
+  valid: boolean
+  errors: { index: number, field: string, message: string }[]
 }
 
 function validateBatch(emails: BatchEmail[]): ValidationResult {
-  const errors: ValidationResult['errors'] = [];
+  const errors: ValidationResult['errors'] = []
 
   if (emails.length === 0) {
-    return { valid: false, errors: [{ index: -1, field: 'batch', message: 'Batch cannot be empty' }] };
+    return { valid: false, errors: [{ index: -1, field: 'batch', message: 'Batch cannot be empty' }] }
   }
 
   if (emails.length > 100) {
-    return { valid: false, errors: [{ index: -1, field: 'batch', message: 'Batch cannot exceed 100 emails' }] };
+    return { valid: false, errors: [{ index: -1, field: 'batch', message: 'Batch cannot exceed 100 emails' }] }
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/
 
   emails.forEach((email, index) => {
     if (!email.from) {
-      errors.push({ index, field: 'from', message: 'From address is required' });
+      errors.push({ index, field: 'from', message: 'From address is required' })
     }
 
     if (!email.to || email.to.length === 0) {
-      errors.push({ index, field: 'to', message: 'At least one recipient is required' });
-    } else if (email.to.length > 50) {
-      errors.push({ index, field: 'to', message: 'Cannot exceed 50 recipients per email' });
-    } else {
+      errors.push({ index, field: 'to', message: 'At least one recipient is required' })
+    }
+    else if (email.to.length > 50) {
+      errors.push({ index, field: 'to', message: 'Cannot exceed 50 recipients per email' })
+    }
+    else {
       email.to.forEach((recipient, rIndex) => {
         if (!emailRegex.test(recipient)) {
-          errors.push({ index, field: `to[${rIndex}]`, message: `Invalid email: ${recipient}` });
+          errors.push({ index, field: `to[${rIndex}]`, message: `Invalid email: ${recipient}` })
         }
-      });
+      })
     }
 
     if (!email.subject) {
-      errors.push({ index, field: 'subject', message: 'Subject is required' });
+      errors.push({ index, field: 'subject', message: 'Subject is required' })
     }
 
     if (!email.html && !email.text) {
-      errors.push({ index, field: 'content', message: 'Either html or text content is required' });
+      errors.push({ index, field: 'content', message: 'Either html or text content is required' })
     }
-  });
+  })
 
-  return { valid: errors.length === 0, errors };
+  return { valid: errors.length === 0, errors }
 }
 
 // Usage
 const emails = [
   { from: 'Acme <noreply@acme.com>', to: ['delivered@resend.dev'], subject: 'Hello', html: '<p>Hi</p>' },
-];
+]
 
-const validation = validateBatch(emails);
+const validation = validateBatch(emails)
 if (!validation.valid) {
-  console.error('Validation failed:', validation.errors);
-  return;
+  console.error('Validation failed:', validation.errors)
+  return
 }
 
-const { data, error } = await resend.batch.send(emails);
+const { data, error } = await resend.batch.send(emails)
 ```
 
 ### Python
@@ -166,36 +168,36 @@ else:
 ### Node.js
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
-const { data, error } = await resend.batch.send(emails);
+const { data, error } = await resend.batch.send(emails)
 
 if (error) {
   switch (error.name) {
     case 'validation_error':
       // Invalid parameters - don't retry, fix the data
-      console.error('Validation error:', error.message);
-      throw new Error(`Invalid batch data: ${error.message}`);
+      console.error('Validation error:', error.message)
+      throw new Error(`Invalid batch data: ${error.message}`)
 
     case 'rate_limit_exceeded':
       // Rate limited - safe to retry with backoff
-      console.log('Rate limited, should retry with backoff');
-      break;
+      console.log('Rate limited, should retry with backoff')
+      break
 
     case 'api_error':
       // Server error - safe to retry
-      console.log('Server error, should retry');
-      break;
+      console.log('Server error, should retry')
+      break
 
     default:
-      console.error('Unexpected error:', error);
+      console.error('Unexpected error:', error)
   }
-  return;
+  return
 }
 
-console.log('Batch sent successfully:', data);
+console.log('Batch sent successfully:', data)
 ```
 
 ### Python
@@ -228,52 +230,52 @@ Combine retry logic with idempotency keys to safely retry failed batches.
 ### Node.js
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface BatchSendOptions {
-  maxRetries?: number;
-  idempotencyKey: string;
+  maxRetries?: number
+  idempotencyKey: string
 }
 
 async function sendBatchWithRetry(
   emails: Parameters<typeof resend.batch.send>[0],
   options: BatchSendOptions
 ) {
-  const { maxRetries = 3, idempotencyKey } = options;
+  const { maxRetries = 3, idempotencyKey } = options
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     const { data, error } = await resend.batch.send(emails, {
       idempotencyKey,
-    });
+    })
 
     if (!error) {
-      return { success: true, data };
+      return { success: true, data }
     }
 
     // Don't retry validation errors
     if (error.name === 'validation_error') {
-      return { success: false, error: error.message, retryable: false };
+      return { success: false, error: error.message, retryable: false }
     }
 
     // Don't retry idempotency conflicts
     if (error.name === 'idempotency_error') {
-      return { success: false, error: 'Duplicate request with different payload', retryable: false };
+      return { success: false, error: 'Duplicate request with different payload', retryable: false }
     }
 
     // Last attempt failed
     if (attempt === maxRetries) {
-      return { success: false, error: error.message, retryable: true };
+      return { success: false, error: error.message, retryable: true }
     }
 
     // Exponential backoff: 1s, 2s, 4s...
-    const delay = Math.pow(2, attempt) * 1000;
-    console.log(`Attempt ${attempt + 1} failed, retrying in ${delay}ms...`);
-    await new Promise(resolve => setTimeout(resolve, delay));
+    const delay = 2 ** attempt * 1000
+    console.log(`Attempt ${attempt + 1} failed, retrying in ${delay}ms...`)
+    await new Promise(resolve => setTimeout(resolve, delay))
   }
 
-  return { success: false, error: 'Max retries exceeded', retryable: true };
+  return { success: false, error: 'Max retries exceeded', retryable: true }
 }
 
 // Usage
@@ -283,12 +285,13 @@ const result = await sendBatchWithRetry(
     { from: 'Acme <noreply@acme.com>', to: ['delivered@resend.dev'], subject: 'Hello', html: '<p>Hi</p>' },
   ],
   { idempotencyKey: `batch-welcome/${batchId}` }
-);
+)
 
 if (result.success) {
-  console.log('Batch sent:', result.data);
-} else {
-  console.error('Batch failed:', result.error);
+  console.log('Batch sent:', result.data)
+}
+else {
+  console.error('Batch failed:', result.error)
 }
 ```
 
@@ -355,58 +358,58 @@ For sends larger than 100 emails, chunk into multiple batch requests.
 ### Node.js
 
 ```typescript
-import { Resend } from 'resend';
-import { randomUUID } from 'crypto';
+import { randomUUID } from 'node:crypto'
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
-const BATCH_SIZE = 100;
+const BATCH_SIZE = 100
 
 interface Email {
-  from: string;
-  to: string[];
-  subject: string;
-  html: string;
+  from: string
+  to: string[]
+  subject: string
+  html: string
 }
 
 async function sendLargeBatch(emails: Email[], batchPrefix: string) {
-  const chunks: Email[][] = [];
+  const chunks: Email[][] = []
 
   for (let i = 0; i < emails.length; i += BATCH_SIZE) {
-    chunks.push(emails.slice(i, i + BATCH_SIZE));
+    chunks.push(emails.slice(i, i + BATCH_SIZE))
   }
 
   const results = await Promise.all(
     chunks.map(async (chunk, index) => {
-      const idempotencyKey = `${batchPrefix}/chunk-${index}`;
+      const idempotencyKey = `${batchPrefix}/chunk-${index}`
 
-      const { data, error } = await resend.batch.send(chunk, { idempotencyKey });
+      const { data, error } = await resend.batch.send(chunk, { idempotencyKey })
 
       return {
         chunkIndex: index,
         success: !error,
         data,
         error: error?.message,
-      };
+      }
     })
-  );
+  )
 
-  const successful = results.filter(r => r.success);
-  const failed = results.filter(r => !r.success);
+  const successful = results.filter(r => r.success)
+  const failed = results.filter(r => !r.success)
 
   return {
     totalChunks: chunks.length,
     successful: successful.length,
     failed: failed.length,
     results,
-  };
+  }
 }
 
 // Usage: Send 250 emails
-const emails = generateEmails(250); // Your email generation logic
-const result = await sendLargeBatch(emails, `campaign-${randomUUID()}`);
+const emails = generateEmails(250) // Your email generation logic
+const result = await sendLargeBatch(emails, `campaign-${randomUUID()}`)
 
-console.log(`Sent ${result.successful}/${result.totalChunks} chunks successfully`);
+console.log(`Sent ${result.successful}/${result.totalChunks} chunks successfully`)
 ```
 
 ### Python
@@ -475,82 +478,84 @@ print(f"Sent {result['successful']}/{result['total_chunks']} chunks successfully
 ### Node.js - Complete Batch Email Service
 
 ```typescript
-import { Resend } from 'resend';
-import { randomUUID } from 'crypto';
+import { randomUUID } from 'node:crypto'
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface BatchEmail {
-  from: string;
-  to: string[];
-  subject: string;
-  html?: string;
-  text?: string;
-  replyTo?: string;
-  cc?: string[];
-  bcc?: string[];
-  tags?: { name: string; value: string }[];
+  from: string
+  to: string[]
+  subject: string
+  html?: string
+  text?: string
+  replyTo?: string
+  cc?: string[]
+  bcc?: string[]
+  tags?: { name: string, value: string }[]
 }
 
 interface BatchSendOptions {
-  idempotencyKey?: string;
-  maxRetries?: number;
-  validateBeforeSend?: boolean;
+  idempotencyKey?: string
+  maxRetries?: number
+  validateBeforeSend?: boolean
 }
 
 interface BatchResult {
-  success: boolean;
-  data?: { id: string }[];
-  error?: string;
-  retryable: boolean;
-  validationErrors?: { index: number; field: string; message: string }[];
+  success: boolean
+  data?: { id: string }[]
+  error?: string
+  retryable: boolean
+  validationErrors?: { index: number, field: string, message: string }[]
 }
 
 class BatchEmailService {
-  private maxBatchSize = 100;
-  private maxRecipientsPerEmail = 50;
+  private maxBatchSize = 100
+  private maxRecipientsPerEmail = 50
 
-  validate(emails: BatchEmail[]): { valid: boolean; errors: BatchResult['validationErrors'] } {
-    const errors: NonNullable<BatchResult['validationErrors']> = [];
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  validate(emails: BatchEmail[]): { valid: boolean, errors: BatchResult['validationErrors'] } {
+    const errors: NonNullable<BatchResult['validationErrors']> = []
+    const emailRegex = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/
 
     if (emails.length === 0) {
-      errors.push({ index: -1, field: 'batch', message: 'Batch cannot be empty' });
-      return { valid: false, errors };
+      errors.push({ index: -1, field: 'batch', message: 'Batch cannot be empty' })
+      return { valid: false, errors }
     }
 
     if (emails.length > this.maxBatchSize) {
-      errors.push({ index: -1, field: 'batch', message: `Batch cannot exceed ${this.maxBatchSize} emails` });
-      return { valid: false, errors };
+      errors.push({ index: -1, field: 'batch', message: `Batch cannot exceed ${this.maxBatchSize} emails` })
+      return { valid: false, errors }
     }
 
     emails.forEach((email, index) => {
       if (!email.from) {
-        errors.push({ index, field: 'from', message: 'From address is required' });
+        errors.push({ index, field: 'from', message: 'From address is required' })
       }
 
       if (!email.to?.length) {
-        errors.push({ index, field: 'to', message: 'At least one recipient is required' });
-      } else if (email.to.length > this.maxRecipientsPerEmail) {
-        errors.push({ index, field: 'to', message: `Cannot exceed ${this.maxRecipientsPerEmail} recipients` });
-      } else {
+        errors.push({ index, field: 'to', message: 'At least one recipient is required' })
+      }
+      else if (email.to.length > this.maxRecipientsPerEmail) {
+        errors.push({ index, field: 'to', message: `Cannot exceed ${this.maxRecipientsPerEmail} recipients` })
+      }
+      else {
         email.to.forEach((r, i) => {
           if (!emailRegex.test(r)) {
-            errors.push({ index, field: `to[${i}]`, message: `Invalid email: ${r}` });
+            errors.push({ index, field: `to[${i}]`, message: `Invalid email: ${r}` })
           }
-        });
+        })
       }
 
       if (!email.subject) {
-        errors.push({ index, field: 'subject', message: 'Subject is required' });
+        errors.push({ index, field: 'subject', message: 'Subject is required' })
       }
 
       if (!email.html && !email.text) {
-        errors.push({ index, field: 'content', message: 'Either html or text is required' });
+        errors.push({ index, field: 'content', message: 'Either html or text is required' })
       }
-    });
+    })
 
-    return { valid: errors.length === 0, errors };
+    return { valid: errors.length === 0, errors }
   }
 
   async send(emails: BatchEmail[], options: BatchSendOptions = {}): Promise<BatchResult> {
@@ -558,54 +563,54 @@ class BatchEmailService {
       idempotencyKey = `batch-${randomUUID()}`,
       maxRetries = 3,
       validateBeforeSend = true,
-    } = options;
+    } = options
 
     // Validate first
     if (validateBeforeSend) {
-      const validation = this.validate(emails);
+      const validation = this.validate(emails)
       if (!validation.valid) {
         return {
           success: false,
           error: 'Validation failed',
           retryable: false,
           validationErrors: validation.errors,
-        };
+        }
       }
     }
 
     // Send with retry
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
-      const { data, error } = await resend.batch.send(emails, { idempotencyKey });
+      const { data, error } = await resend.batch.send(emails, { idempotencyKey })
 
       if (!error) {
-        return { success: true, data, retryable: false };
+        return { success: true, data, retryable: false }
       }
 
       // Non-retryable errors
       if (error.name === 'validation_error' || error.name === 'not_found') {
-        return { success: false, error: error.message, retryable: false };
+        return { success: false, error: error.message, retryable: false }
       }
 
       if (attempt < maxRetries) {
-        const delay = Math.pow(2, attempt) * 1000;
-        await new Promise(r => setTimeout(r, delay));
+        const delay = 2 ** attempt * 1000
+        await new Promise(r => setTimeout(r, delay))
       }
     }
 
-    return { success: false, error: 'Max retries exceeded', retryable: true };
+    return { success: false, error: 'Max retries exceeded', retryable: true }
   }
 
   async sendLarge(emails: BatchEmail[], batchPrefix: string): Promise<{
-    totalEmails: number;
-    totalChunks: number;
-    successfulChunks: number;
-    failedChunks: number;
-    sentEmailIds: string[];
-    errors: { chunkIndex: number; error: string }[];
+    totalEmails: number
+    totalChunks: number
+    successfulChunks: number
+    failedChunks: number
+    sentEmailIds: string[]
+    errors: { chunkIndex: number, error: string }[]
   }> {
-    const chunks: BatchEmail[][] = [];
+    const chunks: BatchEmail[][] = []
     for (let i = 0; i < emails.length; i += this.maxBatchSize) {
-      chunks.push(emails.slice(i, i + this.maxBatchSize));
+      chunks.push(emails.slice(i, i + this.maxBatchSize))
     }
 
     const results = await Promise.all(
@@ -613,10 +618,10 @@ class BatchEmailService {
         this.send(chunk, { idempotencyKey: `${batchPrefix}/chunk-${index}` })
           .then(result => ({ chunkIndex: index, ...result }))
       )
-    );
+    )
 
-    const successful = results.filter(r => r.success);
-    const failed = results.filter(r => !r.success);
+    const successful = results.filter(r => r.success)
+    const failed = results.filter(r => !r.success)
 
     return {
       totalEmails: emails.length,
@@ -625,21 +630,21 @@ class BatchEmailService {
       failedChunks: failed.length,
       sentEmailIds: successful.flatMap(r => r.data?.map(d => d.id) || []),
       errors: failed.map(r => ({ chunkIndex: r.chunkIndex, error: r.error || 'Unknown error' })),
-    };
+    }
   }
 }
 
 // Usage
-const batchService = new BatchEmailService();
+const batchService = new BatchEmailService()
 
 // Simple batch
 const result = await batchService.send([
   { from: 'Acme <noreply@acme.com>', to: ['delivered@resend.dev'], subject: 'Hello', html: '<p>Hi</p>' },
   { from: 'Acme <noreply@acme.com>', to: ['delivered@resend.dev'], subject: 'Hello', html: '<p>Hi</p>' },
-], { idempotencyKey: `welcome-batch/${batchId}` });
+], { idempotencyKey: `welcome-batch/${batchId}` })
 
 // Large batch (auto-chunked)
-const largeResult = await batchService.sendLarge(emails, `campaign-${campaignId}`);
+const largeResult = await batchService.sendLarge(emails, `campaign-${campaignId}`)
 ```
 
 ### Python - Complete Batch Email Service

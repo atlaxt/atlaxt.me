@@ -53,9 +53,9 @@ references:
 ## Quick Send — Node.js
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const { data, error } = await resend.emails.send(
   {
@@ -65,13 +65,13 @@ const { data, error } = await resend.emails.send(
     html: '<p>Email body here</p>',
   },
   { idempotencyKey: `welcome-email/${userId}` }
-);
+)
 
 if (error) {
-  console.error('Failed:', error.message);
-  return;
+  console.error('Failed:', error.message)
+  return
 }
-console.log('Sent:', data.id);
+console.log('Sent:', data.id)
 ```
 
 **Key gotcha:** The Resend Node.js SDK does NOT throw exceptions — it returns `{ data, error }`. Always check `error` explicitly instead of using try/catch for API errors.
@@ -117,12 +117,12 @@ Prevent duplicate emails when retrying failed requests:
 ## Quick Receive (Node.js)
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
-  const payload = await req.text(); // Must use raw text, not req.json()
+  const payload = await req.text() // Must use raw text, not req.json()
 
   const event = resend.webhooks.verify({
     payload,
@@ -132,17 +132,17 @@ export async function POST(req: Request) {
       'svix-signature': req.headers.get('svix-signature'),
     },
     secret: process.env.RESEND_WEBHOOK_SECRET,
-  });
+  })
 
   if (event.type === 'email.received') {
     // Webhook has metadata only — call API for body
     const { data: email } = await resend.emails.receiving.get(
       event.data.email_id
-    );
-    console.log(email.text);
+    )
+    console.log(email.text)
   }
 
-  return new Response('OK', { status: 200 });
+  return new Response('OK', { status: 200 })
 }
 ```
 

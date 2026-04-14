@@ -37,21 +37,21 @@ Prefer a subdomain (e.g., `send.yourdomain.com`) over the root domain:
 
 ```typescript
 const { data, error } = await resend.domains.create({
-  name: 'send.acme.com',           // subdomain recommended
-  region: 'us-east-1',              // immutable after creation
-  customReturnPath: 'bounce',       // optional: bounce@send.acme.com — helps DMARC alignment
+  name: 'send.acme.com', // subdomain recommended
+  region: 'us-east-1', // immutable after creation
+  customReturnPath: 'bounce', // optional: bounce@send.acme.com — helps DMARC alignment
   openTracking: false,
   clickTracking: false,
-});
+})
 if (error) {
-  console.error(error);
-  return;
+  console.error(error)
+  return
 }
 
 // data.records contains DNS records to add:
 // [{ type: 'MX', name: '...', value: '...' }, { type: 'TXT', ... }, ...]
-console.log(data.id);      // domain ID for later calls
-console.log(data.records);  // add these to your DNS provider
+console.log(data.id) // domain ID for later calls
+console.log(data.records) // add these to your DNS provider
 ```
 
 ```python
@@ -71,11 +71,11 @@ After adding DNS records to your provider, trigger verification and poll:
 
 ```typescript
 // Trigger verification (returns immediately)
-await resend.domains.verify(data.id);
+await resend.domains.verify(data.id)
 
 // Poll until verified (DNS propagation can take minutes to hours)
-const { data: domain } = await resend.domains.get(data.id);
-console.log(domain.status); // 'pending', 'verified', 'failed'
+const { data: domain } = await resend.domains.get(data.id)
+console.log(domain.status) // 'pending', 'verified', 'failed'
 ```
 
 ### Verify DNS Propagation
@@ -95,7 +95,7 @@ const { data, error } = await resend.domains.update({
   openTracking: true,
   tls: 'enforced',
   capabilities: { sending: 'enabled', receiving: 'enabled' },
-});
+})
 ```
 
 ## Parameter Reference

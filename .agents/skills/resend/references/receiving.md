@@ -90,12 +90,12 @@ ngrok http 3000
 Always verify signatures to prevent spoofed events:
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
-  const payload = await req.text();
+  const payload = await req.text()
 
   const event = resend.webhooks.verify({
     payload,
@@ -105,13 +105,13 @@ export async function POST(req: Request) {
       'svix-signature': req.headers.get('svix-signature'),
     },
     secret: process.env.RESEND_WEBHOOK_SECRET,
-  });
+  })
 
   if (event.type === 'email.received') {
     // Process the email
   }
 
-  return new Response('OK', { status: 200 });
+  return new Response('OK', { status: 200 })
 }
 ```
 
@@ -123,11 +123,11 @@ List all received emails with cursor-based pagination — useful for polling or 
 const { data: emails } = await resend.emails.receiving.list({
   limit: 20,
   after: 'cursor_abc123', // optional, for forward pagination
-});
+})
 
 for (const email of emails.data) {
-  console.log(email.from, email.subject, email.created_at);
-  console.log(email.attachments); // metadata only (id, filename, content_type, size)
+  console.log(email.from, email.subject, email.created_at)
+  console.log(email.attachments) // metadata only (id, filename, content_type, size)
 }
 // emails.has_more — true if more pages exist
 ```
@@ -148,11 +148,11 @@ Webhooks exclude email body and headers. Call the Receiving API to get them:
 if (event.type === 'email.received') {
   const { data: email } = await resend.emails.receiving.get(
     event.data.email_id
-  );
+  )
 
-  console.log(email.html);    // HTML body
-  console.log(email.text);    // Plain text body
-  console.log(email.headers); // Email headers
+  console.log(email.html) // HTML body
+  console.log(email.text) // Plain text body
+  console.log(email.headers) // Email headers
 }
 ```
 
@@ -165,12 +165,12 @@ if (event.type === 'email.received') {
 ```typescript
 const { data: attachments } = await resend.emails.receiving.attachments.list({
   emailId: event.data.email_id,
-});
+})
 
 for (const attachment of attachments) {
-  console.log(attachment.filename);
-  console.log(attachment.download_url);  // signed URL, see expires_at
-  console.log(attachment.expires_at);
+  console.log(attachment.filename)
+  console.log(attachment.download_url) // signed URL, see expires_at
+  console.log(attachment.expires_at)
 }
 ```
 
@@ -180,20 +180,20 @@ for (const attachment of attachments) {
 const { data: attachment } = await resend.emails.receiving.attachments.get({
   emailId: event.data.email_id,
   attachmentId: 'att_abc123',
-});
+})
 
-console.log(attachment.download_url); // signed URL
-console.log(attachment.expires_at);   // expiration timestamp
-console.log(attachment.size);         // bytes
+console.log(attachment.download_url) // signed URL
+console.log(attachment.expires_at) // expiration timestamp
+console.log(attachment.size) // bytes
 ```
 
 ### Download Attachment Content
 
 ```typescript
-const response = await fetch(attachment.download_url);
-const buffer = await response.arrayBuffer();
+const response = await fetch(attachment.download_url)
+const buffer = await response.arrayBuffer()
 
-await saveToStorage(attachment.filename, buffer);
+await saveToStorage(attachment.filename, buffer)
 ```
 
 **Important:** `download_url` expires (see `expires_at` field). Call the API again for a fresh URL if needed.
@@ -203,36 +203,36 @@ await saveToStorage(attachment.filename, buffer);
 Complete workflow to receive and forward an email with attachments:
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
-  const payload = await req.text();
-  const event = resend.webhooks.verify({ /* ... */ });
+  const payload = await req.text()
+  const event = resend.webhooks.verify({ /* ... */ })
 
   if (event.type === 'email.received') {
     // 1. Get email content
     const { data: email } = await resend.emails.receiving.get(
       event.data.email_id
-    );
+    )
 
     // 2. Get attachments (if any)
     const { data: attachmentList } = await resend.emails.receiving.attachments.list({
       emailId: event.data.email_id,
-    });
+    })
 
     // 3. Download and encode attachments
     const attachments = await Promise.all(
       attachmentList.map(async (att) => {
-        const res = await fetch(att.download_url);
-        const buffer = Buffer.from(await res.arrayBuffer());
+        const res = await fetch(att.download_url)
+        const buffer = Buffer.from(await res.arrayBuffer())
         return {
           filename: att.filename,
           content: buffer.toString('base64'),
-        };
+        }
       })
-    );
+    )
 
     // 4. Forward the email (single send — batch doesn't support attachments)
     await resend.emails.send({
@@ -242,10 +242,10 @@ export async function POST(req: Request) {
       html: email.html,
       text: email.text,
       attachments,
-    });
+    })
   }
 
-  return new Response('OK', { status: 200 });
+  return new Response('OK', { status: 200 })
 }
 ```
 
@@ -255,14 +255,16 @@ All emails to your domain arrive at the same webhook. Route based on the `to` fi
 
 ```typescript
 if (event.type === 'email.received') {
-  const recipient = event.data.to[0];
+  const recipient = event.data.to[0]
 
   if (recipient.includes('support@')) {
-    await handleSupportEmail(event.data);
-  } else if (recipient.includes('billing@')) {
-    await handleBillingEmail(event.data);
-  } else {
-    await handleUnknownEmail(event.data);
+    await handleSupportEmail(event.data)
+  }
+  else if (recipient.includes('billing@')) {
+    await handleBillingEmail(event.data)
+  }
+  else {
+    await handleUnknownEmail(event.data)
   }
 }
 ```

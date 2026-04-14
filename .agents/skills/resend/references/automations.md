@@ -109,7 +109,7 @@ const { data, error } = await resend.automations.create({
     { from: 'send_welcome', to: 'wait_3_days' },
     { from: 'wait_3_days', to: 'send_followup' },
   ],
-});
+})
 ```
 
 ```python
@@ -159,7 +159,7 @@ const { data, error } = await resend.automations.create({
     { from: 'check_plan', to: 'send_pro', type: 'condition_met' },
     { from: 'check_plan', to: 'send_free', type: 'condition_not_met' },
   ],
-});
+})
 ```
 
 ### Update an Automation
@@ -171,7 +171,7 @@ When updating the workflow graph, both `steps` and `connections` must be provide
 const { data, error } = await resend.automations.update({
   id: 'aut_abc123',
   status: 'disabled',
-});
+})
 ```
 
 ```typescript
@@ -180,7 +180,7 @@ const { data, error } = await resend.automations.update({
   id: 'aut_abc123',
   steps: [/* full step array */],
   connections: [/* full connections array */],
-});
+})
 ```
 
 ### List and Monitor Runs
@@ -189,21 +189,21 @@ const { data, error } = await resend.automations.update({
 // List runs, optionally filter by status
 const { data: runs } = await resend.automations.runs.list({
   automationId: 'aut_abc123',
-  status: 'running,failed',  // comma-separated: running, completed, failed, cancelled
-});
+  status: 'running,failed', // comma-separated: running, completed, failed, cancelled
+})
 
 // Get a specific run with executed step details
 const { data: run } = await resend.automations.runs.get({
   automationId: 'aut_abc123',
   runId: 'run_def456',
-});
+})
 // run.steps[].status, run.steps[].output, run.steps[].error
 ```
 
 ### Stop an Automation
 
 ```typescript
-const { data, error } = await resend.automations.stop('aut_abc123');
+const { data, error } = await resend.automations.stop('aut_abc123')
 // data.status === 'disabled'
 ```
 

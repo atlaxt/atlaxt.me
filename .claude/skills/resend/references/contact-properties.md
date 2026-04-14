@@ -25,33 +25,34 @@ Define custom properties that can be set on contacts and interpolated in broadca
 ## Node.js Example
 
 ```typescript
-import { Resend } from 'resend';
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Create a property
 const { data, error } = await resend.contactProperties.create({
   key: 'company_name',
   type: 'string',
   fallbackValue: 'your company',
-});
+})
 
 if (error) {
-  console.error(error);
-  return;
+  console.error(error)
+  return
 }
 
 // Get, list, update, delete
-const { data: prop } = await resend.contactProperties.get(data.id);
+const { data: prop } = await resend.contactProperties.get(data.id)
 
-const { data: props } = await resend.contactProperties.list();
+const { data: props } = await resend.contactProperties.list()
 
 // Only fallbackValue can be updated
 const { data: updated } = await resend.contactProperties.update({
   id: data.id,
   fallbackValue: 'your organization',
-});
+})
 
-const { data: deleted } = await resend.contactProperties.remove(data.id);
+const { data: deleted } = await resend.contactProperties.remove(data.id)
 ```
 
 ## Python Example
@@ -85,7 +86,7 @@ const { data, error } = await resend.contacts.create({
     company_name: 'Acme Corp',
     plan_tier: 'enterprise',
   },
-});
+})
 ```
 
 ## Using in Broadcast HTML

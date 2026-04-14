@@ -26,27 +26,28 @@ View API request logs programmatically. Useful for debugging, auditing API usage
 ### Node.js
 
 ```typescript
-import { Resend } from 'resend';
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 // List recent logs
-const { data, error } = await resend.logs.list({ limit: 20 });
+const { data, error } = await resend.logs.list({ limit: 20 })
 
 if (error) {
-  console.error(error);
-  return;
+  console.error(error)
+  return
 }
 
-console.log(data.has_more); // true if more pages exist
+console.log(data.has_more) // true if more pages exist
 for (const log of data.data) {
-  console.log(`${log.method} ${log.endpoint} → ${log.response_status}`);
+  console.log(`${log.method} ${log.endpoint} → ${log.response_status}`)
 }
 
 // Paginate forward
 const { data: nextPage } = await resend.logs.list({
   limit: 20,
-  after: data.data[data.data.length - 1].id,
-});
+  after: data.data.at(-1).id,
+})
 ```
 
 ### cURL
@@ -85,16 +86,16 @@ Returns a single log with full request and response bodies.
 ### Node.js
 
 ```typescript
-const { data, error } = await resend.logs.get('37e4414c-5e25-4dbc-a071-43552a4bd53b');
+const { data, error } = await resend.logs.get('37e4414c-5e25-4dbc-a071-43552a4bd53b')
 
 if (error) {
-  console.error(error);
-  return;
+  console.error(error)
+  return
 }
 
-console.log(data.request_body);   // original request payload
-console.log(data.response_body);  // original response payload
-console.log(data.response_status); // HTTP status code
+console.log(data.request_body) // original request payload
+console.log(data.response_body) // original response payload
+console.log(data.response_status) // HTTP status code
 ```
 
 ### cURL

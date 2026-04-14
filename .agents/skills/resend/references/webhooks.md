@@ -80,23 +80,23 @@ The `email.received` payload contains metadata only (sender, recipient, subject,
 #### Node.js
 
 ```typescript
-import { Resend } from 'resend';
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const { data, error } = await resend.webhooks.create({
   endpoint: 'https://your-domain.com/webhook',
   events: ['email.delivered', 'email.bounced', 'email.received'],
-});
+})
 
 if (error) {
-  console.error('Failed to create webhook:', error);
-  throw error;
+  console.error('Failed to create webhook:', error)
+  throw error
 }
 
 // IMPORTANT: Store the signing secret — you need it to verify incoming webhooks
-console.log('Webhook created:', data.id);
-console.log('Signing secret:', data.signing_secret); // whsec_xxxxxxxxxx
+console.log('Webhook created:', data.id)
+console.log('Signing secret:', data.signing_secret) // whsec_xxxxxxxxxx
 ```
 
 #### Python
@@ -147,7 +147,7 @@ The `signing_secret` is only returned once when you create the webhook. Store it
 
 ```typescript
 // List all webhooks
-const { data: webhooks, error: listError } = await resend.webhooks.list();
+const { data: webhooks, error: listError } = await resend.webhooks.list()
 
 // Update endpoint URL or subscribed events
 const { data: updated, error: updateError } = await resend.webhooks.update(
@@ -156,10 +156,10 @@ const { data: updated, error: updateError } = await resend.webhooks.update(
     endpoint: 'https://new-domain.com/webhook',
     events: ['email.delivered', 'email.bounced'],
   }
-);
+)
 
 // Delete a webhook
-const { data: deleted, error: deleteError } = await resend.webhooks.remove('4dd369bc-aa82-4ff3-97de-514ae3000ee0');
+const { data: deleted, error: deleteError } = await resend.webhooks.remove('4dd369bc-aa82-4ff3-97de-514ae3000ee0')
 ```
 
 **Key gotchas:**
@@ -202,15 +202,15 @@ Store it securely as `RESEND_WEBHOOK_SECRET` environment variable.
 Example using Next.js:
 
 ```typescript
-import { Resend } from 'resend';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server'
+import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: NextRequest) {
   try {
     // Important: Use raw body, not parsed JSON
-    const payload = await req.text();
+    const payload = await req.text()
 
     // Throws an error if the webhook is invalid
     const event = resend.webhooks.verify({
@@ -221,30 +221,31 @@ export async function POST(req: NextRequest) {
         'svix-signature': req.headers.get('svix-signature'),
       },
       secret: process.env.RESEND_WEBHOOK_SECRET,
-    });
+    })
 
     switch (event.type) {
       case 'email.delivered':
         // Update database with delivery status
-        break;
+        break
       case 'email.bounced':
         // Hard bounce — remove from mailing list immediately
-        break;
+        break
       case 'email.complained':
         // Spam complaint — unsubscribe and flag
-        break;
+        break
       case 'email.received':
         // Inbound email — retrieve body and process
-        const { data: email } = await resend.emails.receiving.get(event.data.email_id);
-        break;
+        const { data: email } = await resend.emails.receiving.get(event.data.email_id)
+        break
       default:
-        break;
+        break
     }
 
-    return new NextResponse('OK', { status: 200 });
-  } catch (error) {
-    console.error('Webhook verification failed:', error);
-    return new NextResponse('Invalid signature', { status: 400 });
+    return new NextResponse('OK', { status: 200 })
+  }
+  catch (error) {
+    console.error('Webhook verification failed:', error)
+    return new NextResponse('Invalid signature', { status: 400 })
   }
 }
 ```

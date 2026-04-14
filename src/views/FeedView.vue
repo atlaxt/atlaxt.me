@@ -496,7 +496,6 @@ useSeo({
   margin-bottom: 2rem;
 }
 
-
 .feed-group-list {
   display: flex;
   flex-direction: column;

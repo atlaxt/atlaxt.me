@@ -29,14 +29,14 @@ No update endpoint — delete and recreate to rename a segment.
 ```typescript
 const { data, error } = await resend.segments.create({
   name: 'Active Users',
-});
+})
 
 if (error) {
-  console.error(error);
-  return;
+  console.error(error)
+  return
 }
 
-console.log(data.id); // seg_xxxxxxxx
+console.log(data.id) // seg_xxxxxxxx
 ```
 
 ## Managing Contacts in Segments
@@ -45,10 +45,10 @@ Add or remove contacts from segments via the contacts sub-resource:
 
 ```typescript
 // Add contact to segment
-await resend.contacts.segments.add({ contactId: 'cont_xxx', segmentId: 'seg_xxx' });
+await resend.contacts.segments.add({ contactId: 'cont_xxx', segmentId: 'seg_xxx' })
 
 // Remove contact from segment
-await resend.contacts.segments.remove({ contactId: 'cont_xxx', segmentId: 'seg_xxx' });
+await resend.contacts.segments.remove({ contactId: 'cont_xxx', segmentId: 'seg_xxx' })
 ```
 
 Contacts can belong to multiple segments simultaneously.
@@ -64,7 +64,7 @@ await resend.broadcasts.create({
   from: 'updates@acme.com',
   subject: 'Product Update',
   html: '<p>New features!</p>',
-});
+})
 ```
 
 ## Common Mistakes

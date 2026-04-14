@@ -156,7 +156,6 @@ useSeo({
   margin-bottom: 2rem;
 }
 
-
 .sort-btn {
   display: flex;
   align-items: baseline;

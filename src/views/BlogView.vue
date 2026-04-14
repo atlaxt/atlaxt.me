@@ -99,7 +99,6 @@ useSeo({
   margin-bottom: 2rem;
 }
 
-
 .year-list {
   display: flex;
   flex-direction: column;

@@ -30,12 +30,12 @@ After sending, emails can be retrieved, listed, rescheduled, or cancelled. Updat
 
 ```typescript
 // Node.js — always destructure { data, error }
-const { data, error } = await resend.emails.get('email_abc123');
+const { data, error } = await resend.emails.get('email_abc123')
 if (error) {
-  console.error(error);
-  return;
+  console.error(error)
+  return
 }
-console.log(data.status); // 'delivered', 'bounced', 'scheduled', etc.
+console.log(data.status) // 'delivered', 'bounced', 'scheduled', etc.
 ```
 
 ```python
@@ -50,8 +50,9 @@ print(email["status"])
 const { data, error } = await resend.emails.update({
   id: 'email_abc123',
   scheduledAt: '2026-04-01T09:00:00Z',
-});
-if (error) console.error(error);
+})
+if (error)
+  console.error(error)
 ```
 
 ```python
@@ -64,8 +65,9 @@ resend.Emails.update({
 ### Cancel a Scheduled Email
 
 ```typescript
-const { data, error } = await resend.emails.cancel('email_abc123');
-if (error) console.error(error);
+const { data, error } = await resend.emails.cancel('email_abc123')
+if (error)
+  console.error(error)
 ```
 
 ```python
@@ -89,24 +91,24 @@ List and download attachments for sent emails. Returns metadata and a signed dow
 // List all attachments for a sent email
 const { data: attachments } = await resend.emails.attachments.list({
   emailId: 'email_abc123',
-});
+})
 
 for (const att of attachments.data) {
-  console.log(att.filename);      // 'invoice.pdf'
-  console.log(att.content_type);   // 'application/pdf'
-  console.log(att.size);           // bytes
-  console.log(att.download_url);   // signed URL, expires at att.expires_at
+  console.log(att.filename) // 'invoice.pdf'
+  console.log(att.content_type) // 'application/pdf'
+  console.log(att.size) // bytes
+  console.log(att.download_url) // signed URL, expires at att.expires_at
 }
 
 // Get a single attachment
 const { data: attachment } = await resend.emails.attachments.get({
   emailId: 'email_abc123',
   attachmentId: 'att_def456',
-});
+})
 
 // Download the content
-const response = await fetch(attachment.download_url);
-const buffer = await response.arrayBuffer();
+const response = await fetch(attachment.download_url)
+const buffer = await response.arrayBuffer()
 ```
 
 **Important:** `download_url` expires (see `expires_at` field). Call the API again for a fresh URL if needed.

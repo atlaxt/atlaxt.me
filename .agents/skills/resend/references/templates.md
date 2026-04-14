@@ -74,12 +74,12 @@ const { data, error } = await resend.emails.send(
     from: 'Acme <orders@acme.com>',
     to: ['customer@example.com'],
     template: {
-      id: 'order-confirmation',  // alias or auto-generated ID
+      id: 'order-confirmation', // alias or auto-generated ID
       variables: { CUSTOMER_NAME: 'Alice', ORDER_ID: '12345' },
     },
   },
   { idempotencyKey: `order-confirm/${orderId}` }
-);
+)
 ```
 
 Cannot combine `template` with `html`, `text`, or `react` — mutually exclusive. `subject` and `from` from the template can be overridden per-send.
@@ -127,7 +127,7 @@ const { data, error } = await resend.templates.create({
     { key: 'CUSTOMER_NAME', type: 'string', fallbackValue: 'Customer' },
     { key: 'ORDER_ID', type: 'string' },
   ],
-});
+})
 // Returns: { id: 'tmpl_abc123', object: 'template' }
 ```
 
@@ -137,7 +137,7 @@ const { data, error } = await resend.templates.create({
 const { data, error } = await resend.templates.create({
   name: 'Welcome',
   html: '<p>Hi {{{NAME}}}</p>',
-}).publish();
+}).publish()
 // Template is created AND published in one call
 ```
 
@@ -145,19 +145,19 @@ const { data, error } = await resend.templates.create({
 
 ```typescript
 // Get by ID or alias
-await resend.templates.get('tmpl_abc123');
-await resend.templates.get('order-confirmation');  // by alias
+await resend.templates.get('tmpl_abc123')
+await resend.templates.get('order-confirmation') // by alias
 
 // List — cursor-based pagination, max 100 per page
-const { data } = await resend.templates.list({ limit: 100 });
+const { data } = await resend.templates.list({ limit: 100 })
 // data.has_more === true → fetch next page
-await resend.templates.list({ limit: 100, after: data.data[data.data.length - 1].id });
+await resend.templates.list({ limit: 100, after: data.data.at(-1).id })
 
 // Update (partial — only provided fields change)
-await resend.templates.update('tmpl_abc123', { name: 'Order Confirmed' });
+await resend.templates.update('tmpl_abc123', { name: 'Order Confirmed' })
 
 // Delete
-await resend.templates.remove('tmpl_abc123');  // returns { deleted: true }
+await resend.templates.remove('tmpl_abc123') // returns { deleted: true }
 ```
 
 See `fetch-all-templates.mjs` for a complete pagination loop.
@@ -165,18 +165,18 @@ See `fetch-all-templates.mjs` for a complete pagination loop.
 ### Publish
 
 ```typescript
-await resend.templates.publish('tmpl_abc123');
+await resend.templates.publish('tmpl_abc123')
 // Template is now live. Publishing is synchronous — no delay needed before sending.
 ```
 
 ### Duplicate
 
 ```typescript
-const { data, error } = await resend.templates.duplicate('tmpl_abc123');
+const { data, error } = await resend.templates.duplicate('tmpl_abc123')
 // Returns: { id: 'tmpl_new456', object: 'template' }
 
 // Chainable — duplicate and publish in one call
-const { data, error } = await resend.templates.duplicate('tmpl_abc123').publish();
+const { data, error } = await resend.templates.duplicate('tmpl_abc123').publish()
 ```
 
 Useful for creating variants (e.g., A/B testing subject lines) or bootstrapping new templates from an existing one.

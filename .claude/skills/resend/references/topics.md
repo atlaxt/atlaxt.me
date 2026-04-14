@@ -29,17 +29,17 @@ Fine-grained subscription preferences — contacts opt in or out per topic. Topi
 ```typescript
 const { data, error } = await resend.topics.create({
   name: 'Product Updates',
-  defaultSubscription: 'opt_in',  // REQUIRED: "opt_in" or "opt_out"
+  defaultSubscription: 'opt_in', // REQUIRED: "opt_in" or "opt_out"
   description: 'New features and releases',
-  visibility: 'public',  // "public" or "private" (default: "private")
-});
+  visibility: 'public', // "public" or "private" (default: "private")
+})
 
 if (error) {
-  console.error(error);
-  return;
+  console.error(error)
+  return
 }
 
-console.log(data.id); // topic_xxxxxxxx
+console.log(data.id) // topic_xxxxxxxx
 ```
 
 ## Update Topic
@@ -51,7 +51,7 @@ const { data, error } = await resend.topics.update({
   id: 'topic_xxx',
   name: 'Product News',
   visibility: 'public',
-});
+})
 ```
 
 ## Managing Contact Subscriptions
@@ -65,7 +65,7 @@ await resend.contacts.topics.update({
     { id: 'topic_xxx', subscription: 'opt_in' },
     { id: 'topic_yyy', subscription: 'opt_out' },
   ],
-});
+})
 ```
 
 ## Using Topics with Broadcasts
@@ -80,7 +80,7 @@ await resend.broadcasts.create({
   from: 'updates@acme.com',
   subject: 'New Feature Launch',
   html: '<p>Check it out!</p>',
-});
+})
 ```
 
 ## Constraints

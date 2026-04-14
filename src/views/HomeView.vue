@@ -6,6 +6,7 @@ import { onBeforeRouteLeave } from 'vue-router'
 import ScrollCue from '@/components/ScrollCue.vue'
 import SectionLabel from '@/components/SectionLabel.vue'
 import SignParticle from '@/components/SignParticle.vue'
+import SocialIcon from '@/components/SocialIcon.vue'
 import { useSeo } from '@/seo/useSeo'
 import booksRaw from '../../content/books.yaml'
 import educationRaw from '../../content/education.yaml'
@@ -107,9 +108,9 @@ onMounted(() => {
 })
 
 const links = [
-  { label: 'GitHub', href: 'https://github.com/atlaxt', external: true },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/atlaxt', external: true },
-  { label: 'Instagram', href: 'https://instagram.com/atlaxt.me', external: true },
+  { label: 'GitHub', icon: 'github' as const, href: 'https://github.com/atlaxt' },
+  { label: 'LinkedIn', icon: 'linkedin' as const, href: 'https://linkedin.com/in/atlaxt' },
+  { label: 'Instagram', icon: 'instagram' as const, href: 'https://instagram.com/atlaxt.me' },
 ]
 
 // 'Halen' ise şu an; değilse verilen ay/yıl string'ini Date'e çevirir
@@ -235,33 +236,35 @@ useSeo({
           <span style="color: var(--text);">npx atlaxt</span>
         </RouterLink>
 
-        <div class="flex items-center gap-5 mt-6">
+        <nav class="hero-links">
+          <RouterLink to="/books" class="hero-chip">
+            <SocialIcon name="books" class="hero-chip-icon" />
+            <span>Kitaplık</span>
+          </RouterLink>
+          <RouterLink to="/photos" class="hero-chip">
+            <SocialIcon name="photos" class="hero-chip-icon" />
+            <span>Fotoğraflar</span>
+          </RouterLink>
+        </nav>
+
+        <RouterLink to="/contact" class="hero-contact-btn">
+          İletişim
+          <span class="hero-contact-arrow">→</span>
+        </RouterLink>
+
+        <div class="hero-socials">
           <a
             v-for="link in links"
             :key="link.href"
             :href="link.href"
+            :aria-label="link.label"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm transition-opacity hover:opacity-100 opacity-50"
-            style="color: var(--text);"
-          >{{ link.label }}</a>
-        </div>
-
-        <div class="flex items-center gap-5 mt-2">
-          <RouterLink
-            to="/books"
-            class="text-sm transition-opacity hover:opacity-100 opacity-50"
-            style="color: var(--text);"
+            class="hero-social-link"
           >
-            Kitaplık
-          </RouterLink>
-          <RouterLink
-            to="/photos"
-            class="text-sm transition-opacity hover:opacity-100 opacity-50"
-            style="color: var(--text);"
-          >
-            Fotoğraflar
-          </RouterLink>
+            <SocialIcon :name="link.icon" class="hero-chip-icon" />
+            <span>{{ link.label }}</span>
+          </a>
         </div>
       </div>
 
@@ -463,6 +466,95 @@ useSeo({
 /* ── Hero scroll cue ─────────────────────────────────── */
 .hero-panel {
   position: relative;
+}
+
+/* ── Hero links ───────────────────────────────────────── */
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.75rem;
+}
+
+.hero-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.72rem;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  opacity: 0.55;
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+  letter-spacing: 0.02em;
+}
+
+.hero-chip:hover {
+  opacity: 1;
+  border-color: var(--text);
+}
+
+.hero-chip-icon {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* ── Hero social icons (iletişim altı) ───────────────── */
+.hero-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  margin-top: 1rem;
+}
+
+.hero-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.7rem;
+  color: var(--text);
+  text-decoration: none;
+  opacity: 0.35;
+  transition: opacity 0.15s ease;
+}
+
+.hero-social-link:first-child {
+  padding-left: 0;
+}
+
+.hero-social-link:hover {
+  opacity: 0.8;
+}
+
+.hero-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  color: var(--bg);
+  background: var(--text);
+  transition: opacity 0.15s ease;
+}
+
+.hero-contact-btn:hover {
+  opacity: 0.8;
+}
+
+.hero-contact-arrow {
+  font-size: 0.65rem;
+  transition: transform 0.15s ease;
+}
+
+.hero-contact-btn:hover .hero-contact-arrow {
+  transform: translateX(2px);
 }
 
 /* ── Shared ───────────────────────────────────────────── */

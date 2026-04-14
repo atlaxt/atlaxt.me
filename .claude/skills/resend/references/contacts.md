@@ -38,12 +38,12 @@ const { data, error } = await resend.contacts.create({
     { id: 'topic_product_updates', subscription: 'opt_in' },
     { id: 'topic_marketing', subscription: 'opt_out' },
   ],
-});
+})
 if (error) {
-  console.error(error);
-  return;
+  console.error(error)
+  return
 }
-console.log(data.id); // contact ID
+console.log(data.id) // contact ID
 ```
 
 ```python
@@ -66,30 +66,30 @@ resend.Contacts.Segments.add({"contact_id": contact["id"], "segment_id": "seg_ab
 
 ```typescript
 // Get by email (alternative: pass { id: 'contact_uuid' })
-const { data, error } = await resend.contacts.get({ email: 'alice@example.com' });
+const { data, error } = await resend.contacts.get({ email: 'alice@example.com' })
 
 // Update by email — change properties, set a property to null to delete it
 const { data: updated, error: updateErr } = await resend.contacts.update({
   email: 'alice@example.com',
   firstName: 'Alicia',
   properties: {
-    plan: 'pro',       // update existing property
-    company: null,     // delete this property
+    plan: 'pro', // update existing property
+    company: null, // delete this property
   },
-});
+})
 ```
 
 ## Delete and List
 
 ```typescript
 // Delete by ID or email — pick one
-const { data, error } = await resend.contacts.remove({ email: 'alice@example.com' });
+const { data, error } = await resend.contacts.remove({ email: 'alice@example.com' })
 
 // List with segment filter
 const { data: contacts, error: listErr } = await resend.contacts.list({
   segmentId: 'seg_abc123',
   limit: 50,
-});
+})
 ```
 
 ## Common Mistakes

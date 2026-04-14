@@ -14,8 +14,17 @@ const email = ref('')
 const subject = ref('')
 const message = ref('')
 const status = ref<'idle' | 'loading' | 'success' | 'error'>('idle')
+const touched = ref({ subject: false, message: false })
+
+const invalid = {
+  subject: () => touched.value.subject && !subject.value.trim(),
+  message: () => touched.value.message && !message.value.trim(),
+}
 
 async function send() {
+  touched.value.subject = true
+  touched.value.message = true
+
   if (!subject.value.trim() || !message.value.trim() || status.value === 'loading')
     return
 
@@ -88,9 +97,11 @@ async function send() {
             v-model="subject"
             type="text"
             class="field-input"
+            :class="{ 'field-input--invalid': invalid.subject() }"
             placeholder="Ne hakkında?"
             autocomplete="off"
             :disabled="status === 'loading'"
+            @blur="touched.subject = true"
           >
         </div>
 
@@ -100,9 +111,11 @@ async function send() {
             id="message"
             v-model="message"
             class="field-input field-textarea"
+            :class="{ 'field-input--invalid': invalid.message() }"
             placeholder="Merhaba..."
             rows="6"
             :disabled="status === 'loading'"
+            @blur="touched.message = true"
           />
         </div>
 
@@ -147,7 +160,6 @@ async function send() {
   gap: 0.6rem;
 }
 
-
 .field-input {
   background: transparent;
   border: none;
@@ -169,6 +181,10 @@ async function send() {
 
 .field-input:focus {
   border-color: var(--text-muted);
+}
+
+.field-input--invalid {
+  border-color: #f87171;
 }
 
 .field-input:disabled {

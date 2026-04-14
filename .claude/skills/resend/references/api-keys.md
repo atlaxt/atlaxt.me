@@ -25,30 +25,31 @@ Create, list, and delete API keys programmatically. No get or update endpoints e
 ### Node.js
 
 ```typescript
-import { Resend } from 'resend';
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Create a domain-scoped sending key
 const { data, error } = await resend.apiKeys.create({
   name: 'Production Sending Key',
   permission: 'sending_access',
   domainId: 'd_abc123',
-});
+})
 
 if (error) {
-  console.error(error);
-  return;
+  console.error(error)
+  return
 }
 
 // IMPORTANT: This is the only time the token is returned -- store it now
-console.log('API Key:', data.token);  // re_xxxxxxxxx
-console.log('Key ID:', data.id);
+console.log('API Key:', data.token) // re_xxxxxxxxx
+console.log('Key ID:', data.id)
 
 // List all keys (tokens are NOT included in list response)
-const { data: keys, error: listError } = await resend.apiKeys.list();
+const { data: keys, error: listError } = await resend.apiKeys.list()
 
 // Delete a key
-const { data: deleted, error: deleteError } = await resend.apiKeys.remove('api_key_id');
+const { data: deleted, error: deleteError } = await resend.apiKeys.remove('api_key_id')
 ```
 
 ### Python
