@@ -32,14 +32,18 @@
 # - name: useSpace Studio
 #   live: https://usespace.studio
 
-# - name: Simay Durmaz
-#   live: https://simaydurmaz.com
+- name: Simay Durmaz
+  live: https://simaydurmaz.com
+  preview_light: /previews/SimayDurmaz.webp
+  preview_dark: /previews/SimayDurmaz.webp
 
 - name: KoiJs Vue Table
   github: https://github.com/atlaxt/koijs-table-vue
 
 - name: Web Screenshot
   github: https://github.com/atlaxt/web-screenshot
+  preview_light: /previews/WebScreenshot.webp
+  preview_dark: /previews/WebScreenshot.webp
 
 - name: InkHub
   github: https://github.com/atlaxt/InkHub
