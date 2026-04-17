@@ -16,8 +16,8 @@ router.beforeEach((to, from) => {
   transitionName.value = (isCli(to.path) && isCli(from.path)) ? '' : 'fade'
 })
 
-const route = useRoute()
-const showFooter = computed(() => !route.path.startsWith('/cli'))
+// const route = useRoute()
+// const showFooter = computed(() => !route.path.startsWith('/cli'))
 </script>
 
 <template>
@@ -35,7 +35,7 @@ const showFooter = computed(() => !route.path.startsWith('/cli'))
         </RouterView>
       </main>
     </div>
-    <AppFooter v-if="showFooter" />
+    <!-- <AppFooter v-if="showFooter" /> -->
     <ScrollToTopButton />
     <NewsTicker />
   </div>
