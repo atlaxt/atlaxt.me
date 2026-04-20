@@ -7,9 +7,9 @@ defineProps<{
   permalink: string
 }>()
 
-function truncate(text: string, max = 100) {
-  return text.length > max ? `${text.slice(0, max)}…` : text
-}
+// function truncate(text: string, max = 100) {
+//   return text.length > max ? `${text.slice(0, max)}…` : text
+// }
 </script>
 
 <template>
@@ -54,10 +54,5 @@ function truncate(text: string, max = 100) {
       </span>
     </div>
 
-    <div v-if="caption" class="px-3 py-2.5" style="border-top: 1px solid var(--border);">
-      <p class="text-xs leading-relaxed" style="color: var(--text-muted);">
-        {{ truncate(caption) }}
-      </p>
-    </div>
   </a>
 </template>

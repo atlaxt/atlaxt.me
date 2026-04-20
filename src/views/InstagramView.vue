@@ -3,6 +3,17 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import InstagramCard from '@/components/InstagramCard.vue'
 import PageHeader from '@/components/PageHeader.vue'
+import { getSocial } from '@/data/socials'
+import { useSeo } from '@/seo/useSeo'
+
+const instagramHref = getSocial('instagram').href
+
+useSeo({
+  title: 'Instagram',
+  description: 'Instagram fotoğraflarım ve paylaşımlarım.',
+  canonicalPath: '/instagram',
+  type: 'website',
+})
 
 interface InstagramProfile {
   username: string
@@ -48,7 +59,7 @@ async function fetchAll() {
     const [profileData, mediaData] = await Promise.all([profileRes.json(), mediaRes.json()])
     if (!profileData || profileData.error || !mediaData?.data) {
       if (import.meta.env.PROD) {
-        window.open('https://instagram.com/atlaxt.me', '_blank')
+        window.open(instagramHref, '_blank')
         router.back()
       }
       return
@@ -59,7 +70,7 @@ async function fetchAll() {
   catch (err) {
     console.error('Hata:', err)
     if (import.meta.env.PROD) {
-      window.open('https://instagram.com/atlaxt.me', '_blank')
+      window.open(instagramHref, '_blank')
       router.back()
     }
   }
@@ -97,7 +108,7 @@ onMounted(fetchAll)
 
     <template v-else>
       <!-- Profil header -->
-      <div v-if="profile" class="flex items-center gap-6 mb-10">
+      <div v-if="profile" class="flex items-center gap-6 mb-10 w-full">
         <a
           :href="`https://instagram.com/${profile.username}`"
           target="_blank"
@@ -120,15 +131,25 @@ onMounted(fetchAll)
           </div>
         </a>
 
-        <div class="flex flex-col gap-2 min-w-0">
-          <a
-            :href="`https://instagram.com/${profile.username}`"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="t-section transition-opacity hover:opacity-60 w-fit"
-          >
-            @{{ profile.username }}
-          </a>
+        <div class="flex flex-col gap-2 min-w-0 w-full">
+          <div class="flex items-center justify-between gap-3 w-full">
+            <a
+              :href="`https://instagram.com/${profile.username}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="t-section transition-opacity hover:opacity-60 w-fit"
+            >
+              @{{ profile.username }}
+            </a>
+            <a
+              :href="`https://instagram.com/${profile.username}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="follow-btn"
+            >
+              Takip Et
+            </a>
+          </div>
 
           <div class="flex gap-5">
             <div class="flex flex-col items-start">
@@ -167,6 +188,26 @@ onMounted(fetchAll)
 </template>
 
 <style scoped>
+.follow-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--text);
+  color: var(--bg);
+  border: 1px solid var(--text);
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+.follow-btn:hover {
+  opacity: 0.75;
+}
+
 .skeleton {
   background: var(--bg-subtle);
   position: relative;

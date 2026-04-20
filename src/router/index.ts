@@ -60,6 +60,16 @@ const router = createRouter({
       component: () => import('@/views/ProjectsView.vue'),
     },
     {
+      path: '/notes',
+      name: 'notes',
+      component: () => import('@/views/NotesView.vue'),
+    },
+    {
+      path: '/notes/:slug',
+      name: 'note',
+      component: () => import('@/views/NoteView.vue'),
+    },
+    {
       path: '/contact',
       name: 'contact',
       component: () => import('@/views/ContactView.vue'),

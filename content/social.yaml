@@ -1,0 +1,20 @@
+- id: github
+  label: GitHub
+  href: https://github.com/atlaxt
+  external: 'true'
+
+- id: linkedin
+  label: LinkedIn
+  href: https://linkedin.com/in/atlaxt
+  external: 'true'
+
+- id: instagram
+  label: Instagram
+  href: https://instagram.com/atlaxt.me
+  route: /instagram
+  external: 'true'
+
+- id: rss
+  label: RSS
+  href: /rss.xml
+  external: 'true'

@@ -1,4 +1,9 @@
-# Instagram Web Entegrasyonu: Erişim Bilgileri Alım Rehberi
+---
+title: 'Instagram Web Entegrasyonu: Erişim Bilgileri Alım Rehberi'
+description: 'Instagram paylaşımlarını sitenize entegre ederken kalıcı erişim anahtarı almak için adım adım rehber.'
+date: '2026-04-20'
+---
+
 
 Bu rehber, Instagram paylaşımlarınızın web sitenizde otomatik ve güncel olarak görünmesi için gerekli olan teknik verileri (**Access Token** ve **User ID**) almanız amacıyla hazırlanmıştır.
 

@@ -122,27 +122,32 @@ useSeo({
 
     <!-- Liste -->
     <div class="flex flex-col">
-      <div
+      <a
         v-for="book in filtered"
         :key="book.number"
-        class="flex items-baseline justify-between py-3 border-b"
+        :href="`https://www.google.com/search?q=${book.code}`"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="book-row flex items-start justify-between py-3 border-b"
         style="border-color: var(--border);"
       >
-        <div class="flex items-baseline gap-4 min-w-0">
-          <span class="text-xs shrink-0 w-6 text-right tabular-nums" style="color: var(--text-muted); opacity: 0.3;">
+        <div class="flex items-start gap-4 min-w-0">
+          <span class="text-xs shrink-0 w-6 text-right tabular-nums mt-0.5" style="color: var(--text-muted); opacity: 0.3;">
             {{ book.number }}
           </span>
-          <span class="text-sm" style="color: var(--text);">{{ book.name }}</span>
-          <span class="text-xs shrink-0 hidden sm:inline" style="color: var(--text-muted);">{{ book.author }}</span>
+          <div class="flex flex-col gap-0.5 min-w-0">
+            <span class="text-sm" style="color: var(--text);">{{ book.name }}</span>
+            <span class="text-xs" style="color: var(--text-muted); opacity: 0.6;">{{ book.author }}</span>
+          </div>
         </div>
         <span
           v-if="book.rate"
-          class="text-xs shrink-0 ml-6 tabular-nums"
+          class="text-xs shrink-0 ml-6 tabular-nums mt-0.5"
           style="color: var(--text-muted);"
         >
           {{ book.rate }} / 10
         </span>
-      </div>
+      </a>
 
       <p v-if="!filtered.length" class="text-sm py-8" style="color: var(--text-muted);">
         Sonuç bulunamadı.
@@ -179,5 +184,14 @@ useSeo({
 
 .sort-icon {
   font-size: 0.6rem;
+}
+
+.book-row {
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.book-row:hover {
+  opacity: 0.7;
 }
 </style>

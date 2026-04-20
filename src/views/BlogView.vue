@@ -134,12 +134,38 @@ useSeo({
 }
 
 .post-row {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 1.5rem 0;
   border-bottom: 1px solid var(--border);
   background: transparent;
   text-decoration: none;
+  overflow: hidden;
+  transition: padding-left 0.2s ease;
+}
+
+.post-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--text-muted);
+  opacity: 0;
+  transform: scaleY(0.4);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform-origin: center;
+}
+
+.post-row:hover {
+  padding-left: 0.9rem;
+}
+
+.post-row:hover::before {
+  opacity: 0.35;
+  transform: scaleY(1);
 }
 
 .post-date {

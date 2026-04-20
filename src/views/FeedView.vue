@@ -545,6 +545,35 @@ useSeo({
   font-size: 0.75rem;
 }
 
+.feed-item-link {
+  position: relative;
+  overflow: hidden;
+  transition: padding-left 0.2s ease !important;
+}
+
+.feed-item-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--text-muted);
+  opacity: 0;
+  transform: scaleY(0.4);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform-origin: center;
+}
+
+.feed-item-link:hover:not(.feed-item-read) {
+  padding-left: 0.9rem;
+}
+
+.feed-item-link:hover:not(.feed-item-read)::before {
+  opacity: 0.35;
+  transform: scaleY(1);
+}
+
 .feed-item-link:hover:not(.feed-item-read) span,
 .feed-item-link:hover:not(.feed-item-read) p,
 .feed-item-link:hover:not(.feed-item-read) .feed-item-source {

@@ -47,6 +47,21 @@ function yamlPlugin(): Plugin {
   }
 }
 
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/ğ/g, 'g')
+    .replace(/ü/g, 'u')
+    .replace(/ş/g, 's')
+    .replace(/ı/g, 'i')
+    .replace(/ö/g, 'o')
+    .replace(/ç/g, 'c')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim()
+}
+
 // Inline dönüşümler: bold, italic, code, link
 function inlineHtml(text: string): string {
   return text
@@ -86,7 +101,7 @@ function mdToHtml(md: string): string {
         out.push('</ul>')
         inList = false
       }
-      out.push(`<h2>${inlineHtml(h2[1])}</h2>`)
+      out.push(`<h2 id="${slugify(h2[1])}">${inlineHtml(h2[1])}</h2>`)
       continue
     }
     if (h3) {
@@ -94,7 +109,7 @@ function mdToHtml(md: string): string {
         out.push('</ul>')
         inList = false
       }
-      out.push(`<h3>${inlineHtml(h3[1])}</h3>`)
+      out.push(`<h3 id="${slugify(h3[1])}">${inlineHtml(h3[1])}</h3>`)
       continue
     }
 

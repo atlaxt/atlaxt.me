@@ -1,9 +1,21 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import type { TocItem } from '@/composables/usePageContext'
+import { computed, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import PageHeader from '@/components/PageHeader.vue'
+import { usePageContext } from '@/composables/usePageContext'
+import { getSocial } from '@/data/socials'
 import { SITE_NAME, toAbsoluteUrl } from '@/seo/site'
 import { useSeo } from '@/seo/useSeo'
+
+function parseHeadings(html: string): TocItem[] {
+  const items: TocItem[] = []
+  const regex = /<h([23])\s+id="([^"]+)">(.+?)<\/h[23]>/g
+  let m
+  while ((m = regex.exec(html)) !== null)
+    items.push({ level: Number(m[1]) as 2 | 3, id: m[2], text: m[3].replace(/<[^>]+>/g, '') })
+  return items
+}
 
 interface Post {
   frontmatter: { title: string, description: string, date: string, image?: string }
@@ -47,7 +59,7 @@ const jsonLd = computed(() => {
     '@type': 'Person',
     'name': SITE_NAME,
     'url': 'https://atlaxt.me',
-    'sameAs': ['https://github.com/atlaxt', 'https://linkedin.com/in/atlaxt'],
+    'sameAs': [getSocial('github').href, getSocial('linkedin').href],
   }
 
   return {
@@ -85,6 +97,18 @@ useSeo({
   publishedTime,
   modifiedTime: publishedTime,
   jsonLd,
+})
+
+const { setSubTitle, setTocItems } = usePageContext()
+
+watch(post, (p) => {
+  setSubTitle(p?.frontmatter.title ?? null, '/blog')
+  setTocItems(p?.html ? parseHeadings(p.html) : [])
+}, { immediate: true })
+
+onUnmounted(() => {
+  setSubTitle(null)
+  setTocItems([])
 })
 
 if (!post.value)

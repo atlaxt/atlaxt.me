@@ -7,6 +7,7 @@ import ScrollCue from '@/components/ScrollCue.vue'
 import SectionLabel from '@/components/SectionLabel.vue'
 import SignParticle from '@/components/SignParticle.vue'
 import SocialIcon from '@/components/SocialIcon.vue'
+import { socials } from '@/data/socials'
 import { useSeo } from '@/seo/useSeo'
 import booksRaw from '../../content/books.yaml'
 import educationRaw from '../../content/education.yaml'
@@ -107,11 +108,9 @@ onMounted(() => {
   }
 })
 
-const links = [
-  { label: 'GitHub', icon: 'github' as const, href: 'https://github.com/atlaxt' },
-  { label: 'LinkedIn', icon: 'linkedin' as const, href: 'https://linkedin.com/in/atlaxt' },
-  { label: 'Instagram', icon: 'instagram' as const, to: '/instagram' },
-]
+const links = socials
+  .filter(s => ['github', 'linkedin', 'instagram'].includes(s.id))
+  .map(s => ({ label: s.label, icon: s.id as 'github' | 'linkedin' | 'instagram', href: s.route ?? s.href, external: !s.route }))
 
 // 'Halen' ise şu an; değilse verilen ay/yıl string'ini Date'e çevirir
 const MONTH_MAP: Record<string, number> = {
@@ -164,11 +163,7 @@ const jsonLd = {
       '@id': 'https://atlaxt.me/#person',
       'name': 'Atlas Yiğit Aydın',
       'url': 'https://atlaxt.me',
-      'sameAs': [
-        'https://github.com/atlaxt',
-        'https://linkedin.com/in/atlaxt',
-        'https://instagram.com/atlaxt.me',
-      ],
+      'sameAs': socials.filter(s => s.external).map(s => s.href),
       'jobTitle': 'Web Geliştirici',
       'worksFor': { '@type': 'Organization', 'name': 'trex Digital Manufacturing' },
     },
@@ -254,10 +249,10 @@ useSeo({
 
         <div class="hero-socials">
           <component
-            :is="link.to ? 'RouterLink' : 'a'"
+            :is="link.external ? 'a' : 'RouterLink'"
             v-for="link in links"
-            :key="link.to ?? link.href"
-            v-bind="link.to ? { to: link.to } : { href: link.href, target: '_blank', rel: 'noopener noreferrer' }"
+            :key="link.href"
+            v-bind="link.external ? { href: link.href, target: '_blank', rel: 'noopener noreferrer' } : { to: link.href }"
             :aria-label="link.label"
             class="hero-social-link"
           >
