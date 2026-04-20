@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { Analytics as VercelAnalytics } from '@vercel/analytics/vue'
 import { SpeedInsights as VercelSpeedInsights } from '@vercel/speed-insights/vue'
-import { computed, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import AppFooter from '@/components/AppFooter.vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import NewsTicker from '@/components/NewsTicker.vue'
 import ScrollToTopButton from '@/components/ScrollToTopButton.vue'

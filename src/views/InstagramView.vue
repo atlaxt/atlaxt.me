@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import InstagramCard from '@/components/InstagramCard.vue'
 import PageHeader from '@/components/PageHeader.vue'
 
@@ -19,6 +20,8 @@ interface InstagramPhoto {
   media_url: string
   permalink: string
 }
+
+const router = useRouter()
 
 const profile = ref<InstagramProfile | null>(null)
 const photos = ref<InstagramPhoto[]>([])
@@ -43,11 +46,22 @@ async function fetchAll() {
       fetch(`${base}/${userId}/media?fields=id,caption,media_type,media_url,permalink&limit=24&access_token=${token}`),
     ])
     const [profileData, mediaData] = await Promise.all([profileRes.json(), mediaRes.json()])
+    if (!profileData || profileData.error || !mediaData?.data) {
+      if (import.meta.env.PROD) {
+        window.open('https://instagram.com/atlaxt.me', '_blank')
+        router.back()
+      }
+      return
+    }
     profile.value = profileData
     photos.value = mediaData.data
   }
   catch (err) {
     console.error('Hata:', err)
+    if (import.meta.env.PROD) {
+      window.open('https://instagram.com/atlaxt.me', '_blank')
+      router.back()
+    }
   }
   finally {
     loading.value = false

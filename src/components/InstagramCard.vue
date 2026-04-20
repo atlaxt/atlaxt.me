@@ -37,7 +37,7 @@ function truncate(text: string, max = 100) {
         :alt="caption"
         loading="lazy"
         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-      />
+      >
       <span
         v-if="media_type === 'VIDEO'"
         class="absolute top-2 right-2 label-micro px-1.5 py-0.5"

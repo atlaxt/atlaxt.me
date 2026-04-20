@@ -11,7 +11,6 @@ const year = new Date().getFullYear()
 <template>
   <footer class="footer">
     <div class="footer-inner max-w-4xl mx-auto px-4 md:px-8">
-
       <div class="footer-row">
         <!-- Sol: logo + yıl -->
         <RouterLink to="/" class="footer-brand" aria-label="Ana sayfa">
@@ -39,7 +38,6 @@ const year = new Date().getFullYear()
           </a>
         </div>
       </div>
-
     </div>
   </footer>
 </template>
