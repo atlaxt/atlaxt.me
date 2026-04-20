@@ -12,8 +12,12 @@ function parseHeadings(html: string): TocItem[] {
   const items: TocItem[] = []
   const regex = /<h([23])\s+id="([^"]+)">(.+?)<\/h[23]>/g
   let m
-  while ((m = regex.exec(html)) !== null)
-    items.push({ level: Number(m[1]) as 2 | 3, id: m[2], text: m[3].replace(/<[^>]+>/g, '') })
+  while ((m = regex.exec(html)) !== null) {
+    const level = Number(m[1]) as 2 | 3
+    const id = m[2] ?? ''
+    const text = (m[3] ?? '').replace(/<[^>]+>/g, '')
+    items.push({ level, id, text })
+  }
   return items
 }
 
@@ -117,26 +121,26 @@ if (!post.value)
 
 <template>
   <div v-if="post" class="px-2 md:px-0 py-16 w-full">
-    <PageHeader class="sticky top-0" :crumbs="[{ label: 'Blog', to: '/blog' }, { label: post.frontmatter.title }]" />
+    <PageHeader class="sticky top-0" :crumbs="[{ label: 'Blog', to: '/blog' }, { label: post.frontmatter.title ?? '' }]" />
 
     <!-- Kapak görseli -->
     <img
       v-if="post.frontmatter.image"
-      :src="post.frontmatter.image"
-      :alt="post.frontmatter.title"
+      :src="post.frontmatter.image ?? ''"
+      :alt="post.frontmatter.title ?? ''"
       class="w-full rounded-md mb-10 object-cover"
       style="max-height: 360px;"
     >
 
     <!-- Başlık -->
     <p class="text-xs tabular-nums mb-4" style="color: var(--text-muted);">
-      {{ new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+      {{ post.frontmatter.date ? new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }) : '' }}
     </p>
     <h1 class="text-2xl font-semibold mb-4 leading-snug" style="color: var(--text);">
-      {{ post.frontmatter.title }}
+      {{ post.frontmatter.title ?? '' }}
     </h1>
     <p class="text-sm mb-12" style="color: var(--text-muted);">
-      {{ post.frontmatter.description }}
+      {{ post.frontmatter.description ?? '' }}
     </p>
 
     <!-- İçerik -->

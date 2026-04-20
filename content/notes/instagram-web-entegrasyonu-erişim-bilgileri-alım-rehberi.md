@@ -1,67 +1,87 @@
 ---
 title: 'Instagram Web Entegrasyonu: Erişim Bilgileri Alım Rehberi'
-description: 'Instagram paylaşımlarını sitenize entegre ederken kalıcı erişim anahtarı almak için adım adım rehber.'
+description: 'Bu döküman, Instagram içeriklerinin web sitesi üzerinde dinamik olarak sergilenmesi için gereken **Süresiz Erişim Anahtarı (Permanent Token)** ve **Instagram Business ID** verilerinin hatasız bir şekilde temin edilmesi amacıyla hazırlanmıştır.'
 date: '2026-04-20'
 ---
 
+---
 
-Bu rehber, Instagram paylaşımlarınızın web sitenizde otomatik ve güncel olarak görünmesi için gerekli olan teknik verileri (**Access Token** ve **User ID**) almanız amacıyla hazırlanmıştır.
+## 1. Aşama: Sosyal Medya Varlıklarının Hazırlanması
 
-> **Önemli Not:** Bu adımları bir kez tamamladığınızda, sisteminiz kalıcı bir anahtar ile çalışacak ve her 60 günde bir yenileme zahmetine girmeyeceksiniz.
+API erişimi için Instagram hesabının profesyonel bir işletme kimliğine sahip olması ve bir Facebook Sayfası ile ilişkilendirilmiş olması zorunludur.
+
+* **Profesyonel Hesap:** Instagram ayarları üzerinden hesap türünü **İşletme (Business)** veya **İçerik Üreticisi (Creator)** statüsüne geçiriniz.
+* **Facebook Sayfa Bağlantısı:** Instagram profilinizdeki "Profili Düzenle" > "Sayfa" adımlarını izleyerek hesabı bir Facebook Sayfasına bağlayınız. Mevcut bir sayfanız yoksa yeni bir tane oluşturunuz.
 
 ---
 
-## 1. Adım: Instagram Hesabınızı Hazırlayın
+## 2. Aşama: Meta Developer Uygulama Kaydı
 
-Bağlantı kurulabilmesi için hesabınızın "Profesyonel" statüsünde olması ve bir Facebook Sayfasına bağlı olması şarttır.
-
-1. **Profesyonel Hesaba Geçiş:** Instagram uygulamasında *Ayarlar -> Hesap Türü* yolunu izleyerek hesabınızı **İşletme (Business)** veya **İçerik Üreticisi (Creator)** yapın.
-2. **Facebook Sayfası Bağlantısı:** *Profili Düzenle -> Sayfa* kısmından hesabınızı bir Facebook Sayfasına bağlayın. Eğer bir sayfanız yoksa, "Yeni Bir Sayfa Oluştur"u seçerek hızlıca oluşturabilirsiniz.
-
----
-
-## 2. Adım: Meta Uygulamasını Oluşturma
-
-1. [Meta for Developers](https://developers.facebook.com/) adresine gidin ve Facebook hesabınızla giriş yapın.
-2. **Uygulamalarım (My Apps)** sekmesinden **Uygulama Oluştur (Create App)** butonuna basın.
-3. Uygulama türü olarak **"Diğer"** -> **"İşletme" (Business)** seçeneğini işaretleyerek ilerleyin.
-4. Uygulamanıza bir isim verin (Örn: *Site_Entegrasyonu*) ve süreci tamamlayın.
+1. [Meta for Developers](https://developers.facebook.com/) platformuna giriş yapınız.
+2. **Uygulamalarım (My Apps)** > **Uygulama Oluştur (Create App)** butonuna tıklayınız.
+3. Uygulama türü olarak **"Diğer"** ve ardından **"İşletme" (Business)** seçeneğini belirleyiniz.
+4. Uygulamanıza bir isim (Örn: `Web_Entegrasyonu`) vererek süreci tamamlayınız.
 
 ---
 
-## 3. Adım: Kalıcı Erişim Anahtarı (Token) Oluşturma
+## 3. Aşama: Güvenlik Yapılandırması ve Yönlendirme Ayarları
 
-Sitenin bağlantısının kopmaması için bu adım en kritik aşamadır.
+> **⚠️ Önemli Teknik Not:** Meta'nın yetkilendirme pencereleri Chrome ve benzeri tarayıcılardaki reklam engelleyiciler veya gizlilik ayarları nedeniyle "Siyah Ekran" hatası verebilir veya pencereleri otomatik kapatabilir. Bu aşamadaki işlemleri **Safari** veya **Firefox** tarayıcısı kullanarak gerçekleştirmeniz önerilir.
 
-1. [İşletme Ayarları](https://business.facebook.com/settings) sayfasına gidin.
-2. Sol menüde **Kullanıcılar -> Sistem Kullanıcıları** sekmesine tıklayın.
-3. **Ekle** butonuna basarak bir kullanıcı oluşturun (İsim: `site_bot`, Rol: `Çalışan/Employee` veya `Yönetici/Admin`).
-4. Oluşturduğunuz kullanıcıyı seçin ve **Varlıklar Atayın** butonuna basın:
-    * **Uygulamalar:** Az önce oluşturduğunuz uygulamayı seçin ve "Tam Kontrol" yetkisi verin.
-    * **Sayfalar:** Instagram hesabınızın bağlı olduğu sayfayı seçin ve tüm yetkileri açın.
-5. Şimdi **Yeni Token Oluştur** butonuna basın:
-    * Uygulamanızı seçin.
-    * İzinler listesinden `instagram_basic`, `pages_show_list` ve `pages_read_engagement` seçeneklerini işaretleyin.
-6. Ekrana gelen uzun kodu kopyalayın ve güvenli bir yere kaydedin. Bu kod sizin **"Kalıcı Erişim Anahtarınızdır"**.
+1. Uygulama panelinde sol menüden *Instagram Graph API* > *Ayarlar* sekmesine gidiniz.
+2. **"Geçerli OAuth yönlendirme URI'leri"** alanına web sitenizin tam adresini (`https://alanadiniz.com`) ekleyiniz ve kaydediniz.
 
 ---
 
-## 4. Adım: Instagram Business ID Bulma
+## 4. Aşama: Sistem Kullanıcısı Tanımlama ve Uygulama Yetkilendirmesi
 
-1. [Graph API Explorer](https://developers.facebook.com/tools/explorer/) aracına gidin.
-2. Sağ taraftaki "Access Token" kısmına az önce aldığınız kodu yapıştırın.
-3. Üstteki adres çubuğuna şu sorguyu yapıştırıp **Submit** deyin:
+Standart kullanıcı jetonları 60 gün sonra geçerliliğini yitirir. Süresiz erişim için bir **Sistem Kullanıcısı** oluşturulmalıdır.
+
+1. [İşletme Ayarları](https://business.facebook.com/settings) paneline gidiniz.
+2. **Kullanıcılar > Sistem Kullanıcıları** sekmesinden yeni bir kullanıcı ekleyiniz (Rol: Yönetici).
+3. **Kritik Adım:** Sol menüdeki **Hesaplar > Uygulamalar** sekmesine gidiniz.
+4. Oluşturduğunuz uygulamayı seçin, **Kişi Ekle (Add People)** butonuna tıklayın ve oluşturduğunuz Sistem Kullanıcısını seçerek **"Uygulamayı Yönet" (Full Control)** yetkisi ile ekleyiniz. *Bu adım yapılmadığı takdirde jeton oluşturma aşamasında hata alınacaktır.*
+
+---
+
+## 5. Aşama: Varlık Ataması (Asset Assignment)
+
+Sistem kullanıcısına ilgili verileri yönetme yetkisi tanımlanmalıdır:
+
+1. **Sistem Kullanıcıları** sekmesinde oluşturduğunuz kullanıcıyı seçiniz ve **Varlıkları Ata (Assign Assets)** butonuna tıklayınız.
+2. **Sayfalar:** İlgili Facebook sayfasını seçip yetki veriniz.
+3. **Instagram Hesapları:** İlgili Instagram hesabını seçiniz ve **"Hesabı Yönet / Tam Kontrol"** yetkisini aktif ederek kaydediniz.
+
+---
+
+## 6. Aşama: Süresiz Erişim Anahtarı (Token) Üretimi
+
+1. Sistem Kullanıcıları panelinde **Jeton Oluştur (Generate Token)** butonuna tıklayınız.
+2. İlgili uygulamayı seçiniz ve aşağıdaki 3 izni işaretleyiniz:
+    * `instagram_basic`
+    * `pages_show_list`
+    * `pages_read_engagement`
+3. Oluşturulan kodu kopyalayınız. Bu sizin süresiz anahtarınızdır.
+4. **Doğrulama:** [Access Token Debugger](https://developers.facebook.com/tools/debug/accesstoken/) aracına bu kodu yapıştırarak **"Expires: Never"** ibaresini kontrol ediniz.
+
+---
+
+## 7. Aşama: Instagram Business ID Erişimi
+
+1. [Graph API Explorer](https://developers.facebook.com/tools/explorer/) aracına gidiniz.
+2. "Access Token" kısmına aldığınız süresiz kodu yapıştırınız.
+3. Adres çubuğuna şu sorguyu yazıp **Submit** butonuna basınız:
     `me/accounts?fields=instagram_business_account{id,username,name}`
-4. Sonuçlarda `instagram_business_account` başlığı altındaki **id** numarasını kopyalayın.
+4. Gelen sonuçtaki `id` (17 haneli numara) sizin **Instagram Business ID** verinizdir.
 
 ---
 
-## Teknik Ekibe İletilecek Bilgiler
+## Teknik Teslimat
 
-Kurulum tamamlandı! Lütfen aşağıdaki iki veriyi yazılımcınıza iletin:
+Yapılandırma sonunda aşağıdaki iki veriyi teknik ekibe iletiniz:
 
-1. **Access Token:** (3. Adımda aldığınız uzun kod)
-2. **Instagram Business ID:** (4. Adımda aldığınız 17 haneli numara)
+* **Süresiz Erişim Anahtarı (Access Token):** `EAAG...` (Uzun kod bloğu)
+* **Instagram Business ID:** `1784...` (17 haneli sayısal kimlik)
 
 ---
-*Bu bilgiler sitenizin Instagram ile güvenli konuşmasını sağlar. Lütfen bu kodları yetkisiz kişilerle paylaşmayın.*
+*Bu döküman, 2026 yılı güncel Meta protokollerine ve tarayıcı uyumluluklarına göre hazırlanmıştır.*

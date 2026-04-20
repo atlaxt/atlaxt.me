@@ -1,11 +1,12 @@
 {
   "version": "5.2.0",
-  "buildDate": "2026-04-13T14:11:06.675Z",
+  "buildDate": "2026-04-20T20:50:29.923Z",
   "dependencies": [
     "@unhead/vue",
     "@vercel/analytics",
     "@vercel/speed-insights",
     "@vueuse/core",
+    "resend",
     "vue",
     "vue-i18n",
     "vue-router"

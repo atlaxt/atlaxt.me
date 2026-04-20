@@ -10,8 +10,12 @@ function parseHeadings(html: string): TocItem[] {
   const items: TocItem[] = []
   const regex = /<h([23])\s+id="([^"]+)">(.+?)<\/h[23]>/g
   let m
-  while ((m = regex.exec(html)) !== null)
-    items.push({ level: Number(m[1]) as 2 | 3, id: m[2], text: m[3].replace(/<[^>]+>/g, '') })
+  while ((m = regex.exec(html)) !== null) {
+    const level = Number(m[1]) as 2 | 3
+    const id = m[2] ?? ''
+    const text = (m[3] ?? '').replace(/<[^>]+>/g, '')
+    items.push({ level, id, text })
+  }
   return items
 }
 
@@ -56,16 +60,16 @@ if (!note.value)
 
 <template>
   <div v-if="note" class="px-2 md:px-0 py-16 w-full">
-    <PageHeader :crumbs="[{ label: 'Notlar', to: '/notes' }, { label: note.frontmatter.title }]" />
+    <PageHeader :crumbs="[{ label: 'Notlar', to: '/notes' }, { label: note.frontmatter.title ?? '' }]" />
 
     <p class="text-xs tabular-nums mb-3" style="color: var(--text-muted); opacity: 0.5;">
-      {{ new Date(note.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }) }}
+      {{ note.frontmatter.date ? new Date(note.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }) : '' }}
     </p>
     <h1 class="text-2xl font-semibold mb-3 leading-snug" style="color: var(--text);">
-      {{ note.frontmatter.title }}
+      {{ note.frontmatter.title ?? '' }}
     </h1>
     <p v-if="note.frontmatter.description" class="text-sm mb-12" style="color: var(--text-muted);">
-      {{ note.frontmatter.description }}
+      {{ note.frontmatter.description ?? '' }}
     </p>
 
     <div class="post-content" v-html="note.html" />
