@@ -27,9 +27,9 @@ const year = new Date().getFullYear()
           <a href="https://linkedin.com/in/atlaxt" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="footer-icon">
             <SocialIcon name="linkedin" />
           </a>
-          <a href="https://instagram.com/atlaxt.me" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="footer-icon">
+          <RouterLink to="/instagram" aria-label="Instagram" class="footer-icon">
             <SocialIcon name="instagram" />
-          </a>
+          </RouterLink>
           <a href="/rss.xml" target="_blank" rel="noopener noreferrer" aria-label="RSS" class="footer-icon">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 11a9 9 0 0 1 9 9" />

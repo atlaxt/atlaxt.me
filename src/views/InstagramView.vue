@@ -1,0 +1,140 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import InstagramCard from '@/components/InstagramCard.vue'
+import PageHeader from '@/components/PageHeader.vue'
+
+interface InstagramProfile {
+  username: string
+  biography?: string
+  profile_picture_url?: string
+  followers_count: number
+  follows_count: number
+  media_count: number
+}
+
+interface InstagramPhoto {
+  id: string
+  caption?: string
+  media_type: 'IMAGE' | 'VIDEO' | 'CAROUSEL_ALBUM'
+  media_url: string
+  permalink: string
+}
+
+const profile = ref<InstagramProfile | null>(null)
+const photos = ref<InstagramPhoto[]>([])
+const loading = ref(true)
+
+const token = import.meta.env.VITE_META_INSTAGRAM_ACCESS_TOKEN
+const userId = import.meta.env.VITE_META_INSTAGRAM_USER_ID
+
+function formatCount(n: number) {
+  if (n >= 1_000_000)
+    return `${(n / 1_000_000).toFixed(1)}M`
+  if (n >= 1_000)
+    return `${(n / 1_000).toFixed(1)}K`
+  return String(n)
+}
+
+async function fetchAll() {
+  try {
+    const base = `https://graph.facebook.com/v22.0`
+    const [profileRes, mediaRes] = await Promise.all([
+      fetch(`${base}/${userId}?fields=username,biography,profile_picture_url,followers_count,follows_count,media_count&access_token=${token}`),
+      fetch(`${base}/${userId}/media?fields=id,caption,media_type,media_url,permalink&limit=24&access_token=${token}`),
+    ])
+    const [profileData, mediaData] = await Promise.all([profileRes.json(), mediaRes.json()])
+    profile.value = profileData
+    photos.value = mediaData.data
+  }
+  catch (err) {
+    console.error('Hata:', err)
+  }
+  finally {
+    loading.value = false
+  }
+}
+
+onMounted(fetchAll)
+</script>
+
+<template>
+  <div class="px-2 md:px-0 py-16">
+    <PageHeader :crumbs="[{ label: 'Instagram', to: '/instagram' }]" />
+
+    <div v-if="loading" class="t-caption">
+      yükleniyor…
+    </div>
+
+    <template v-else>
+      <!-- Profil header -->
+      <div v-if="profile" class="flex items-center gap-6 mb-10">
+        <a
+          :href="`https://instagram.com/${profile.username}`"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="shrink-0"
+        >
+          <img
+            v-if="profile.profile_picture_url"
+            :src="profile.profile_picture_url"
+            :alt="profile.username"
+            class="rounded-full object-cover transition-opacity hover:opacity-80"
+            style="width: 72px; height: 72px; border: 1px solid var(--border);"
+          >
+          <div
+            v-else
+            class="rounded-full flex items-center justify-center"
+            style="width: 72px; height: 72px; background: var(--bg-subtle); border: 1px solid var(--border);"
+          >
+            <span class="t-caption">@</span>
+          </div>
+        </a>
+
+        <div class="flex flex-col gap-2 min-w-0">
+          <a
+            :href="`https://instagram.com/${profile.username}`"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="t-section transition-opacity hover:opacity-60 w-fit"
+          >
+            @{{ profile.username }}
+          </a>
+
+          <div class="flex gap-5">
+            <div class="flex flex-col items-start">
+              <span class="t-section">{{ formatCount(profile.media_count) }}</span>
+              <span class="t-caption">gönderi</span>
+            </div>
+            <div class="flex flex-col items-start">
+              <span class="t-section">{{ formatCount(profile.followers_count) }}</span>
+              <span class="t-caption">takipçi</span>
+            </div>
+            <div class="flex flex-col items-start">
+              <span class="t-section">{{ formatCount(profile.follows_count) }}</span>
+              <span class="t-caption">takip</span>
+            </div>
+          </div>
+
+          <p v-if="profile.biography" class="t-small" style="white-space: pre-line;">
+            {{ profile.biography }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Gönderiler grid -->
+      <div
+        class="grid gap-px"
+        style="grid-template-columns: repeat(3, 1fr);"
+      >
+        <InstagramCard
+          v-for="photo in photos"
+          :key="photo.id"
+          v-bind="photo"
+        />
+      </div>
+    </template>
+  </div>
+</template>
+
+<style scoped>
+</style>

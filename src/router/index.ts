@@ -65,6 +65,11 @@ const router = createRouter({
       component: () => import('@/views/ContactView.vue'),
     },
     {
+      path: '/instagram',
+      name: 'instagram',
+      component: () => import('@/views/InstagramView.vue'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('@/views/NotFoundView.vue'),

@@ -233,10 +233,10 @@ onUnmounted(() => {
                   <SocialIcon name="linkedin" />
                   <span>LinkedIn</span>
                 </a>
-                <a href="https://instagram.com/atlaxt.me" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+                <RouterLink to="/instagram" class="social-link" aria-label="Instagram">
                   <SocialIcon name="instagram" />
                   <span>Instagram</span>
-                </a>
+                </RouterLink>
               </div>
             </div>
           </div>
@@ -352,9 +352,9 @@ onUnmounted(() => {
                 <a href="https://linkedin.com/in/atlaxt" target="_blank" rel="noopener noreferrer" class="mobile-social-link" aria-label="LinkedIn">
                   <SocialIcon name="linkedin" />
                 </a>
-                <a href="https://instagram.com/atlaxt.me" target="_blank" rel="noopener noreferrer" class="mobile-social-link" aria-label="Instagram">
+                <RouterLink to="/instagram" class="mobile-social-link" aria-label="Instagram">
                   <SocialIcon name="instagram" />
-                </a>
+                </RouterLink>
               </div>
             </div>
           </div>

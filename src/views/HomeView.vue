@@ -110,7 +110,7 @@ onMounted(() => {
 const links = [
   { label: 'GitHub', icon: 'github' as const, href: 'https://github.com/atlaxt' },
   { label: 'LinkedIn', icon: 'linkedin' as const, href: 'https://linkedin.com/in/atlaxt' },
-  { label: 'Instagram', icon: 'instagram' as const, href: 'https://instagram.com/atlaxt.me' },
+  { label: 'Instagram', icon: 'instagram' as const, to: '/instagram' },
 ]
 
 // 'Halen' ise şu an; değilse verilen ay/yıl string'ini Date'e çevirir
@@ -253,18 +253,17 @@ useSeo({
         </RouterLink>
 
         <div class="hero-socials">
-          <a
+          <component
+            :is="link.to ? 'RouterLink' : 'a'"
             v-for="link in links"
-            :key="link.href"
-            :href="link.href"
+            :key="link.to ?? link.href"
+            v-bind="link.to ? { to: link.to } : { href: link.href, target: '_blank', rel: 'noopener noreferrer' }"
             :aria-label="link.label"
-            target="_blank"
-            rel="noopener noreferrer"
             class="hero-social-link"
           >
             <SocialIcon :name="link.icon" class="hero-chip-icon" />
             <span>{{ link.label }}</span>
-          </a>
+          </component>
         </div>
       </div>
 
