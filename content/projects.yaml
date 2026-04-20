@@ -1,11 +1,11 @@
 - name: Git101
-  live: git101-seven.vercel.app
+  live: https://git101-seven.vercel.app
   github: https://github.com/atlaxt/git101
   preview_light: /previews/Git101_light.webp
   preview_dark: /previews/Git101_dark.webp
 
 - name: nuxt-tawk-to
-  live: nuxt-tawk-to.vercel.atlaxt.me
+  live: https://nuxt-tawk-to.atlaxt.me/
   github: https://github.com/atlaxt/nuxt-tawk-to
   npm: https://www.npmjs.com/package/nuxt-tawk-to
   preview_light: /previews/NuxtTawkTo_light.webp

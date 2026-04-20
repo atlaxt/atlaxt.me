@@ -215,30 +215,17 @@ onUnmounted(() => {
 
         <!-- Controls -->
         <div class="flex items-center gap-4" style="color: var(--text-muted);">
-          <!-- Social dropdown -->
-          <div class="social-wrap">
-            <button class="social-trigger flex opacity-55 transition-opacity hover:opacity-100" aria-label="Sosyal medya">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
-                <line x1="8.59" x2="15.42" y1="13.51" y2="17.49" /><line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
-              </svg>
-            </button>
-            <div class="social-dropdown">
-              <div class="social-dropdown-inner">
-                <a href="https://github.com/atlaxt" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
-                  <SocialIcon name="github" />
-                  <span>GitHub</span>
-                </a>
-                <a href="https://linkedin.com/in/atlaxt" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-                  <SocialIcon name="linkedin" />
-                  <span>LinkedIn</span>
-                </a>
-                <RouterLink to="/instagram" class="social-link" aria-label="Instagram">
-                  <SocialIcon name="instagram" />
-                  <span>Instagram</span>
-                </RouterLink>
-              </div>
-            </div>
+          <!-- Social icons -->
+          <div class="flex items-center gap-3">
+            <a href="https://github.com/atlaxt" target="_blank" rel="noopener noreferrer" class="flex opacity-50 transition-opacity hover:opacity-100 header-icon-link" style="color: var(--text-muted);" aria-label="GitHub">
+              <SocialIcon name="github" />
+            </a>
+            <a href="https://linkedin.com/in/atlaxt" target="_blank" rel="noopener noreferrer" class="flex opacity-50 transition-opacity hover:opacity-100 header-icon-link" style="color: var(--text-muted);" aria-label="LinkedIn">
+              <SocialIcon name="linkedin" />
+            </a>
+            <RouterLink to="/instagram" class="flex opacity-50 transition-opacity hover:opacity-100 header-icon-link" style="color: var(--text-muted);" aria-label="Instagram">
+              <SocialIcon name="instagram" />
+            </RouterLink>
           </div>
 
           <button class="flex transition-opacity hover:opacity-60" @click="toggleColorMode($event)">
@@ -365,52 +352,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* ── Social dropdown ──────────────────────────────────── */
-.social-wrap {
-  position: relative;
-}
-
-.social-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  padding-top: 10px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-4px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
-  transition-delay: 120ms;
-}
-
-.social-dropdown-inner {
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  padding: 0.3rem 0;
-  min-width: 130px;
-}
-
-.social-wrap:hover .social-dropdown {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-  transition-delay: 0ms;
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.45rem 0.85rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  text-decoration: none;
-  opacity: 0.7;
-  transition: opacity 0.12s ease;
-}
 
 .social-link :deep(.social-icon svg) {
   width: 14px;
