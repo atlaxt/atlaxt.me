@@ -61,8 +61,24 @@ onMounted(fetchAll)
   <div class="px-2 md:px-0 py-16">
     <PageHeader :crumbs="[{ label: 'Instagram', to: '/instagram' }]" />
 
-    <div v-if="loading" class="t-caption">
-      yükleniyor…
+    <div v-if="loading">
+      <!-- Profil skeleton -->
+      <div class="flex items-center gap-6 mb-10">
+        <div class="rounded-full shrink-0 skeleton" style="width: 72px; height: 72px;" />
+        <div class="flex flex-col gap-3 flex-1">
+          <div class="skeleton" style="height: 12px; width: 120px;" />
+          <div class="flex gap-5">
+            <div class="skeleton" style="height: 28px; width: 44px;" />
+            <div class="skeleton" style="height: 28px; width: 44px;" />
+            <div class="skeleton" style="height: 28px; width: 44px;" />
+          </div>
+          <div class="skeleton" style="height: 10px; width: 200px;" />
+        </div>
+      </div>
+      <!-- Grid skeleton -->
+      <div class="grid gap-px" style="grid-template-columns: repeat(3, 1fr);">
+        <div v-for="n in 9" :key="n" class="skeleton aspect-square" />
+      </div>
     </div>
 
     <template v-else>
@@ -137,4 +153,23 @@ onMounted(fetchAll)
 </template>
 
 <style scoped>
+.skeleton {
+  background: var(--bg-subtle);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, var(--border) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
 </style>
