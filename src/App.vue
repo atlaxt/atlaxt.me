@@ -26,11 +26,8 @@ onMounted(() => {
   const source = params.has('cv') ? 'cv' : params.has('qr') ? 'qr' : null
   if (!source) return
 
-  params.delete('cv')
-  params.delete('qr')
-  const newSearch = params.toString()
-  const newUrl = window.location.pathname + (newSearch ? `?${newSearch}` : '') + window.location.hash
-  window.history.replaceState(null, '', newUrl)
+  const { cv: _cv, qr: _qr, ...restQuery } = route.query
+  router.replace({ query: restQuery })
 
   try {
     const storageKey = `visit_tracked_${source}`
