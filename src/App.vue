@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Analytics as VercelAnalytics } from '@vercel/analytics/vue'
 import { SpeedInsights as VercelSpeedInsights } from '@vercel/speed-insights/vue'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 import NewsTicker from '@/components/NewsTicker.vue'
@@ -18,6 +18,37 @@ router.beforeEach((to, from) => {
 
 const route = useRoute()
 const showFooter = computed(() => !route.path.startsWith('/cli'))
+
+const COOLDOWN_MS = 60 * 60 * 1000
+
+onMounted(() => {
+  const params = new URLSearchParams(window.location.search)
+  const source = params.has('cv') ? 'cv' : params.has('qr') ? 'qr' : null
+  if (!source) return
+
+  params.delete('cv')
+  params.delete('qr')
+  const newSearch = params.toString()
+  const newUrl = window.location.pathname + (newSearch ? `?${newSearch}` : '') + window.location.hash
+  window.history.replaceState(null, '', newUrl)
+
+  try {
+    const storageKey = `visit_tracked_${source}`
+    const lastTracked = Number(localStorage.getItem(storageKey) ?? 0)
+    const now = Date.now()
+    if (now - lastTracked < COOLDOWN_MS) return
+    localStorage.setItem(storageKey, String(now))
+  }
+  catch {
+    // localStorage unavailable (private browsing / iframe) — still send the request
+  }
+
+  fetch('/api/track-visit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ source }),
+  }).catch(() => {})
+})
 </script>
 
 <template>
