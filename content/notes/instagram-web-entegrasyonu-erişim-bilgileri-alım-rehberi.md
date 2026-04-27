@@ -1,6 +1,6 @@
 ---
 title: 'Instagram Web Entegrasyonu: Erişim Bilgileri Alım Rehberi'
-description: 'Bu döküman, Instagram içeriklerinin web sitesi üzerinde dinamik olarak sergilenmesi için gereken **Süresiz Erişim Anahtarı (Permanent Token)** ve **Instagram Business ID** verilerinin hatasız bir şekilde temin edilmesi amacıyla hazırlanmıştır.'
+description: 'Bu döküman, Instagram içeriklerinin web sitesi üzerinde dinamik olarak sergilenmesi için gereken Süresiz Erişim Anahtarı (Permanent Token) ve Instagram Business ID verilerinin hatasız bir şekilde temin edilmesi amacıyla hazırlanmıştır.'
 date: '2026-04-20'
 ---
 
