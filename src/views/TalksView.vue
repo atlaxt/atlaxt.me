@@ -11,15 +11,23 @@ useSeo({
   type: 'website',
 })
 
-const talks = ref<Talk[]>([])
+const talks = ref<Talk[]>([
+  {
+    title: 'Doğumundan Bugüne Yapay Zeka, Doğru AI Doğru Prompt',
+    date: '2026-05-08',
+    location: 'İstanbul, Marmara Üniversitesi',
+    url: 'https://talks.atlaxt.me/2026/biyolojik-bilimler-kulubu-yapay-zeka/',
+    shortUrl: '/2026/biyolojik-bilimler-kulubu-yapay-zeka',
+  },
+])
 const error = ref<string | null>(null)
 
 onMounted(async () => {
   try {
-    const res = await fetch('https://talks.atlaxt.me/talks.json')
-    if (!res.ok)
-      throw new Error(`${res.status} ${res.statusText}`)
-    talks.value = await res.json()
+    // const res = await fetch('https://talks.atlaxt.me/talks.json')
+    // if (!res.ok)
+    //   throw new Error(`${res.status} ${res.statusText}`)
+    // talks.value = await res.json()
   }
   catch (e) {
     error.value = String(e)
