@@ -175,14 +175,14 @@ onUnmounted(() => {
             Notlar
           </RouterLink>
 
-          <RouterLink
+          <!-- <RouterLink
             to="/talks"
             class="opacity-70 transition-opacity hover:opacity-100"
             style="color: var(--text-muted);"
             active-class="!opacity-100 !text-[color:var(--text)]"
           >
             Konuşmalar
-          </RouterLink>
+          </RouterLink> -->
 
           <RouterLink
             to="/feed"
@@ -457,9 +457,9 @@ onUnmounted(() => {
               <RouterLink to="/notes" class="opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
                 Notlar
               </RouterLink>
-              <RouterLink to="/talks" class="opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
+              <!-- <RouterLink to="/talks" class="opacity-85 transition-opacity hover:opacity-100" active-class="!opacity-100 !text-[color:var(--text)]" @click="closeMobileMenu">
                 Konuşmalar
-              </RouterLink>
+              </RouterLink> -->
               <RouterLink to="/feed" class="feed-link transition-opacity hover:opacity-100" active-class="!opacity-100" @click="closeMobileMenu">
                 Haberler
               </RouterLink>
