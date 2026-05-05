@@ -86,5 +86,17 @@ export interface FeedItem {
   sourceLink: string
 }
 
+// ─── Konuşmalar ──────────────────────────────────────────────
+export interface Talk {
+  title: string
+  date: string
+  location: string
+  url: string
+  shortUrl: string
+  slides?: string
+  pdf?: string
+  lang?: string
+}
+
 // ─── Projeler ────────────────────────────────────────────────
 export * from './projects'

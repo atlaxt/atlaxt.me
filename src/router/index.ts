@@ -70,6 +70,11 @@ const router = createRouter({
       component: () => import('@/views/NoteView.vue'),
     },
     {
+      path: '/talks',
+      name: 'talks',
+      component: () => import('@/views/TalksView.vue'),
+    },
+    {
       path: '/contact',
       name: 'contact',
       component: () => import('@/views/ContactView.vue'),
