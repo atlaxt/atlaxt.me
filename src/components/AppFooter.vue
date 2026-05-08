@@ -47,6 +47,9 @@ const year = new Date().getFullYear()
             <RouterLink to="/notes" class="footer-nav-link">
               Notlar
             </RouterLink>
+            <RouterLink to="/talks" class="footer-nav-link">
+              Konuşmalar
+            </RouterLink>
             <RouterLink to="/feed" class="footer-nav-link footer-nav-link--red">
               Haberler
             </RouterLink>

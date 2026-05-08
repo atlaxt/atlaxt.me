@@ -175,14 +175,14 @@ onUnmounted(() => {
             Notlar
           </RouterLink>
 
-          <!-- <RouterLink
+          <RouterLink
             to="/talks"
             class="opacity-70 transition-opacity hover:opacity-100"
             style="color: var(--text-muted);"
             active-class="!opacity-100 !text-[color:var(--text)]"
           >
             Konuşmalar
-          </RouterLink> -->
+          </RouterLink>
 
           <RouterLink
             to="/feed"
