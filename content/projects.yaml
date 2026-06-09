@@ -1,3 +1,8 @@
+- name: Ertan Fotoğrafçılık
+  live: https://ertanfotografcilik.com/
+  preview_light: /previews/ErtanFotografcilik.webp
+  preview_dark: /previews/ErtanFotografcilik.webp
+
 - name: Git101
   live: https://git101-seven.vercel.app
   github: https://github.com/atlaxt/git101
