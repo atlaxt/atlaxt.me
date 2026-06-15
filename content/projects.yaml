@@ -1,3 +1,8 @@
+- name: Placehold Studio
+  live: https://placehold.atlaxt.me/
+  preview_light: /previews/PlaceholdStudio_light.webp
+  preview_dark: /previews/PlaceholdStudio_dark.webp
+
 - name: Erdem Acay Danışmanlık
   live: https://erdemacay.com/
   preview_light: /previews/ErdemAcayDanışmanlık.webp
