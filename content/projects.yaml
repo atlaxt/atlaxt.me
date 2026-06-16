@@ -1,3 +1,8 @@
+- name: My Favorite Fonts
+  live: https://fonts.atlaxt.me/
+  preview_light: /previews/fonts_light.webp
+  preview_dark: /previews/fonts_dark.webp
+
 - name: Placehold Studio
   live: https://placehold.atlaxt.me/
   preview_light: /previews/PlaceholdStudio_light.webp
