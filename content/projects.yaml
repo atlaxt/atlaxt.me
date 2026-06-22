@@ -46,36 +46,38 @@
   preview_light: /previews/useMarkdown_light.webp
   preview_dark: /previews/useMarkdown_dark.webp
 
-# - name: useColor
-#   live: https://usecolor.space
-
-# - name: useSpace Studio
-#   live: https://usespace.studio
-
 - name: Simay Durmaz
   live: https://simaydurmaz.com
   preview_light: /previews/SimayDurmaz.webp
   preview_dark: /previews/SimayDurmaz.webp
-
-- name: KoiJs Vue Table
-  github: https://github.com/atlaxt/koijs-table-vue
 
 - name: Web Screenshot
   github: https://github.com/atlaxt/web-screenshot
   preview_light: /previews/WebScreenshot.webp
   preview_dark: /previews/WebScreenshot.webp
 
-- name: InkHub
-  github: https://github.com/atlaxt/InkHub
+- name: Imoji
+  github: https://github.com/atlaxt/imoji
+  preview_light: /previews/Imoji_light.webp
+  preview_dark: /previews/Imoji_dark.webp
 
 - name: Css Training
   github: https://github.com/atlaxt/css-training
+  preview_light: /previews/CssTraining.webp
+  preview_dark: /previews/CssTraining.webp
 
 - name: Mockly
   github: https://github.com/atlaxt/mockly
+  preview_light: /previews/Mockly.webp
+  preview_dark: /previews/Mockly.webp
+
+- name: KoiJs Vue Table
+  github: https://github.com/atlaxt/koijs-table-vue
+  preview_light: /previews/KoiTable.gif
+  preview_dark: /previews/KoiTable.gif
+
+- name: InkHub
+  github: https://github.com/atlaxt/InkHub
 
 - name: SnakeHub
   github: https://github.com/atlaxt/SnakeHub
-
-- name: Imoji
-  github: https://github.com/atlaxt/imoji
