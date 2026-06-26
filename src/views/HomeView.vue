@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { Book, EducationEntry, ExperienceEntry, Photo, Post, Quote } from '@/types'
 import photosRaw from 'virtual:photos'
-import { nextTick, onMounted, ref } from 'vue'
+import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
+
 import ScrollCue from '@/components/ScrollCue.vue'
 import SectionLabel from '@/components/SectionLabel.vue'
 import SignParticle from '@/components/SignParticle.vue'
@@ -61,6 +62,9 @@ function getNextQuoteIndex(total: number): number {
 const quoteIndex = getNextQuoteIndex(quotes.length)
 const currentQuote = quotes[quoteIndex] ?? quotes[0]!
 
+const welcomeSource = ref<'cv' | 'qr' | null>(null)
+const welcomeModalOpen = ref(false)
+
 // ─── Son yazılar ────────────────────────────────────────────────
 const modules = import.meta.glob('../../content/blogs/*.md', { eager: true })
 const recentPosts = (Object.values(modules) as { default: Post }[])
@@ -106,6 +110,26 @@ onMounted(() => {
   else {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
+
+  const source = sessionStorage.getItem('welcome_source') as 'cv' | 'qr' | null
+  if (!source)
+    return
+
+  sessionStorage.removeItem('welcome_source')
+  welcomeSource.value = source
+  welcomeModalOpen.value = true
+})
+
+function closeWelcomeModal() {
+  welcomeModalOpen.value = false
+}
+
+watch(welcomeModalOpen, (isOpen) => {
+  document.body.style.overflow = isOpen ? 'hidden' : ''
+})
+
+onUnmounted(() => {
+  document.body.style.overflow = ''
 })
 
 const links = socials
@@ -204,6 +228,60 @@ useSeo({
 
 <template>
   <div>
+    <Transition name="welcome-modal">
+      <div
+        v-if="welcomeModalOpen && welcomeSource"
+        class="fixed inset-0 z-[80] flex items-center justify-center px-4 py-6 sm:px-6"
+        @click.self="closeWelcomeModal"
+      >
+        <div class="absolute inset-0 bg-black/55 backdrop-blur-sm" />
+        <section class="relative z-10 w-full max-w-xl border border-[color:var(--border)]/70 bg-[color:var(--bg)] px-5 py-5 shadow-[0_30px_100px_rgba(0,0,0,0.28)] sm:px-6 sm:py-6">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="label-micro mb-2 tracking-[0.18em]" style="color: var(--text-muted); opacity: 0.7;">
+                HOŞ GELDİN
+              </p>
+              <h2 class="text-xl font-medium leading-tight" style="color: var(--text);">
+                Selamlar! CV'mdeki link üzerinden geldiğinizi görüyorum, hoş geldiniz.
+              </h2>
+            </div>
+
+            <button
+              type="button"
+              class="inline-flex h-8 w-8 shrink-0 items-center justify-center border border-[color:var(--border)]/70 transition-opacity hover:opacity-70"
+              aria-label="Hoşgeldin mesajını kapat"
+              @click="closeWelcomeModal"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <p class="mt-4 max-w-2xl text-sm leading-relaxed sm:text-[15px]" style="color: var(--text-muted);">
+            Kağıda sığmayan projelerimin canlı versiyonlarını ve tasarım detaylarını burada keşfedebilirsiniz.
+            Fotoğraf albümü ve kitaplık sayfalarına da göz atmanızı tavsiye ederim. Keyifli incelemeler!
+          </p>
+
+          <div class="mt-2 flex items-center justify-between gap-4 border-t border-[color:var(--border)]/60 pt-4">
+            <!-- <span class="label-micro" style="color: var(--text-muted); opacity: 0.65;">
+              {{ welcomeSource === 'cv' ? 'CV bağlantısı' : 'QR bağlantısı' }}
+            </span> -->
+
+            <button
+              type="button"
+              class="inline-flex ml-auto items-center gap-2 border border-[color:var(--border)]/70 px-4 py-1 text-sm transition-opacity hover:opacity-70"
+              style="color: var(--text);"
+              @click="closeWelcomeModal"
+            >
+              Devam et
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </Transition>
     <!-- Hero: tam ekran yüksekliği -->
     <div ref="heroRef" class="hero-panel flex h-[calc(100vh-57px)]">
       <!-- Sol: Bio -->
@@ -217,7 +295,7 @@ useSeo({
         <!-- Şu an çalışılan yer -->
         <div class="inline-flex items-center gap-2 mt-6 text-xs" style="color: #4ade80;">
           <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse shrink-0" />
-          trex Digital Manufacturing'da çalışıyor
+          trex Digital Manufacturing'de çalışıyor
         </div>
 
         <RouterLink
@@ -456,6 +534,29 @@ useSeo({
     </div>
   </div>
 </template>
+
+<style scoped>
+.welcome-modal-enter-active,
+.welcome-modal-leave-active {
+  transition: opacity 0.18s ease;
+}
+
+.welcome-modal-enter-from,
+.welcome-modal-leave-to {
+  opacity: 0;
+}
+
+.welcome-modal-enter-active section,
+.welcome-modal-leave-active section {
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.welcome-modal-enter-from section,
+.welcome-modal-leave-to section {
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+}
+</style>
 
 <style scoped>
 /* ── Hero scroll cue ─────────────────────────────────── */

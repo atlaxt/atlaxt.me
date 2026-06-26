@@ -27,7 +27,7 @@ const year = new Date().getFullYear()
             Atlas Yiğit Aydın
           </p>
           <p class="footer-tagline">
-            Web geliştirici — Vue ekosistemine odaklanan,<br>UX'e önem veren.
+            atlaxt
           </p>
         </div>
 

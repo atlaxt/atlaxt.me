@@ -24,7 +24,10 @@ const COOLDOWN_MS = 60 * 60 * 1000
 onMounted(() => {
   const params = new URLSearchParams(window.location.search)
   const source = params.has('cv') ? 'cv' : params.has('qr') ? 'qr' : null
-  if (!source) return
+  if (!source)
+    return
+
+  sessionStorage.setItem('welcome_source', source)
 
   const { cv: _cv, qr: _qr, ...restQuery } = route.query
   router.replace({ query: restQuery })
@@ -33,7 +36,8 @@ onMounted(() => {
     const storageKey = `visit_tracked_${source}`
     const lastTracked = Number(localStorage.getItem(storageKey) ?? 0)
     const now = Date.now()
-    if (now - lastTracked < COOLDOWN_MS) return
+    if (now - lastTracked < COOLDOWN_MS)
+      return
     localStorage.setItem(storageKey, String(now))
   }
   catch {
@@ -70,7 +74,6 @@ onMounted(() => {
 </template>
 
 <style>
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.18s ease;
